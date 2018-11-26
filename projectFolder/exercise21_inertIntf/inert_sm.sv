@@ -1,10 +1,15 @@
-module inert_sm();
-	output logic wrt vld;
+module inert_sm(wrt, vld, cmd, done, C_P_H, C_P_L, C_AZ_H, C_AZ_L, INT, clk, rst_n);
+	output logic wrt, vld;
 	output logic [15:0]cmd;
 	output logic C_P_H, C_P_L, C_AZ_H, C_AZ_L;
 
 	input clk, rst_n;
 	input done, INT;
+
+  ////// internal signals ////////////////////
+	logic INT_ff1,INT_ff2;
+	logic [15:0]timer;
+  ////////////////////////////////////////////
 
 	typedef enum logic [3:0] {INIT1, INIT2, INIT3, INIT4,
 				WAIT, READ1, READ2, READ3, READ4} state_t;
@@ -100,6 +105,7 @@ module inert_sm();
 				nxt_state = WAIT;
 				wrt = 1;
 				C_AZ_H = 1;
+				vld = 1;
 			end else begin
 				nxt_state = READ4;
 			end
@@ -115,7 +121,7 @@ module inert_sm();
 		else state <= nxt_state;
   ////////////////////////////////////////////
 
-	logic INT_ff1,INT_ff2;
+	
   ////// doublt flop INT, metastability //////
 	always_ff @(posedge clk, negedge rst_n)
 		if (!rst_n) begin
@@ -128,6 +134,12 @@ module inert_sm();
   ////////////////////////////////////////////
 
 
+  ////// 16-bit counter, wait sensor waked up //////
+	always_ff @(posedge clk, negedge rst_n)
+		if (!rst_n)
+			timer <= 0;
+		else timer <= timer + 1;
+  //////////////////////////////////////////////////
 
 
 endmodule
