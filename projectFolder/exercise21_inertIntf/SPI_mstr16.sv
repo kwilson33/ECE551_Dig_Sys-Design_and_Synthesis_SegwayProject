@@ -1,136 +1,212 @@
-module SPI_mstr16 (wrt, cmd, MISO, clk, rst_n,
-				   done, rd_data, SS_n, SCLK, MOSI);
+// Kevin Wilson 11/4/18
+module SPI_mstr16(done, rd_data, SS_n, SCLK, MOSI, MISO, wrt, clk, rst_n, cmd);
 
-input [15:0]cmd;		// cmd is data passed to slave
-input wrt, MISO, clk, rst_n;	// clock, active_low reset, write signal
-
-// MOSI, MISO are signals between master and slave devices
-output logic [15:0]rd_data;				// rd_data is read back
-output logic done, SS_n, SCLK, MOSI;	// SS_n select slave device, SCLK is a slow clock, done when shift is done
-
-// rst_cnt to reset sclk counter, init to load data into [15:0]cmd,
-// smpl signal when to sample MISO,
-// set_done and clr_done signal when we need to set signal done or clear it 
-logic rst_cnt, init, smpl, shft, MISO_smpl, set_done, clr_done;
-
-logic SCLK_r, SCLK_f;	// signal when SLCK is about to rise or fall
-logic [4:0]sclk_div;	// SLCK divider
-logic [3:0]shft_cnt;	// shift counter, counting # of shifts we have done
-logic shft_cnt_clr;		// clear shift counter
-logic shft_15;			// asserted when 15 shifts have been done
-
-typedef enum logic [1:0] {IDLE, FRNT, SHFT, BAK} state_t;	// define states of FSM
-state_t state, nxt_state;
-
-// shift register, heart of spi, to hold the 16-bit value
-logic [15:0]shft_reg;
-always_ff @(posedge clk)
-	if (init)
-		shft_reg <= cmd;
-	else if (shft) 
-		shft_reg <= {shft_reg[14:0], MISO_smpl}; // new smpl shif into least significant bit 
-	else shft_reg <= shft_reg;
-		
-assign MOSI = shft_reg[15];		// most significant bit out to slave
-assign rd_data = shft_reg; // data read in is also stored in shift register
-
-// sample MISO at rising edge(smpl is asserted)
-always_ff @(posedge clk)
-	if (smpl)	// 
-		MISO_smpl <= MISO;
-	else MISO_smpl <= MISO_smpl;
-
-// sclk counter, a slower clock for shift and sample
-always_ff @(posedge clk)
-	if (rst_cnt)
-		sclk_div <= 5'b10111;	// front porch
-	else sclk_div <= sclk_div + 1;	// counting up
-
-assign SCLK = sclk_div[4];	// 32 unit clock, 5 bit num, neg for high, pos for low
-assign SCLK_r = (sclk_div == 5'b01111);	// when sclk is about to rise
-assign SCLK_f = (sclk_div == 5'b11111); // when sclk is about to fall
-
-// 4 bit counter for 16 shift
-always_ff @(posedge clk)
-	if (shft_cnt_clr)
-		shft_cnt <= 4'h00;
-	else if (SCLK_f)
-		shft_cnt <= shft_cnt + 1;
-	else shft_cnt <= shft_cnt;
-
-assign shft_15 = (shft_cnt == 4'hf);	// 15 shifts have been done
-
-// state transition
-always_ff @(posedge clk, negedge rst_n)
-	if (!rst_n)
-		state <= IDLE;
-	else state <= nxt_state;
-
-// FSM transition conditions
-always_comb begin
-	//default values
-	rst_cnt = 0;	// reset 
-	init = 0;
-	shft_cnt_clr = 0;	// dont clear so far
-	shft = 0;
-	smpl = 0;
-	clr_done = 0;
-	set_done = 0;
+	// Serial Peripheral Interconnect, simple Master Slave serial interface
+	// 4 wires for full duplex...
+	// MOSI : Master Out Slave In (we are its master and we drive it)
+	// MISO: Master In Slave Out (intertial sensor drives this back to us)
+	// SCLK: serial clock, normally high
+	// SS_n: Active low slave select
 	
-	case (state)
-	  IDLE: begin
-		rst_cnt = 1;
-		if (wrt) begin
-			nxt_state = FRNT;	// enter front porch, load data and clear done
-			init = 1;
-			clr_done = 1;
-		end
-	  end
-	  FRNT: begin
-		if (!SCLK) begin
-			nxt_state = SHFT;	// when SLCK falls, ready to shift or sample
-			shft_cnt_clr = 1;	// clear shift counter
-		end
-	  end
-	  SHFT: begin
-		if (shft_15 & SCLK_f) begin	// if 15 shifts have been done
-			nxt_state = IDLE;		// and next shift is to happen in a clock, do last shift
-			shft = 1;				// and return back to IDLE (stop SCLK)
-			rst_cnt = 1;
-			set_done = 1;
-		end else if (SCLK_r)		// sample at rising edge of SCLK
-			smpl = 1;
-		else if (SCLK_f)			// shift at falling edge of SCLK
-			shft = 1;
-	  end
-	  default: begin
-		rst_cnt = 1;
-		if (wrt) begin
-			nxt_state = FRNT;	// enter front porch, load data and clear done
-			init = 1;
-			clr_done = 1;
-		end
-	  end
-	endcase
-end
 
-// SS_n is controlled by a pair of done signals
-always_ff @(posedge clk, negedge rst_n)
-	if (!rst_n)
-		SS_n <= 1;
-	else if (clr_done)
-		SS_n <= 0;
-	else if (set_done)
-		SS_n <= 1;
-	else SS_n <= SS_n;
+	// MOSI shifted on SCLK fall
+	// MISO sampled on SCLK rise
 
-// done is controlled by a pair of done signals
-always_ff @(posedge clk, negedge rst_n)
-	if (!rst_n)
-		done <= 0;
-	else if (clr_done)
-		done <= 0;
-	else if (set_done)
-		done <= 1;
+	// Essentially a 16 bit shift register that can parallel load data we want to transmit
+	// And then shift it out (MSB first) at the same time it receives data from slave in the LSB
+
+	// The bit coming from the slave (MISO) is sampled on rise of SCLK and put into shift reg on fall of  SCLK
+
+	// Inputs
+	input clk, rst_n, wrt, MISO; 					// 50 MHz clock, active low reset
+	input wrt;										// high for 1 clock period, initates SPI transaction
+   input MISO;										// Master in Slave Out. Sampled on SCLK rise
+	input [15:0] cmd; 								// data being sent to intertial sensor
+
+	// Outputs
+	output logic [15:0] rd_data;					// Data from SPI slave, use [7:0] for intertial sensor, [11:0] for A/D
+	output logic SS_n; 								// active low slave select
+	output logic SCLK;						   		// 1/32 of 50MHz clock, comes from MSB of a 5 bit counter running off clk
+	output logic MOSI,  done;						//	MOSI signal we're driving, and done signal asserted when SPI transaction is complete.					 
+
+	
+	// Additional signals
+	logic rst_cnt;									// rst_cnt is high when in IDLE state
+	logic init;										// init is used to initialize an SPI transaction.
+	logic set_done;									// asserted when going back to IDLE state. Used for SS_n and done signals.
+
+	reg [4:0] sclk_div;								// 5 bit counter that will determine what SCLK is
+	logic smpl; 				 					// asserted when sclk_div is 01111, 
+	logic shft; 									// asserted when sclk_div is 11111
+ 
+	reg MISO_smpl;									// sample MISO on SCLK rise
+
+	reg [15:0] shft_reg; 							// The heart of SPI. MISO_smpl shifted at the LSB on SCLK rise. MOSI shifted OUT on SCLK fall
+	
+	reg [4:0] shft_cnt; 							// counts to see if we've shifteed enough, count up to 16
+	
+
+
+
+	
+	assign SCLK = sclk_div[4]; 						// SCLK is 1/32 of 50Mhz clock, high when sclk_div = 10000
+	assign rd_data = shft_reg;						// at end of transaction, rd_data will contain shft_reg;
+	assign MOSI = shft_reg[15]; 					// MOSI is the MSB of the shift register. 
+	
+
+
+	// Both flops are synchronously reset by rst_cnt, which is high when in IDLE state. One flop is for sclk_div counter to see when we're ready to shift/sample
+	// and the other flop is for shft_cnt counter to see when we've shifted enough.
+
+	// sclk_div counter logic
+	always @(posedge clk) begin
+		if (rst_cnt) begin
+			// synch reset to this value for creation of 'front porch'
+			// which is the little bit of time before SCLK goes low when SS_n first goes low
+			sclk_div <= 5'b10111;				 
+		end
 		
+		else begin
+			sclk_div <= sclk_div  + 1;
+		end
+	end
+
+	//counter to see if we're done shifting
+	always @(posedge clk) begin
+		if (rst_cnt)  shft_cnt <= 0;				
+		else if (shft) shft_cnt <= shft_cnt  + 1;
+	end
+	
+	
+
+	
+	// sample MISO on SCLK rise
+	always @(posedge clk) begin
+		if (smpl) begin
+			MISO_smpl <= MISO;
+		end 
+	end
+	
+
+
+	// shft_reg logic
+	always @(posedge clk) begin
+		casex ({wrt, shft}) 
+			2'b1x: shft_reg <= cmd; 						// if wrt is high, initiate new transaction and load in data
+			2'b01: shft_reg <= {shft_reg[14:0], MISO_smpl}; // shift in MISO at LSB. At end of transaction, shft_reg will be data in shft_reg
+			default : shft_reg <= shft_reg; 
+		endcase
+	end
+	
+	
+	
+	
+			
+	/*
+		active low preset flop for done signal. SR Flop
+
+		assert done if shifted 16 times. Can't test by seeing if shft_cnt == 16 BECAUSE we're transitioning back to IDLE the same time we are shifting final time, 
+		in which we are resetting count to 0, which has priority to the increment. Instead, use a set_done signal that is asserted when transitioning back to IDLE.
+	*/
+	always @(posedge clk, negedge rst_n) begin
+		if (!rst_n) done <= 0;										
+		else if (init) done <= 0;							// done stays high until next wrt is asserted, then init goes high for one clock
+		else if (set_done) done <= 1; 							
+	end
+	
+
+	/*
+		active low preset flop for SS_n signal. SR Flop
+
+		assert SS_n if shifted 16 times. Can't test by seeing if shft_cnt == 16 BECAUSE we're transitioning back to IDLE the same time we are shifting final time, 
+		in which we are resetting count to 0, which has priority to the increment. Instead, use a set_done signal that is asserted when transitioning back to IDLE.
+	*/
+	always @(posedge clk, negedge rst_n) begin
+		if (!rst_n) SS_n <= 1;										
+		else if (init) SS_n <= 0;							// SS_n is high until next wrt, when init goes high for one clock
+		else if (set_done) SS_n <= 1; 							
+	end
+
+
+	// ##################################################### State Machine ###############################################################
+	typedef enum reg[1:0] {IDLE, SAMPLE_WAIT, SHIFT_WAIT, FINAL} state_t;
+	state_t state, nxt_state;
+	
+	//sequential next state logic
+	always_ff @(posedge clk, negedge rst_n) begin
+		if (!rst_n) state <= IDLE;
+		else state <= nxt_state;
+	end
+	
+	//combinational transition logic
+	always_comb begin
+		nxt_state = IDLE;
+		rst_cnt = 0; 
+		set_done = 0;										// asserted when going back to IDLE.						
+		init = 0;
+		smpl = 0;
+		shft = 0;
+	
+		case (state)
+			IDLE: begin
+				rst_cnt = 1; 	// high only when in IDLE
+				if (wrt) begin
+					init = 1;								// wrt is an external signal, can stay high forever, so make init signal high when ready to transmit, then go low. Fixes bugs with wrt kept high
+					nxt_state = SAMPLE_WAIT;
+				end
+			end
+				
+
+			SAMPLE_WAIT: begin 								// sample and wait until ready to shift
+
+				if (sclk_div == 5'b01111) begin 			// check value of sclk_div
+		
+					smpl = 1;								// enable sample of MISO when sclk_div will be 10000 on next clock
+								
+					if (shft_cnt == 5'hF) begin 			// check if shft_cnt is 15, if so, sample final time in FINAL state		
+						nxt_state = FINAL;															
+					end
+
+					else nxt_state = SHIFT_WAIT;			// if not, sample in the SHIFT_WAIT state 
+					
+				end 
+
+				else nxt_state = SAMPLE_WAIT;				// if sclk_div not ready, stay in current state
+				
+			end
+			
+
+			SHIFT_WAIT: begin								// shift and wait until ready to sample	
+
+				if(sclk_div == 5'b11111) begin				// on the next clock edge, sclk_div will be 0
+					shft = 1;										// which means SCLK will fall, so assert a shift
+					nxt_state = SAMPLE_WAIT;
+				end
+				 else begin
+					nxt_state = SHIFT_WAIT;
+				end
+			end 
+				
+			
+			FINAL: begin
+
+				if (sclk_div == 5'b11111) begin 			// 'back porch': Wait for last time to shift. SCLK won't fall after 15 shifts, 
+															// so have to wait until sclk_div increments to tell us to shift
+					nxt_state = IDLE;
+					rst_cnt = 1;							// reset count so sclk_div is 10111 and has a 1 in the MSB, keeping SCLK high
+					set_done = 1;							// assert when we're going back to IDLE and shifting final time. 
+															// Have to use because shft_cnt will be set to 0 so can't check if equal to 16
+					shft = 1;
+				end
+				else begin
+					nxt_state = FINAL;
+				end
+			end
+				
+		default: nxt_state = IDLE;
+	
+		endcase
+	
+	end
+
 endmodule
