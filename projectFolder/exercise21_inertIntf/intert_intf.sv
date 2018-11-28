@@ -83,8 +83,11 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		vld = 0;
 		
 		case (state)
-		
+		  //We start with a round of data writes to some
+          //registers to configure the inertial sensor to
+		  //operate in the mode we wish.
 		  INIT1: begin
+		    //Enable interrupt upon data ready
 			cmd = 16'h0D02;
 			if (&timer) begin
 				nxt_state = INIT2;
@@ -95,6 +98,8 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  
 		  INIT2: begin
+		  	//Setup accel for 208Hz data rate, +/- 2g accel
+			//range, 50Hz LPF
 			cmd = 16'h1053;
 			if (done) begin
 				nxt_state = INIT3;
@@ -105,6 +110,7 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  
 		  INIT3: begin
+		    //Setup gyro for 208Hz data rate, +/- 245 degrees/sec range
 			cmd = 16'h1150;
 			if (done) begin
 				nxt_state = INIT4;
@@ -115,6 +121,7 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  
 		  INIT4: begin
+		    //Turn rounding on for both accel and gyro
 			cmd = 16'h1460;
 			if (done) begin
 				nxt_state = WAIT;
@@ -123,7 +130,9 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = INIT4;
 		  end
 		  
-		  
+		  //Now we're at the point in which we've completed initializing
+          //the sensor and we go into an infinite loop of reading gyro
+          //and accel data.
 		  WAIT: begin
 			if (done && INT_meta2 == 1) begin
 				nxt_state = READ1;
@@ -132,20 +141,22 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = WAIT;
 		  end
 		  
-		  
+		  //pitch L state: pitch rate low
 		  READ1: begin
+		    //Read and store pitchL from gyro
 			cmd = 16'hA200;
 			if (done) begin
 				nxt_state = READ2;
 				wrt = 1;
-				C_P_L = 1;
+				C_P_L = 1;						//storing pitchL reading
 			end
 			else nxt_state = READ1;
 		  end
 		  
 		  
-		  
+		  //pitch H state: pitch rate high
 		  READ2: begin
+		    //Read and store pitchH from gyro
 			cmd = 16'hA300;
 			if (done) begin
 				nxt_state = READ3;
@@ -155,8 +166,9 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = READ2;
 		  end
 		  
-		  
+		  //AZL state: acceleration in Z low byte
 		  READ3: begin
+		    //Read and store AZL from accel
 			cmd = 16'hAC00;
 			if (done) begin
 				nxt_state = READ4;
@@ -166,8 +178,11 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = READ3;
 		  end
 		  
-		  
+		  //AZH state: acceleration in Z high byte
 		  READ4: begin
+		    //Read and store AZH from acccel and then
+			//indicate to inertial integrator that valid
+			//readings are ready.
 			cmd = 16'hAD00;
 			if (done) begin
 				nxt_state = WAIT;
