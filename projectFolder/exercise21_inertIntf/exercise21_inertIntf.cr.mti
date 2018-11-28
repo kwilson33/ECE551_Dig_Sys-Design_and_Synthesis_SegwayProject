@@ -1,4 +1,11 @@
-I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv {1 {vlog -work work -sv -stats=none I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv
+I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv {1 {vlog -work work -sv -stats=none I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module inert_intf
+
+Top level modules:
+	inert_intf
+
+} {} {}} I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv {1 {vlog -work work -sv -stats=none I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling module inertial_integrator
 

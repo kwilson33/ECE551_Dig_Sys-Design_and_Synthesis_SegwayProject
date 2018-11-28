@@ -12,7 +12,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 	
 	//// internal signals ///
 	logic [15:0] cmd;
-	logic [15:0] rd_data
+	logic [15:0] rd_data;
 	logic [7:0] ptch_rt, AZ;
 	logic wrt, done;
 	logic C_P_L, C_P_H, C_AZ_L, C_AZ_H; 		// determines when to store readings of pitchL, pitchH, AZL, and AZH respectively

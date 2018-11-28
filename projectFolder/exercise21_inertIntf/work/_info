@@ -10,15 +10,15 @@ cModel Technology
 dC:/AppV5/Quartus_16.v2
 vinert_intf
 Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
-!s110 1543421497
+!s110 1543422790
 !i10b 1
-!s100 mV`6SK1V3fCh2_B9E?OJ_1
-IW>D9XajCd`o1g]M7aE>3E0
+!s100 If1j:Y=J0^T=[R4<H@5d<1
+IjkccYkok8VmCb@mO_RB[K3
 Z1 VDg1SIo80bB@j0V0VzS_@n1
 Z2 !s105 inert_intf_sv_unit
 S1
 Z3 dI:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf
-w1543421483
+w1543422783
 Z4 8I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv
 Z5 FI:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv
 L0 2
@@ -26,11 +26,11 @@ Z6 OV;L;10.4d;61
 r1
 !s85 0
 31
-!s108 1543421497.000000
-Z7 !s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv|
-Z8 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv|
+!s108 1543422789.000000
+!s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv|
+Z7 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv|
 !i113 1
-Z9 o-work work -sv
+Z8 o-work work -sv
 vinert_intf_tb
 R0
 !s110 1543421704
@@ -53,10 +53,10 @@ r1
 !s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf_tb.sv|
 !i113 1
-R9
+R8
 vinertial_integrator
 R0
-Z10 !s110 1543421496
+Z9 !s110 1543421496
 !i10b 1
 !s100 00mhCE^`IIi?e^`VdllOI1
 IBVgmkjKETODLDN`Rod4`W0
@@ -76,7 +76,7 @@ r1
 !s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inertial_integrator.sv|
 !i113 1
-R9
+R8
 vintert_intf
 R0
 !s110 1543421395
@@ -96,13 +96,13 @@ r1
 !s85 0
 31
 !s108 1543421395.000000
+!s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/inert_intf.sv|
 R7
-R8
 !i113 1
-R9
+R8
 vSegwayModel
 R0
-R10
+R9
 !i10b 1
 !s100 ^XPDXPPC?dhUYVaYWzWc:3
 I9[I`h1Ba6kCKTe;g]_ZXf2
@@ -122,7 +122,7 @@ r1
 !s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/SegwayModel.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/SegwayModel.sv|
 !i113 1
-R9
+R8
 n@segway@model
 vSPI_mstr16
 R0
@@ -146,5 +146,5 @@ r1
 !s107 I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/SPI_mstr16.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ProjectRepo/projectFolder/exercise21_inertIntf/SPI_mstr16.sv|
 !i113 1
-R9
+R8
 n@s@p@i_mstr16
