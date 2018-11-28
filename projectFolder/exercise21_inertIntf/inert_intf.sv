@@ -30,10 +30,10 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			.ptch_rt({pitchH, pitchL}), .AZ({AZH, AZL}), .ptch(ptch));
 
 	// continuous assign to determine values of 4 readings needed from sensor
-	assign pitchL = (C_P_L)? rd_data : 0;
-	assign pitchH = (C_P_H)? rd_data : 0;
-	assign AZL = (C_AZ_L)? rd_data : 0;
-	assign AZH = (C_AZ_H)? rd_data : 0;
+	assign pitchL = (C_P_L)? rd_data [7:0] : 0;
+	assign pitchH = (C_P_H)? rd_data  [7:0] : 0;
+	assign AZL = (C_AZ_L)? rd_data  [7:0] : 0;
+	assign AZH = (C_AZ_H)? rd_data  [7:0] : 0;
 
 	
 	// double flop INT, metastability
