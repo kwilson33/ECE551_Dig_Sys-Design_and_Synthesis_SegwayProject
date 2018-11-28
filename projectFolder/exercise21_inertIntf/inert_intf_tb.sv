@@ -6,7 +6,7 @@ module inert_intf_tb();
 	wire INT, MISO;
 	
 	logic PWM_rev_rght,PWM_frwrd_rght, PWM_rev_lft,PWM_frwrd_lft;
-	logic [15:0]rider_lean;
+	logic [13:0]rider_lean;
 	
 	inert_intf intf(.SS_n(SS_n), .SCLK(SCLK), .MOSI(MOSI), .vld(vld),
 					.ptch(ptch), .clk(clk), .rst_n(rst_n), .INT(INT), .MISO(MISO));

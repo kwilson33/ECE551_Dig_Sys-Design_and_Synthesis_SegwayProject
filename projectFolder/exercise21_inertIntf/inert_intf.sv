@@ -1,5 +1,5 @@
 //Kevin W, Shawn Z, Tyler M, Severin D
-module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
+module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 	
 	input clk, rst_n; 							// 50MHz clock, active low reset
 	input  INT;									// Interrupt signal from intertial sensor, informs new measurement ready to be read
@@ -39,7 +39,7 @@ module intert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 	always_ff @(posedge clk, negedge rst_n) begin
 		if (!rst_n) begin
 			INT_meta1 <= 0;
-			INT_doubleFlopped <= 0;
+			INT_meta2 <= 0;
 		end 
 		else begin
 			INT_meta1 <= INT;
