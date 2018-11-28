@@ -26,3 +26,4 @@ Questions
 --------------
 * Is the SPI any different? The diagram has a few different things
 	* 5'b11000 vs 5'b10111 in exercise
+* UART baud rate
