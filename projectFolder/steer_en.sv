@@ -1,11 +1,51 @@
-module steer_en_SM(clk,rst_n,tmr_full,sum_gt_min,sum_lt_min,diff_gt_eigth,
-                   diff_gt_15_16,clr_tmr,en_steer,rider_off);
+module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
+  localparam MIN_RIDER_WEIGHT = 12'h200;
+  
   input clk;				// 50MHz clock
   input rst_n;				// Active low asynch reset
-  input tmr_full;			// asserted when timer reaches 1.3 sec
-  input sum_gt_min;			// asserted when left and right load cells together exceed min rider weight
-  input sum_lt_min;			// asserted when left_and right load cells are less than min_rider_weight
+  input signed [11:0]lft_ld,rght_ld;
 
+  output signed [11:0]ld_cell_diff;
+  output logic en_steer;	// enables steering (goes to balance_cntrl)
+  output logic rider_off;	// pulses high for one clock on transition back to initial state
+  
+  logic [11:0]ld_cell_diff_abs;
+  logic signed [11:0]ld_cell_sum;
+  logic [25:0] tmr;			//26-bit timer (1.34 seconds) to meet balance criteria
+  logic tmr_full;			// asserted when timer reaches 1.3 sec
+  logic sum_gt_min;			// asserted when left and right load cells together exceed min rider weight
+  logic diff_gt_fourth;		// asserted if load cell difference exceeds 1/4 sum (rider not situated)
+  logic diff_gt_15_16;		// asserted if load cell difference is great (rider stepping off)
+  logic clr_tmr;			// clears the 1.3sec timer
+
+  
+  
+  assign ld_cell_diff = lft_ld - rght_ld;
+  assign ld_cell_sum = lft_ld + rght_ld;
+
+  // first check if rider exceeds MIN weight
+  assign sum_gt_min = ld_cell_sum >=  MIN_RIDER_WEIGHT;
+  // use abs value of weight next
+  assign ld_cell_diff_abs = !ld_cell_diff[11] ? ld_cell_diff : -ld_cell_diff;
+  // then check if rider is balanced
+  assign diff_gt_fourth = ld_cell_diff_abs > {{2{ld_cell_sum[11]}},ld_cell_sum[11:2]};
+  // stay enabled until rider is not balanced OR rider steps of (sum_gt_min is low)
+  assign diff_gt_15_16 = ld_cell_diff_abs > (($signed(15))*({{4{ld_cell_sum[11]}},ld_cell_sum[11:4]}));  
+  
+  //controlling timer
+  always_ff @(posedge clk,negedge rst_n) begin
+    if (!rst_n) tmr <= 0;
+	else if (clr_tmr) tmr <= 0;
+	else tmr <= tmr + 1;
+  end
+ 
+  //check if 1.34 seconds
+  assign tmr_full = &tmr;
+  
+  
+  
+  
+  /////////////////////////// State Machine ///////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   // HEY BUDDY...you are a moron.  sum_gt_min would simply be ~sum_lt_min. Why
   // have both signals coming to this unit??  ANSWER: What if we had a rider
@@ -20,13 +60,6 @@ module steer_en_SM(clk,rst_n,tmr_full,sum_gt_min,sum_lt_min,diff_gt_eigth,
   // who's wieght is right at the threshold.  This hysteresis trick is as old
   // as the hills, but very handy...remember it.
   //////////////////////////////////////////////////////////////////////////// 
-
-  input diff_gt_eigth;		// asserted if load cell difference exceeds 1/8 sum (rider not situated)
-  input diff_gt_15_16;		// asserted if load cell difference is great (rider stepping off)
-  output logic clr_tmr;		// clears the 1.3sec timer
-  output logic en_steer;	// enables steering (goes to balance_cntrl)
-  output logic rider_off;	// pulses high for one clock on transition back to initial state
-  
   typedef enum reg[1:0] {IDLE, WAIT, STEER_EN} state_t; //create enumerated type
   state_t state, nxt_state;		//declare state and nxt_state signals
   
@@ -45,12 +78,10 @@ module steer_en_SM(clk,rst_n,tmr_full,sum_gt_min,sum_lt_min,diff_gt_eigth,
 	en_steer = 0;	//to
 	rider_off = 0; //avoid latches
 	
-	//TODO
-	//the signals sum_gt_min and sum_lt_min can be left alone after being added to sensitivity list
 	case (state)
 	
 		IDLE: begin
-			if (sum_gt_min) begin                     	//if user exceeds min weight, start waiting
+			if (sum_gt_min) begin               //if user exceeds min weight, start waiting
 				nxt_state = WAIT;
 				clr_tmr = 1;
 			end
@@ -59,8 +90,8 @@ module steer_en_SM(clk,rst_n,tmr_full,sum_gt_min,sum_lt_min,diff_gt_eigth,
 		
 		WAIT: begin
 		
-			if (~sum_gt_min | sum_lt_min) nxt_state = IDLE;  //weight doesnt pass the min weight, go back to idle state
-			else if (diff_gt_eigth) begin
+			if (~sum_gt_min) nxt_state = IDLE;  //weight doesnt pass the min weight, go back to idle state
+			else if (diff_gt_fourth) begin
 				nxt_state = WAIT;				// too much/little weight on either side
 				clr_tmr = 1;					// reset counter and stay in state
 			end
@@ -68,28 +99,28 @@ module steer_en_SM(clk,rst_n,tmr_full,sum_gt_min,sum_lt_min,diff_gt_eigth,
 				nxt_state = STEER_EN;
 				en_steer = 1;
 			end
-			else nxt_state = WAIT; // keep on countin ;)
+			else nxt_state = WAIT; 				// keep on countin ;)
 		end
 		
 		
 		STEER_EN: begin
 			
-			if ((~sum_gt_min) | (sum_lt_min)) begin 			//rider knocked off the device or is not heavy enough
+			if (~sum_gt_min) begin 				//rider knocked off the device or is not heavy enough
 				nxt_state = IDLE;
 				rider_off = 1;
 			end
-			else if (diff_gt_15_16) begin 				// rider steps off
+			else if (diff_gt_15_16) begin 		// rider steps off
 				nxt_state = WAIT;
 				clr_tmr = 1;
 			end
-			else begin						// rider stays balanced, keep ridin ;)
+			else begin							// rider stays balanced, keep ridin ;)
 				nxt_state = STEER_EN;
 				en_steer = 1;
 			end
 		end
 		
 		
-		default: nxt_state = IDLE; //reset state 
+		default: nxt_state = IDLE; 				//reset state 
 		
 	endcase
 	end
