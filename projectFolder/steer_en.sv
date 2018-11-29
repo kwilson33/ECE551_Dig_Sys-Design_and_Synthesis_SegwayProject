@@ -1,25 +1,35 @@
 module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
-  localparam MIN_RIDER_WEIGHT = 12'h200;
+
+  localparam MIN_RIDER_WEIGHT = 12'h200;	// min weight rider must exceed
   
-  input clk;				// 50MHz clock
-  input rst_n;				// Active low asynch reset
+  parameter fast_sim = 0; 					// defaulted to 0. When enabled only 
+											// waits for bits [14:0] of timer to become full instead of [25:0]
+  
+  input clk;								// 50MHz clock
+  input rst_n;								// Active low asynch reset
   input signed [11:0]lft_ld,rght_ld;
 
   output signed [11:0]ld_cell_diff;
-  output logic en_steer;	// enables steering (goes to balance_cntrl)
-  output logic rider_off;	// pulses high for one clock on transition back to initial state
+  output logic en_steer;					// enables steering (goes to balance_cntrl)
+  output logic rider_off;					// pulses high for one clock on transition back to initial state
   
-  logic [11:0]ld_cell_diff_abs;
-  logic signed [11:0]ld_cell_sum;
-  logic [25:0] tmr;			//26-bit timer (1.34 seconds) to meet balance criteria
-  logic tmr_full;			// asserted when timer reaches 1.3 sec
-  logic sum_gt_min;			// asserted when left and right load cells together exceed min rider weight
-  logic diff_gt_fourth;		// asserted if load cell difference exceeds 1/4 sum (rider not situated)
-  logic diff_gt_15_16;		// asserted if load cell difference is great (rider stepping off)
-  logic clr_tmr;			// clears the 1.3sec timer
+  // Internal Signals
+  
+  // Timer signals
+  logic [25:0] waitTimer;					// 26-bit timer (1.34 seconds) to meet balance criteria
+  logic tmr_full;							// asserted when timer reaches 1.3 sec
+  logic clr_tmr;							// clears the 1.3sec timer
+  
+  // Signals to check rider balance/weight
+  logic [11:0] ld_cell_diff_abs;
+  logic signed [11:0] ld_cell_sum;
+  logic sum_gt_min;							// asserted when left and right load cells together exceed min rider weight
+  logic diff_gt_fourth;						// asserted if load cell difference exceeds 1/4 sum (rider not situated)
+  logic diff_gt_15_16;						// asserted if load cell difference is great (rider stepping off)
+  
 
   
-  
+  // Produce sum and difference of left side of segway and right side
   assign ld_cell_diff = lft_ld - rght_ld;
   assign ld_cell_sum = lft_ld + rght_ld;
 
@@ -34,13 +44,13 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
   
   //controlling timer
   always_ff @(posedge clk,negedge rst_n) begin
-    if (!rst_n) tmr <= 0;
-	else if (clr_tmr) tmr <= 0;
-	else tmr <= tmr + 1;
+    if (!rst_n) waitTimer <= 0;
+	else if (clr_tmr) waitTimer <= 0;
+	else waitTimer <= waitTimer + 1;
   end
  
-  //check if 1.34 seconds
-  assign tmr_full = &tmr;
+  //check if 1.34 seconds (2^26 cycles) if fast_sim is not enabled. If fast_sim is enabled only wait 2^15 clock cycles
+  assign tmr_full = fast_sim ? (&tmr[14:0]) : (&tmr[25:0]);
   
   
   

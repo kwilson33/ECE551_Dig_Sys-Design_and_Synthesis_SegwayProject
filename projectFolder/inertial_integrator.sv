@@ -41,7 +41,7 @@ module inertial_integrator(clk,rst_n,vld,ptch_rt,AZ,ptch);
    if acceleration is more than ptch, then add 512 to ptch_int, else you subtract 		
   */
   assign ptch = ptch_int[26:11];											// divide ptch by 2^11. Compare the accelerator angle to it. This is the integrated angle. 
-  assign fusion_ptch_offset = (ptch_acc > ptch) ? 512 : -512;				// find offset by seeing if accelator angle is greater than ptch
+  assign fusion_ptch_offset = (ptch_acc > ptch) ? 1024 : -1024;				// find offset by seeing if accelator angle is greater than ptch
   assign ptch_rt_comp = ptch_rt - PTCH_RT_OFFSET;							// how much you change compared to last time
   always_ff @(posedge clk,negedge rst_n) begin
     if (!rst_n)

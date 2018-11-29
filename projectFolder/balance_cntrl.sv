@@ -1,26 +1,33 @@
-//Kevin Wilson
+ //Kevin Wilson and Shaoheng Zhou
 module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
-                     rght_spd,rght_rev,rider_off, en_steer);
+                     rght_spd,rght_rev,rider_off, en_steer, pwr_up, too_fast);
+					 
+	
+  parameter fast_sim = 0; 						// defaulted to 0. Speeds up integral term by 16x if enabled
   
   //use these params for saturating  values
   localparam most_neg10b = 10'h200; 			// most negative value in 10 bits
   localparam most_pos10b = 10'h1FF; 			// most positive value in 10 bits signed
   localparam most_neg7b  =  7'h40;				// most negative value in 7 bits
   localparam most_pos7b  =  7'h3F;				// most positive value in 7 bits  signed
-  localparam most_pos11b_unsigned = 11'h7FF; 	//most pos value in 11 bits unsigned
+  localparam most_pos11b_unsigned = 11'h7FF; 	// most pos value in 11 bits unsigned
+  
+  localparam warningSpeed =11'h600;				// value to compare against to see if speed is too fast, 1536 in decimal. If saturated, speed will be 2047, which will trigger warning for too fast
  
   
   input clk,rst_n;
-  input vld;						// tells when a new valid inertial reading ready
-  input signed [15:0] ptch;			// actual pitch measured
-  input signed [11:0] ld_cell_diff;	// lft_ld - rght_ld from steer_en block
-  input rider_off;					// High when weight on load cells indicates no rider
+  input vld;									// tells when a new valid inertial reading ready
+  input signed [15:0] ptch;						// actual pitch measured
+  input signed [11:0] ld_cell_diff;				// lft_ld - rght_ld from steer_en block
+  input rider_off;								// High when weight on load cells indicates no rider
   input en_steer;
-  output [10:0] lft_spd;			// 11-bit unsigned speed at which to run left motor
-  output lft_rev;					// direction to run left motor (1==>reverse)
-  output [10:0] rght_spd;			// 11-bit unsigned speed at which to run right motor
-  output rght_rev;					// direction to run right motor (1==>reverse)
+  input pwr_up;									// comes from Auth_blk.sv. Enables device. lft and rght speed should be 0 if pwr_up is high
   
+  output [10:0] lft_spd;						// 11-bit unsigned speed at which to run left motor
+  output lft_rev;								// direction to run left motor (1==>reverse)
+  output [10:0] rght_spd;						// 11-bit unsigned speed at which to run right motor
+  output rght_rev;								// direction to run right motor (1==>reverse)
+  output too_fast;								// asserted if lft rght speed are greater than 1536. Goes to piezo interface to warn rider.
   
   
   ////////////////////////////////////
@@ -131,8 +138,11 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   assign pos_overflow = (!integrator[17] & !ptch_err_sat_SignExt[17]) ?   nxt_integrator[17]   : 1'b0; //check if both MSBS are 0, if they are and nxt_integ MSB is 1, then overflow
   assign overflow = (neg_overflow | pos_overflow);
 
-  //only have to use upper 10 bits to get the I term for PID math
-  assign ptch_I_term = integrator[17:6]; //12 bits
+  /* only have to use upper 10 bits to get the I term for PID math
+     ensure integral term is reset when ~pwr_up to prevent from winding up 
+     if device is powered up  but not authorized to move
+  */ 
+  assign ptch_I_term = pwr_up ? (integrator[17:6]) : (12'd0); //12 bits
   assign ptch_I_term_SignExt = {{4{ptch_I_term[11]}}, ptch_I_term}; 
  
   //Flop that gets integrator, will clear if rider is off or reset is asserted
@@ -204,7 +214,8 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   //######################################################################################################################################################################################################
 	
 	assign ld_cell_diff_div8_SignExt = {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}; //getting rid of 3 LSBs, same as dividing by 8
-	assign PID_cntrl = ptch_P_term_SignExt + ptch_I_term_SignExt + ptch_D_term_SignExt; //16 bits
+	//either add sped up version of integrator or normal sign extended version based on fast_sim parameter
+	assign PID_cntrl = ptch_P_term_SignExt + ptch_D_term_SignExt + (fast_sim ? ptch_I_term[17:2] : ptch_I_term_SignExt); //16 bits
 	
 	//if steering is enabled, get left and right torque by subtracting from/ adding to the PID_cntrl
 	//if not, just use the PID cntrl
@@ -239,7 +250,8 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   
   //take abs value of lft_shaped and unsigned saturate to 11 bits
   assign abs_lft_shaped = lft_shaped[15] ? -lft_shaped : lft_shaped;
-  assign lft_spd = (|abs_lft_shaped[15:11]) ? most_pos11b_unsigned : abs_lft_shaped[10:0]; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
+  //if pwr_up is not asserted, lft_speed is 0
+  assign lft_spd = pwr_up ? ((|abs_lft_shaped[15:11]) ? most_pos11b_unsigned : abs_lft_shaped[10:0]) : 11'h000; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
   
   
   
@@ -255,7 +267,14 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   
   //take abs value of rght_shaped and unsigned saturate to 11 bits
   assign abs_rght_shaped = rght_shaped[15] ? -rght_shaped : rght_shaped;
-  assign rght_spd = (|abs_rght_shaped[15:11]) ? most_pos11b_unsigned : abs_rght_shaped[10:0]; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
+  // if pwr_up is not asserted, rght_speed is 0
+  assign rght_spd = pwr_up ? ((|abs_rght_shaped[15:11]) ? most_pos11b_unsigned : abs_rght_shaped[10:0]) : 11'h000; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
+  
+  
+  
+  
+  //See if either left or right speed are too fast
+  assign too_fast = ((lft_spd > warningSpeed) || ( rght_spd > warningSpeed));
   
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
