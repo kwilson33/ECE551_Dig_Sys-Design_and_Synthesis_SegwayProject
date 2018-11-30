@@ -1,6 +1,6 @@
  //Kevin Wilson and Shaoheng Zhou
 module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
-                     rght_spd,rght_rev,rider_off, en_steer, pwr_up, too_fast);
+                     rght_spd,rght_rev,rider_off, en_steer, pwr_up, ovr_spd);
 					 
 	
   parameter fast_sim = 0; 						// defaulted to 0. Speeds up integral term by 16x if enabled
@@ -27,7 +27,7 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   output lft_rev;								// direction to run left motor (1==>reverse)
   output [10:0] rght_spd;						// 11-bit unsigned speed at which to run right motor
   output rght_rev;								// direction to run right motor (1==>reverse)
-  output too_fast;								// asserted if lft rght speed are greater than 1536. Goes to piezo interface to warn rider.
+  output ovr_spd;								// asserted if lft rght speed are greater than 1536. Goes to piezo interface to warn rider.
   
   
   ////////////////////////////////////
@@ -274,7 +274,7 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   
   
   //See if either left or right speed are too fast
-  assign too_fast = ((lft_spd > warningSpeed) || ( rght_spd > warningSpeed));
+  assign ovr_spd = ((lft_spd > warningSpeed) || ( rght_spd > warningSpeed));
   
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
