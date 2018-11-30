@@ -18,9 +18,9 @@ module SPI_mstr16(done, rd_data, SS_n, SCLK, MOSI, MISO, wrt, clk, rst_n, cmd);
 	// The bit coming from the slave (MISO) is sampled on rise of SCLK and put into shift reg on fall of  SCLK
 
 	// Inputs
-	input clk, rst_n, wrt, MISO; 					// 50 MHz clock, active low reset
+	input clk, rst_n; 					// 50 MHz clock, active low reset
 	input wrt;										// high for 1 clock period, initates SPI transaction
-   input MISO;										// Master in Slave Out. Sampled on SCLK rise
+	input MISO;										// Master in Slave Out. Sampled on SCLK rise
 	input [15:0] cmd; 								// data being sent to intertial sensor
 
 	// Outputs
