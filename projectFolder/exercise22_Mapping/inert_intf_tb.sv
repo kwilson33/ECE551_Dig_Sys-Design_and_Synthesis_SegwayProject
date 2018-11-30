@@ -25,14 +25,14 @@ module inert_intf_tb();
 		PWM_frwrd_rght = 0;
 		PWM_rev_lft = 0;
 		PWM_frwrd_lft = 0;
-		rider_lean = 'h100;
+		rider_lean = 14'h0100;
 	  //// initial done //////////////////////////
 	  
 		repeat(2) @(posedge clk);
 		@(posedge clk) rst_n = 1;
 	
 		
-		repeat(32000000) @(posedge clk);
+		repeat(500000) @(posedge clk);
 		$display("%h", inert.registers[7'h0d]); 
 		$stop;
 	
