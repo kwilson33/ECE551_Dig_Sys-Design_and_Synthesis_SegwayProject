@@ -2,7 +2,6 @@ What is done
 ------------
 * Auth_blck
 * UART 
-	* (change baud rate, 9600 for project, 19200 for exercise we did) **ASK HOFFMAN**
 * SPI
 * A2D Interface
 * Inertial integrator
@@ -21,9 +20,3 @@ What to do
 * flesh out Segway.v
 * flesh out SegwayModel.sv
 * optional Segway_tb.v	
-	
-Questions
---------------
-* Is the SPI any different? The diagram has a few different things
-	* 5'b11000 vs 5'b10111 in exercise
-* UART baud rate
