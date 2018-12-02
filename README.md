@@ -4,13 +4,14 @@ What is done
 * UART 
 * SPI
 
-* Inertial integrator
 * Balance control
 * Steer_en
 
 
 What to do
 ------------
+* Inertial integrator
+	* Should we use don't cares for the read values?
 * piezo driver, not an in class exercise
 	* warnings to people in vicinity (norm_mode, every 2 seconds)
 	* warn rider too fast (ovr_spd,alarming)
