@@ -17,7 +17,8 @@ module SegwayModel(clk,RST_n,SS_n,SCLK,MISO,MOSI,INT,PWM_rev_rght,PWM_frwrd_rght
   input MOSI;				// serial data in from master
   input PWM_frwrd_rght,PWM_rev_rght;
   input PWM_frwrd_lft,PWM_rev_lft;
-  input signed [13:0] rider_lean;		// represents rider's forward/backward lean torque (+=backwards)
+  input signed [15:0] rider_lean;		// represents rider's forward/backward 
+										// Don't exceed 0x1FFF postitive or 0xE000 negative
 
   
   output MISO;				// serial data out to master
