@@ -20,3 +20,5 @@ periodic signal that happens often enough but not too often. Hey, don’t we get
 inertial sensor 200+ times a second.
 
 * Complete Segway_tb.v	
+
+* Extra Credit : Code coverage
