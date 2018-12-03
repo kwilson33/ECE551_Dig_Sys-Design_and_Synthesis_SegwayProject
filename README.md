@@ -3,16 +3,14 @@ What is done
 * Module instantiations in Segway.v
 * Balance control
 * Steer_en
+* Inertial Interface & Integrator
+* Synthesis script
 
 
 What to do
 ------------
-* Ask about rst_synch
-* Inertial integrator/ Inertial Interface : 
-	* Verify waveform
-	* Should we use don't cares for the read values?
 * piezo
-* synthesis
+* synthesis design
 * A2D Interface (DETAILS IN misc things to do)
 	* need a way to specify left and right load cell readings (and perhaps battery too) and have those translate into something that is accessed by your A2D_Intf block (SPI bus).
 	* modify ADC128S or augment SPI_ADC128S to create such a block that can be used as part of fullchip testing.
