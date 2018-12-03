@@ -3,15 +3,15 @@ module inert_intf_tb();
 	logic SS_n, SCLK, MOSI, vld;
 	logic [15:0]ptch;
 	logic clk, rst_n;
-	wire INT, MISO;
+	logic INT, MISO;
 	
 	logic PWM_rev_rght,PWM_frwrd_rght, PWM_rev_lft,PWM_frwrd_lft;
 	logic [13:0]rider_lean;
 	
-	inert_intf intf(.SS_n(SS_n), .SCLK(SCLK), .MOSI(MOSI), .vld(vld),
+	inert_intf intert_interface(.SS_n(SS_n), .SCLK(SCLK), .MOSI(MOSI), .vld(vld),
 					.ptch(ptch), .clk(clk), .rst_n(rst_n), .INT(INT), .MISO(MISO));
 	
-	SegwayModel inert(.clk(clk),.RST_n(rst_n),.SS_n(SS_n),.SCLK(SCLK),
+	SegwayModel segway_model(.clk(clk),.RST_n(rst_n),.SS_n(SS_n),.SCLK(SCLK),
 					.MISO(MISO),.MOSI(MOSI),.INT(INT),
 					.PWM_rev_rght(PWM_rev_rght),.PWM_frwrd_rght(PWM_frwrd_rght),
                     .PWM_rev_lft(PWM_rev_lft),.PWM_frwrd_lft(PWM_frwrd_lft),
@@ -30,10 +30,25 @@ module inert_intf_tb();
 	  
 		repeat(2) @(posedge clk);
 		@(posedge clk) rst_n = 1;
-	
 		
-		repeat(500000) @(posedge clk);
-		$display("%h", inert.registers[7'h0d]); 
+		//wait until NEMO setup goes high to deassert reset
+		/*
+		fork
+			begin: timeout1
+				repeat (800000) @(posedge clk); //if done hasn't been asserted after 1000 clocks something is wrong
+				$display("ERROR!");
+				$stop();
+			end
+
+			begin
+				@(posedge segway_model.NEMO_setup)
+				disable timeout1;
+			end
+		join
+		*/
+	
+		repeat(800000) @(posedge clk);
+		$display("%h", segway_model.registers[7'h0d]); 
 		$stop;
 	
 	end

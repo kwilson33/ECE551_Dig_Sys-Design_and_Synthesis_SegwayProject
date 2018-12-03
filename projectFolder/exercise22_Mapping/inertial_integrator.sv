@@ -4,20 +4,18 @@ module inertial_integrator(clk,rst_n,vld,ptch_rt,AZ,ptch);
 	localparam PTCH_RT_OFFSET = 16'h03C2;
 	localparam AZ_OFFSET = 16'hFE80;
 	localparam FUDGE_FACTOR = $signed(12'h147);			// used to calculate product of pitch acceleration
-	localparam FUSION_OFFSET_POS = $signed(27'h0000400);
-	localparam FUSION_OFFSET_NEG = $signed(27'hFFFFC00);
 	
 	//defining module input/output ports
 	input clk,rst_n;
-	input vld;																// vld: high for single clock cycle when new
-	input signed [15:0] ptch_rt; 				// ptch_rt: raw pitch rate from intertial sensor
-	input signed [15:0] AZ;					// AZ: acceleration in Z direction. Used to calculate ptch_acc
+	input vld;											// vld: high for single clock cycle when new
+	input signed [15:0] ptch_rt; 						// ptch_rt: raw pitch rate from intertial sensor
+	input signed [15:0] AZ;								// AZ: acceleration in Z direction. Used to calculate ptch_acc
 	
-	output signed [15:0]ptch;				// ptch: fully compensated and "fused" pitch
+	output signed [15:0]ptch;							// ptch: fully compensated and "fused" pitch
 
 	
 	//internal signals
-	logic signed [26:0]ptch_int;				// ptch_int: ptch_rt is summed into this
+	logic signed [26:0]ptch_int;						// ptch_int: ptch_rt is summed into this
 	logic signed [26:0]fusion_ptch_offset;
 	logic signed [15:0]ptch_rt_comp,AZ_comp;
 	logic signed [25:0]ptch_acc_product;
@@ -33,7 +31,7 @@ module inertial_integrator(clk,rst_n,vld,ptch_rt,AZ,ptch);
   read from the accelerator readings
   */
   assign AZ_comp = AZ - AZ_OFFSET;		
-  assign ptch_acc_product = AZ_comp * FUDGE_FACTOR; 				// 327 is fudge factor
+  assign ptch_acc_product = AZ_comp * FUDGE_FACTOR; 						// 327 is fudge factor
   assign ptch_acc = {{3{ptch_acc_product[25]}},ptch_acc_product[25:13]};  	// pitch angle calculated from accel only
   
   
@@ -41,8 +39,8 @@ module inertial_integrator(clk,rst_n,vld,ptch_rt,AZ,ptch);
    Flop for accumulating ptch_int. Subtract ptch_rt_comp and add whatever fusion_ptch_offset was calculated to be
    if acceleration is more than ptch, then adC:/Users/tmill/OneDrive/Documents/ECE 551/Semester Project/Testing and Mapping Inertial Interface/SPI_mstr16.svd 512 to ptch_int, else you subtract 		
   */
-  assign ptch = ptch_int[26:11];							// divide ptch by 2^11. Compare the accelerator angle to it. This is the integrated angle. 
-  assign fusion_ptch_offset = (ptch_acc > ptch) ? FUSION_OFFSET_POS : FUSION_OFFSET_NEG;// find offset by seeing if accelator angle is greater than ptch
+  assign ptch = ptch_int[26:11];									// divide ptch by 2^11. Compare the accelerator angle to it. This is the integrated angle. 
+  assign fusion_ptch_offset = (ptch_acc > ptch) ? 1024 : -1024;		// find offset by seeing if accelator angle is greater than ptch
   assign ptch_rt_comp = ptch_rt - PTCH_RT_OFFSET;					// how much you change compared to last time
   always_ff @(posedge clk,negedge rst_n) begin
     if (!rst_n)

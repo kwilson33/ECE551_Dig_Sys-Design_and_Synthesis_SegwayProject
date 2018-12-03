@@ -58,7 +58,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   
   // Piezo Signals
   wire batt_low;
-  assign batt_low = batt < BATT_LOW_THRESH; // TODO: Is this OK??
+  assign batt_low = batt <= BATT_LOW_THRESH; // TODO: Is this OK??
   
 
   ////////////////////////////////////
