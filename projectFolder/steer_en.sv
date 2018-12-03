@@ -50,7 +50,7 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
   end
  
   //check if 1.34 seconds (2^26 cycles) if fast_sim is not enabled. If fast_sim is enabled only wait 2^15 clock cycles
-  assign tmr_full = fast_sim ? (&tmr[14:0]) : (&tmr[25:0]);
+  assign tmr_full = fast_sim ? (&waitTimer[14:0]) : (&waitTimer[25:0]);
   
   
   
