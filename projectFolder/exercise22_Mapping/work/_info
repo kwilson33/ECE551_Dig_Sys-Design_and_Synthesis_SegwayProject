@@ -10,65 +10,65 @@ cModel Technology
 dC:/AppV5/Quartus_16.v2
 vinert_intf
 Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
-Z1 !s110 1543854432
+!s110 1543858114
 !i10b 1
-!s100 ciekm0Z3CaQ9Sn@OD_[^P3
-IRZ8[]04>NKjECA:d>gUE^1
-Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s100 iOiXo^CSYH^k6lm;z>V050
+IH5Mm`ongHLO96[WP9izQD1
+Z1 VDg1SIo80bB@j0V0VzS_@n1
 !s105 inert_intf_sv_unit
 S1
-Z3 dI:/ece551/ece551Project/projectFolder/exercise22_Mapping
-w1543600530
+Z2 dI:/ece551/ece551Project/projectFolder/exercise22_Mapping
+w1543858111
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf.sv
 L0 2
-Z4 OV;L;10.4d;61
+Z3 OV;L;10.4d;61
 r1
 !s85 0
 31
-Z5 !s108 1543854432.000000
+!s108 1543858114.000000
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf.sv|
 !i113 1
-Z6 o-work work -sv
+Z4 o-work work -sv
 vinert_intf_tb
 R0
-R1
+!s110 1543854432
 !i10b 1
 !s100 P<=B`b>]K>dC@hn@VffFl0
 Ik^Xi2FLN:[iWcj2B]H?103
-R2
+R1
 !s105 inert_intf_tb_sv_unit
 S1
-R3
+R2
 w1543854389
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_tb.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_tb.sv
 L0 1
-R4
+R3
 r1
 !s85 0
 31
-R5
+!s108 1543854432.000000
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_tb.sv|
 !i113 1
-R6
+R4
 vinert_intf_test
 R0
 !s110 1543854433
 !i10b 1
 !s100 l7U[`h5ofIVH;OZQEVhdo3
 I]e2<e`O=03iW[D[_`d=K72
-R2
+R1
 !s105 inert_intf_test_sv_unit
 S1
-R3
+R2
 w1543595300
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv
 L0 1
-R4
+R3
 r1
 !s85 0
 31
@@ -76,22 +76,22 @@ r1
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv|
 !i113 1
-R6
+R4
 vinertial_integrator
 R0
 !s110 1543855368
 !i10b 1
 !s100 J_oT;gnSEJZoNN6`Y0YI33
 I4nT`koXm_<:hLoMjU@d5W0
-R2
+R1
 !s105 inertial_integrator_sv_unit
 S1
-R3
+R2
 w1543855000
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inertial_integrator.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/inertial_integrator.sv
 L0 2
-R4
+R3
 r1
 !s85 0
 31
@@ -99,22 +99,22 @@ r1
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inertial_integrator.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inertial_integrator.sv|
 !i113 1
-R6
+R4
 vrst_synch
 R0
 !s110 1543854435
 !i10b 1
 !s100 @HOnY`GATNd>9E@XQIc<f0
 I?a=IOMbcC2@T[gQ^z]ckl2
-R2
+R1
 !s105 rst_synch_sv_unit
 S1
-R3
+R2
 w1543597746
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv
 L0 1
-R4
+R3
 r1
 !s85 0
 31
@@ -122,22 +122,22 @@ r1
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv|
 !i113 1
-R6
+R4
 vSegwayModel
 R0
 !s110 1543854436
 !i10b 1
 !s100 ^XPDXPPC?dhUYVaYWzWc:3
 Il]zKP1I]llRQXQM:Tf<?P3
-R2
+R1
 !s105 SegwayModel_sv_unit
 S1
-R3
+R2
 w1543359162
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv
 L0 1
-R4
+R3
 r1
 !s85 0
 31
@@ -145,29 +145,29 @@ r1
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv|
 !i113 1
-R6
+R4
 n@segway@model
 vSPI_mstr16
 R0
-!s110 1543856291
+!s110 1543856985
 !i10b 1
 !s100 T<cWCPPLomzA1FoBBjOIc2
 Ig40=o3G;EMCjHdO6<Y<3<0
-R2
+R1
 !s105 SPI_mstr16_sv_unit
 S1
-R3
-w1543856281
+R2
+w1543856479
 8I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv
 FI:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv
 L0 2
-R4
+R3
 r1
 !s85 0
 31
-!s108 1543856291.000000
+!s108 1543856985.000000
 !s107 I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv|
 !i113 1
-R6
+R4
 n@s@p@i_mstr16
