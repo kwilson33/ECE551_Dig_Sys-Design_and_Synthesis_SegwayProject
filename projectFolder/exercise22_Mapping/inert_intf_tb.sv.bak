@@ -32,7 +32,7 @@ module inert_intf_tb();
 		@(posedge clk) rst_n = 1;
 	
 		
-		repeat(500000) @(posedge clk);
+		repeat(10000000) @(posedge clk);
 		$display("%h", inert.registers[7'h0d]); 
 		$stop;
 	

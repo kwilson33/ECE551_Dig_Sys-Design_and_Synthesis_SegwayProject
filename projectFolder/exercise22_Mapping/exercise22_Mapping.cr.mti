@@ -19,12 +19,19 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 Top level modules:
 	inert_intf_tb
 
-} {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv {1 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SPI_mstr16.sv
+} {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv {1 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module SPI_mstr16
+-- Compiling module inert_intf_test
 
 Top level modules:
-	SPI_mstr16
+	inert_intf_test
+
+} {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv {1 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv
+Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+-- Compiling module rst_synch
+
+Top level modules:
+	rst_synch
 
 } {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv {2 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/SegwayModel.sv
 Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
@@ -34,19 +41,5 @@ Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
 
 Top level modules:
 	SegwayModel
-
-} {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv {1 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/rst_synch.sv
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module rst_synch
-
-Top level modules:
-	rst_synch
-
-} {} {}} I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv {1 {vlog -work work -sv -stats=none I:/ece551/ece551Project/projectFolder/exercise22_Mapping/inert_intf_test.sv
-Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
--- Compiling module inert_intf_test
-
-Top level modules:
-	inert_intf_test
 
 } {} {}}

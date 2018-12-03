@@ -18,28 +18,28 @@ module SPI_mstr16(done, rd_data, SS_n, SCLK, MOSI, MISO, wrt, clk, rst_n, cmd);
 	// The bit coming from the slave (MISO) is sampled on rise of SCLK and put into shift reg on fall of  SCLK
 
 	// Inputs
-	input clk, rst_n; 							// 50 MHz clock, active low reset
-	input wrt;								// high for 1 clock period, initates SPI transaction
-	input MISO;								// Master in Slave Out. Sampled on SCLK rise
-	input [15:0] cmd; 							// data being sent to intertial sensor
+	input clk, rst_n; 					// 50 MHz clock, active low reset
+	input wrt;										// high for 1 clock period, initates SPI transaction
+	input MISO;										// Master in Slave Out. Sampled on SCLK rise
+	input [15:0] cmd; 								// data being sent to intertial sensor
 
 	// Outputs
-	output logic [15:0] rd_data;						// Data from SPI slave, use [7:0] for intertial sensor, [11:0] for A/D
-	output logic SS_n; 							// active low slave select
-	output logic SCLK;						   	// 1/32 of 50MHz clock, comes from MSB of a 5 bit counter running off clk
-	output logic MOSI,  done;						// MOSI signal we're driving, and done signal asserted when SPI transaction is complete.					 
+	output logic [15:0] rd_data;					// Data from SPI slave, use [7:0] for intertial sensor, [11:0] for A/D
+	output logic SS_n; 								// active low slave select
+	output logic SCLK;						   		// 1/32 of 50MHz clock, comes from MSB of a 5 bit counter running off clk
+	output logic MOSI,  done;						//	MOSI signal we're driving, and done signal asserted when SPI transaction is complete.					 
 
 	
 	// Additional signals
-	logic rst_cnt;								// rst_cnt is high when in IDLE state
-	logic init;									// init is used to initialize an SPI transaction.
-	logic set_done;								// asserted when going back to IDLE state. Used for SS_n and done signals.
+	logic rst_cnt;									// rst_cnt is high when in IDLE state
+	logic init;										// init is used to initialize an SPI transaction.
+	logic set_done;									// asserted when going back to IDLE state. Used for SS_n and done signals.
 
-	reg [4:0] sclk_div;							// 5 bit counter that will determine what SCLK is
-	logic smpl; 				 				// asserted when sclk_div is 01111, 
-	logic shft; 								// asserted when sclk_div is 11111
+	reg [4:0] sclk_div;								// 5 bit counter that will determine what SCLK is
+	logic smpl; 				 					// asserted when sclk_div is 01111, 
+	logic shft; 									// asserted when sclk_div is 11111
  
-	reg MISO_smpl;								// sample MISO on SCLK rise
+	reg MISO_smpl;									// sample MISO on SCLK rise
 
 	reg [15:0] shft_reg; 							// The heart of SPI. MISO_smpl shifted at the LSB on SCLK rise. MOSI shifted OUT on SCLK fall
 	
@@ -51,7 +51,7 @@ module SPI_mstr16(done, rd_data, SS_n, SCLK, MOSI, MISO, wrt, clk, rst_n, cmd);
 	
 	assign SCLK = sclk_div[4]; 						// SCLK is 1/32 of 50Mhz clock, high when sclk_div = 10000
 	assign rd_data = shft_reg;						// at end of transaction, rd_data will contain shft_reg;
-	assign MOSI = shft_reg[15]; 						// MOSI is the MSB of the shift register. 
+	assign MOSI = shft_reg[15]; 					// MOSI is the MSB of the shift register. 
 	
 
 
