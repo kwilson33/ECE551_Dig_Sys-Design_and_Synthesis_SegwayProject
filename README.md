@@ -7,6 +7,7 @@ What is done
 
 What to do
 ------------
+* Ask about rst_synch
 * Inertial integrator/ Inertial Interface : 
 	* Verify waveform
 	* Should we use don't cares for the read values?
