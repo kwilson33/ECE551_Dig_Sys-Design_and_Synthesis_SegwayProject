@@ -30,42 +30,17 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 
 		
 
-	/*
-	// Use regs to store 4 readings from sensor
-	always_ff @(posedge clk, negedge rst_n) begin
-		if (!rst_n) begin
-			pitch_L <= 0;
-			pitch_H <= 0;
-			AZL <= 0;
-			AZH <= 0;
-		end
-		
-		else if (C_P_L) pitch_L <= rd_data [7:0];
-		else if (C_P_H) pitch_H <= rd_data[7:0];
-		else if (C_AZ_L) AZL <= rd_data [7:0];
-		else if (C_AZ_H) AZH <= rd_data [7:0];
-	end
-	*/
-	
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk)
 		if (C_P_L) pitch_L <= rd_data [7:0];
-		else pitch_L <= 0;
-	end
 	
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk)
 		if (C_P_H) pitch_H <= rd_data [7:0];
-		else pitch_H <= 0;
-	end
 	
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk)
 		if (C_AZ_L) AZL <= rd_data [7:0];
-		else AZL <= 0;
-	end
 	
-	always_ff @(posedge clk) begin
+	always_ff @(posedge clk)
 		if (C_AZ_H) AZH <= rd_data [7:0];
-		else AZH <= 0;
-	end
 	
 
 	
@@ -94,7 +69,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 	
 	// states needed for state machine
 	typedef enum logic [3:0] {INIT1, INIT2, INIT3, INIT4,
-							WAIT, READ1, READ2, READ3, READ4} state_t;
+							WAIT, READ1, READ2, READ3, READ4, ASRT_VLD} state_t;
 	state_t state, nxt_state;
 	
 	// sequential state transition logic 
@@ -165,10 +140,11 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  end
 		  
 		  //Now we're at the point in which we've completed initializing
-          //the sensor and we go into an infinite loop of reading gyro
-          //and accel data.
+          	  //the sensor and we go into an infinite loop of reading gyro
+          	  //and accel data.
 		  WAIT: begin
-			if (done && INT_meta2 == 1) begin
+                        cmd = 16'hA200;
+			if (INT_meta2) begin
 				nxt_state = READ1;
 				wrt = 1;
 			end 
@@ -177,8 +153,8 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  //pitch L state: pitch rate low
 		  READ1: begin
-		    //Read and store pitchL from gyro
-			cmd = 16'hA200;
+		    	//Read and store pitchL from gyro
+			cmd = 16'hA300;
 			if (done) begin
 				nxt_state = READ2;
 				wrt = 1;
@@ -190,8 +166,8 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  //pitch H state: pitch rate high
 		  READ2: begin
-		    //Read and store pitchH from gyro
-			cmd = 16'hA300;
+		  	//Read and store pitchH from gyro
+			cmd = 16'hAC00;
 			if (done) begin
 				nxt_state = READ3;
 				wrt = 1;
@@ -203,7 +179,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  //AZL state: acceleration in Z low byte
 		  READ3: begin
 		    //Read and store AZL from accel
-			cmd = 16'hAC00;
+			cmd = 16'hAD00;
 			if (done) begin
 				nxt_state = READ4;
 				wrt = 1;
@@ -217,16 +193,20 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		    //Read and store AZH from acccel and then
 			//indicate to inertial integrator that valid
 			//readings are ready.
-			cmd = 16'hAD00;
 			if (done) begin
-				nxt_state = WAIT;
+				nxt_state = ASRT_VLD;
 				wrt = 1;
 				C_AZ_H = 1;
-				vld = 1;
 			end 
 			else nxt_state = READ4;
 		  end
-		  
+
+		  //Wait a cycle before asserting vld.
+		  ASRT_VLD: begin
+                     vld = 1;
+                     nxt_state = WAIT;
+                  end
+
 		  // default case to make sure we end up in beginning state if something goes wrong
 		  default: nxt_state = INIT1;
 

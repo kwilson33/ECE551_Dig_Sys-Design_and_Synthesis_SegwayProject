@@ -190,7 +190,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  
 		  //AZH state: acceleration in Z high byte
 		  READ4: begin
-		    	//Read and store AZH from acccel and then
+		    //Read and store AZH from acccel and then
 			//indicate to inertial integrator that valid
 			//readings are ready.
 			if (done) begin
@@ -201,6 +201,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = READ4;
 		  end
 
+		  //Wait a cycle before asserting vld.
 		  ASRT_VLD: begin
                      vld = 1;
                      nxt_state = WAIT;
