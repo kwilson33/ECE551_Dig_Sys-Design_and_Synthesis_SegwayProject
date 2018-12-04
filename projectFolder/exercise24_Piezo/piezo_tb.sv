@@ -21,18 +21,20 @@ module piezo_tb();
     rst_n = 1;
 
     norm_mode = 1;
-    repeat (50000000) @(posedge clk);
+    repeat (68000000) @(posedge clk);
     norm_mode = 0;
     ovr_spd = 1;
-    repeat (5000000) @(posedge clk);
+    repeat (68000000) @(posedge clk);
     ovr_spd = 0;
     batt_low = 1;
-    repeat (5000000) @(posedge clk);
+    repeat (68000000) @(posedge clk);
+    ovr_spd = 1;
+    repeat (68000000) @(posedge clk);
 
     $stop();
 
   end
 
-  always #5 clk = ~clk; 
+  always #2 clk = ~clk; 
 
 endmodule
