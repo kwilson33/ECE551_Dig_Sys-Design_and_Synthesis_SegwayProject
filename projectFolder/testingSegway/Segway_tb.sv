@@ -1,5 +1,6 @@
 module Segway_tb();
-			
+`include "tb_tasks.v"	// perhaps you have a separate included file that has han
+`include "tb_tests.v"	// includes all the tests
 //// Interconnects to DUT/support defined as type wire /////
 wire SS_n,SCLK,MOSI,MISO,INT;				// to inertial sensor
 wire A2D_SS_n,A2D_SCLK,A2D_MOSI,A2D_MISO;	// to A2D converter
@@ -56,10 +57,8 @@ initial begin
   repeatClock(50000);
   
   SendCmd(8'h67);	
-
-    .
-	.	// this is the "guts" of your test
-	.
+  
+  test1;
 	
   $display("YAHOO! test passed!");
   
@@ -69,6 +68,6 @@ end
 always
   #5 clk = ~clk;
 
-`include "tb_tasks.v"	// perhaps you have a separate included file that has handy tasks.
+
 
 endmodule	
