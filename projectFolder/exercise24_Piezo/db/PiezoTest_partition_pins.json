@@ -1,0 +1,37 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "piezo",
+					"strict" : false
+				},
+				{
+					"name" : "piezo_n",
+					"strict" : false
+				},
+				{
+					"name" : "en_steer",
+					"strict" : false
+				},
+				{
+					"name" : "batt_low",
+					"strict" : false
+				},
+				{
+					"name" : "ovr_spd",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				},
+				{
+					"name" : "RST_n",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

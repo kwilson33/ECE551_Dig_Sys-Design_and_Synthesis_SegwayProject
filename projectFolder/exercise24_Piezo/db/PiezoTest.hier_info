@@ -1,0 +1,80 @@
+|PiezoTest
+clk => clk.IN2
+RST_n => RST_n.IN1
+en_steer => en_steer.IN1
+ovr_spd => ovr_spd.IN1
+batt_low => batt_low.IN1
+piezo << piezo:iP.piezo
+piezo_n << piezo:iP.piezo_n
+
+
+|PiezoTest|rst_synch:iRST
+RST_n => rst_n~reg0.ACLR
+RST_n => reg1.ACLR
+clk => rst_n~reg0.CLK
+clk => reg1.CLK
+rst_n <= rst_n~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|PiezoTest|piezo:iP
+clk => timer[0].CLK
+clk => timer[1].CLK
+clk => timer[2].CLK
+clk => timer[3].CLK
+clk => timer[4].CLK
+clk => timer[5].CLK
+clk => timer[6].CLK
+clk => timer[7].CLK
+clk => timer[8].CLK
+clk => timer[9].CLK
+clk => timer[10].CLK
+clk => timer[11].CLK
+clk => timer[12].CLK
+clk => timer[13].CLK
+clk => timer[14].CLK
+clk => timer[15].CLK
+clk => timer[16].CLK
+clk => timer[17].CLK
+clk => timer[18].CLK
+clk => timer[19].CLK
+clk => timer[20].CLK
+clk => timer[21].CLK
+clk => timer[22].CLK
+clk => timer[23].CLK
+clk => timer[24].CLK
+clk => timer[25].CLK
+rst_n => timer[0].ACLR
+rst_n => timer[1].ACLR
+rst_n => timer[2].ACLR
+rst_n => timer[3].ACLR
+rst_n => timer[4].ACLR
+rst_n => timer[5].ACLR
+rst_n => timer[6].ACLR
+rst_n => timer[7].ACLR
+rst_n => timer[8].ACLR
+rst_n => timer[9].ACLR
+rst_n => timer[10].ACLR
+rst_n => timer[11].ACLR
+rst_n => timer[12].ACLR
+rst_n => timer[13].ACLR
+rst_n => timer[14].ACLR
+rst_n => timer[15].ACLR
+rst_n => timer[16].ACLR
+rst_n => timer[17].ACLR
+rst_n => timer[18].ACLR
+rst_n => timer[19].ACLR
+rst_n => timer[20].ACLR
+rst_n => timer[21].ACLR
+rst_n => timer[22].ACLR
+rst_n => timer[23].ACLR
+rst_n => timer[24].ACLR
+rst_n => timer[25].ACLR
+norm_mode => piezo.OUTPUTSELECT
+ovr_spd => piezo.IN0
+ovr_spd => piezo.OUTPUTSELECT
+batt_low => piezo.IN1
+batt_low => piezo.OUTPUTSELECT
+piezo <= piezo.DB_MAX_OUTPUT_PORT_TYPE
+piezo_n <= piezo.DB_MAX_OUTPUT_PORT_TYPE
+
+
