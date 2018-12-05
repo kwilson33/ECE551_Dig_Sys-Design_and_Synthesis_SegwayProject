@@ -11,6 +11,7 @@ output piezo_n;		// drive is differential to increase volume
 wire rst_n;
 
   ////// instantiate your piezo block here /////
-  
-  rst_synch iRST(.clk(clk),.RST_n(RST_n),.rst_n(rst_n)); 
+  rst_synch iRST(.clk(clk),.RST_n(RST_n),.rst_n(rst_n));
+  piezo		iP(.clk(clk), .rst_n(rst_n), .norm_mode(en_steer), .ovr_spd(ovr_spd), 
+			   .batt_low(batt_low), .piezo(piezo), .piezo_n(piezo_n));  
 endmodule
