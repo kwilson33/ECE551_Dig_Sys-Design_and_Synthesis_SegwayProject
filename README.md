@@ -12,4 +12,5 @@ What to do
 ------------
 * synthesize design
 * Complete Segway_tb.v	
+  * testbench class, 
 * Extra Credit : Code coverage
