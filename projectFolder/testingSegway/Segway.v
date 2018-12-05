@@ -100,7 +100,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
 						.MISO_A2D(A2D_MISO));
 						
 						
-  //   piezo		   TODO: should norm_mode be connected to en_steer or to pwr_up? How to connect batt_low? 
+  //   piezo		   GOOD
   piezo pepperoni_piezo(.clk(clk), .rst_n(rst_n), .piezo(piezo), .piezo_n(piezo_n), .batt_low(batt_low), 
 						.ovr_spd(ovr_spd), .norm_mode(en_steer));
   
