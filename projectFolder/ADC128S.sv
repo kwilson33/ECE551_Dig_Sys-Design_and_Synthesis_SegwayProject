@@ -29,7 +29,6 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
   /////////////////////////////////////////////
   reg rdy_ff;				// used for edge detection on rdy
   reg [2:0] channel;		// pointer to last channel specified for A2D conversion to be performed on.
-  //reg [11:0] value;
   wire [11:0] value;
   
   /////////////////////////////////////////////
@@ -54,13 +53,7 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
 	    $display("WARNING: Only channels 0,4,5 of A2D valid for this version of ADC128S\n");
 	end
 	
-/*	
-  always_ff @(posedge clk, negedge rst_n)
-    if (!rst_n)
-	  value <= 12'hC00;
-	else if (dec_value)
-	  value <= value - 12'h010;
-*/
+
   assign value = channel[2]? (channel[0]? batt : rght_ld) : lft_ld;
 
 
@@ -89,7 +82,6 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
       // Default outputs //
       ////////////////////
       update_ch = 0;
-	  //dec_value = 0;
       nxt_state = FIRST;	  
 
       case (state)
@@ -101,15 +93,13 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
         end
 		SECOND : begin		
 		  if (rdy_rise) begin
-		    //dec_value = 1;
 			nxt_state = FIRST;
 		  end else
 		    nxt_state = SECOND;
 		end
       endcase
     end
-	
-  //assign A2D_data = {4'b0000,value} | {13'h0000,channel};
+
   assign A2D_data = {4'b0000,value};
 
 endmodule  
