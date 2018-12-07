@@ -1,5 +1,6 @@
+
 //Initialize all stimulus
-task Initialize();
+task Initialize;
 	clk = 0;
 	RST_n = 0;
 	cmd = 0;
@@ -10,7 +11,7 @@ task Initialize();
 	@(negedge clk);
 	//deassert reset
 	RST_n = 1;
-endtask: Initialize
+endtask
 
 //task to send 'g'
 task SendCmd(input byte command);
@@ -19,9 +20,9 @@ task SendCmd(input byte command);
 	send_cmd = 1;
 	@(posedge clk);
 	send_cmd = 0;
-endtask: SendCmd
+endtask
 
 //easy way to wait number of cycles
 task repeatClock(input shortint numClocks);
 	repeat(numClocks) @(posedge clk);
-endtask repeatClock
+endtask

@@ -15,7 +15,7 @@ wire piezo,piezo_n;
 reg clk, RST_n;
 reg [7:0] cmd;					// command host is sending to DUT
 reg send_cmd;					// asserted to initiate sending of command
-reg signed [15:0] rider_lean;			// forward/backward lean (goes to SegwayModel)
+reg signed [13:0] rider_lean;			// forward/backward lean (goes to SegwayModel)
 // Perhaps more needed?
 reg [11:0] lft_ld, rght_ld, batt;
 
