@@ -47,7 +47,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   wire pwr_up;
 		
   // Steer Enable Signals
-  wire ld_cell_diff;
+  wire [11:0] ld_cell_diff;
   wire en_steer;
   wire rider_off;
   
@@ -78,9 +78,9 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
 			
 			
   //   balance_cntrl 	GOOD 
-  balance_ctrl balance_control(.clk(clk), .rst_n(rst_n), .vld(vld), .ptch(ptch), .ld_cell_diff(ld_cell_diff),
+  balance_cntrl balance_control(.clk(clk), .rst_n(rst_n), .vld(vld), .ptch(ptch), .ld_cell_diff(ld_cell_diff),
 							   .lft_spd(lft_spd), .lft_rev(lft_rev), .rght_spd(rght_spd), .rght_rev(rght_rev),
-							   .rider_off(rider_off), .en_steer(en_steer), .pwr_up(pwr_up), .ovr_speed(ovr_speed));
+							   .rider_off(rider_off), .en_steer(en_steer), .pwr_up(pwr_up), .ovr_spd(ovr_spd));
 							   
   //   steer_en			GOOD
   steer_en steer_enable(.clk(clk), .rst_n(rst_n), .lft_ld(lft_ld), .rght_ld(rght_ld), .ld_cell_diff(ld_cell_diff),
@@ -95,7 +95,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
 					  
   //   A2D_intf 		GOOD
    // use vld from intertial interface for next signal of A2D_Interface
-  A2D_intf A2D_interface(.clk(clk), .rst_n(rst_n), .nxt(vld), .lft_ld(lft_ld), .rght_ld(rght_ld),
+  A2D_Intf A2D_interface(.clk(clk), .rst_n(rst_n), .nxt(vld), .lft_ld(lft_ld), .rght_ld(rght_ld),
 						.batt(batt), .SS_n_A2D(A2D_SS_n), . SCLK_A2D(A2D_SCLK), .MOSI_A2D(A2D_MOSI),
 						.MISO_A2D(A2D_MISO));
 						
@@ -110,6 +110,6 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   /////////////////////////////////////
   // Instantiate reset synchronizer //
   ///////////////////////////////////  
-  reset_synch iRST(.clk(clk),.RST_n(RST_n),.rst_n(rst_n));
+  rst_synch iRST(.clk(clk),.RST_n(RST_n),.rst_n(rst_n));
   
 endmodule
