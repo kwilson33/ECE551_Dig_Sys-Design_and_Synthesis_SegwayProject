@@ -1,6 +1,6 @@
 //Kevin Wilson 11/9/18
 //A2D interface
-module A2D_intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_A2D, MISO_A2D);
+module A2D_Intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_A2D, MISO_A2D);
 
 	// We use 3 channels of the AD converter for our segway
 	// Channel 0 -> lft_ld

@@ -1,4 +1,3 @@
-
 //Initialize all stimulus
 task Initialize();
 	clk = 0;

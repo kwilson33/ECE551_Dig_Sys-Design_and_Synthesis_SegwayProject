@@ -8,7 +8,7 @@ module piezo(clk, rst_n, norm_mode, ovr_spd, batt_low, piezo, piezo_n);
 	reg [25:0]timer;
 	// digital square waves to drive piezo buzzer
 	wire norm_mode_wave,ovr_spd_wave,batt_low_wave;
-	wire norm_tone_dur,warn_tone_dur;// controls the duration of buzzer
+	wire norm_tone_dur,warn_tone1_dur,warn_tone2_dur;// controls the duration of buzzer
 					 // pulses when in normal or danger modes
 
 	always_ff @(posedge clk,negedge rst_n)
