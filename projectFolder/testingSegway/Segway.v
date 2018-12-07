@@ -89,7 +89,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   
   
   //   mtr_drv			GOOD
-  mtr_drv motor_drive(.clk(clk), .rst_n(rst_n), .PWM_rev_lft(PWM_rev_lft), .PWM_rev_rght(PWM_frwrd_rght),
+  mtr_drv motor_drive(.clk(clk), .rst_n(rst_n), .PWM_rev_lft(PWM_rev_lft), .PWM_rev_rght(PWM_rev_rght), .PWM_frwrd_rght(PWM_frwrd_rght),
 					  .PWM_frwrd_lft(PWM_frwrd_lft), .lft_spd(lft_spd), .lft_rev(lft_rev), .rght_spd(rght_spd), .rght_rev(rght_rev));
 					  
 					  
