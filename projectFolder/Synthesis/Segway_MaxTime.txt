@@ -1,3 +1,4 @@
+Warning: Design 'Segway' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Information: Updating design information... (UID-85)
  
 ****************************************
@@ -7,15 +8,16 @@ Report : timing
         -max_paths 1
 Design : Segway
 Version: N-2017.09-SP5
-Date   : Fri Dec  7 11:44:23 2018
+Date   : Fri Dec  7 12:17:01 2018
 ****************************************
 
 Operating Conditions: NCCOM   Library: tcbn40lpbwptc
 Wire Load Model Mode: segmented
 
-  Startpoint: Inertial_Interface/intgr/ptch_int_reg[21]
+  Startpoint: Inertial_Interface/pitch_L_reg[1]
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: piezo (output port clocked by clk)
+  Endpoint: Inertial_Interface/intgr/ptch_int_reg[26]
+            (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
 
@@ -28,80 +30,68 @@ Wire Load Model Mode: segmented
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.00       0.00
-  Inertial_Interface/intgr/ptch_int_reg[21]/CP (DFCND4BWP)
-                                                          0.00       0.00 r
-  Inertial_Interface/intgr/ptch_int_reg[21]/Q (DFCND4BWP)
-                                                          0.14       0.14 r
-  U2770/ZN (INVD6BWP)                                     0.02       0.16 f
-  U4217/ZN (NR2XD4BWP)                                    0.02       0.18 r
-  U4218/ZN (IND3D4BWP)                                    0.04       0.22 f
-  U2575/ZN (ND2D8BWP)                                     0.03       0.25 r
-  U5290/ZN (CKND2D4BWP)                                   0.03       0.28 f
-  U3402/Z (BUFFD4BWP)                                     0.04       0.33 f
-  U2916/ZN (ND2D8BWP)                                     0.02       0.35 r
-  U2869/ZN (CKND2D4BWP)                                   0.02       0.37 f
-  U2832/ZN (ND2D4BWP)                                     0.02       0.39 r
-  U2819/ZN (INVD2BWP)                                     0.01       0.40 f
-  U2845/Z (XOR4D1BWP)                                     0.13       0.54 r
-  U6130/Z (CKXOR2D2BWP)                                   0.09       0.63 f
-  U4688/ZN (CKND4BWP)                                     0.03       0.66 r
-  U4686/ZN (CKND2D8BWP)                                   0.02       0.68 f
-  U2313/ZN (CKND4BWP)                                     0.02       0.70 r
-  U4649/Z (OR3D4BWP)                                      0.05       0.75 r
-  U3500/ZN (INVD4BWP)                                     0.02       0.77 f
-  U4689/ZN (OAI31D4BWP)                                   0.06       0.83 r
-  U2734/Z (XOR2D2BWP)                                     0.09       0.92 r
-  U2386/ZN (INVD0BWP)                                     0.03       0.95 f
-  U4065/ZN (IAO21D4BWP)                                   0.09       1.04 f
-  U4484/ZN (ND2D4BWP)                                     0.02       1.06 r
-  U2588/Z (CKXOR2D2BWP)                                   0.08       1.15 f
-  U3542/ZN (OAI211D2BWP)                                  0.05       1.19 r
-  U4670/Z (OA31D4BWP)                                     0.07       1.27 r
-  U3912/ZN (ND2D4BWP)                                     0.03       1.30 f
-  U3453/ZN (ND2D3BWP)                                     0.03       1.32 r
-  U5353/ZN (IND2D2BWP)                                    0.04       1.37 r
-  U2378/ZN (CKND2D4BWP)                                   0.03       1.39 f
-  U2387/ZN (ND2D3BWP)                                     0.02       1.41 r
-  U5402/ZN (ND4D2BWP)                                     0.06       1.47 f
-  U4361/ZN (IIND4D2BWP)                                   0.04       1.50 r
-  U2192/ZN (CKND2D3BWP)                                   0.03       1.53 f
-  U4448/ZN (IND2D4BWP)                                    0.05       1.58 f
-  U4533/ZN (ND2D4BWP)                                     0.02       1.60 r
-  U5091/ZN (IND4D4BWP)                                    0.05       1.65 f
-  U2199/ZN (CKND2D3BWP)                                   0.04       1.69 r
-  U4123/ZN (CKND2D8BWP)                                   0.02       1.71 f
-  U3538/ZN (CKND6BWP)                                     0.02       1.73 r
-  U4389/ZN (CKND2D8BWP)                                   0.03       1.76 f
-  U4390/ZN (CKND2D8BWP)                                   0.02       1.78 r
-  U2657/ZN (INVD6BWP)                                     0.02       1.80 f
-  U5061/ZN (IOA21D2BWP)                                   0.02       1.82 r
-  U3357/ZN (OAI21D2BWP)                                   0.03       1.85 f
-  U5313/ZN (MUX2ND4BWP)                                   0.08       1.93 r
-  U3368/ZN (ND2D4BWP)                                     0.02       1.95 f
-  U5457/ZN (OAI211D2BWP)                                  0.03       1.97 r
-  U5125/Z (OA211D4BWP)                                    0.09       2.06 r
-  U3759/ZN (CKND2D4BWP)                                   0.02       2.09 f
-  U4196/Z (OR3D4BWP)                                      0.09       2.18 f
-  U3824/ZN (ND2D2BWP)                                     0.02       2.20 r
-  U2494/ZN (NR2D3BWP)                                     0.02       2.22 f
-  U4231/ZN (AOI33D2BWP)                                   0.05       2.27 r
-  U2304/Z (AN2D4BWP)                                      0.06       2.33 r
-  U2303/ZN (AOI211D4BWP)                                  0.02       2.35 f
-  U2295/ZN (INVD4BWP)                                     0.02       2.37 r
-  U2294/Z (BUFFD16BWP)                                    0.07       2.45 r
-  piezo (out)                                             0.00       2.45 r
-  data arrival time                                                  2.45
+  Inertial_Interface/pitch_L_reg[1]/CP (EDFQD4BWP)        0.00       0.00 r
+  Inertial_Interface/pitch_L_reg[1]/Q (EDFQD4BWP)         0.10       0.10 r
+  U731/Z (CKXOR2D2BWP)                                    0.10       0.20 f
+  U732/ZN (CKND2D2BWP)                                    0.03       0.23 r
+  U741/ZN (OAI21D2BWP)                                    0.03       0.26 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_3/CO (FA1D1BWP)
+                                                          0.07       0.33 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_4/CO (FA1D1BWP)
+                                                          0.07       0.40 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_5/CO (FA1D1BWP)
+                                                          0.07       0.47 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_6/CO (FA1D1BWP)
+                                                          0.07       0.53 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_7/CO (FA1D1BWP)
+                                                          0.07       0.60 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_8/CO (FA1D1BWP)
+                                                          0.07       0.67 f
+  Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_9/CO (FA1D2BWP)
+                                                          0.07       0.74 f
+  U898/ZN (MAOI222D1BWP)                                  0.06       0.80 r
+  U896/CON (FCICOND1BWP)                                  0.08       0.88 f
+  U899/ZN (IOA21D2BWP)                                    0.04       0.91 r
+  U919/ZN (IND2D4BWP)                                     0.02       0.94 f
+  U918/ZN (IOA21D2BWP)                                    0.02       0.96 r
+  U914/ZN (IND2D4BWP)                                     0.02       0.98 f
+  U913/ZN (IOA21D2BWP)                                    0.02       1.00 r
+  U910/ZN (IND2D4BWP)                                     0.02       1.03 f
+  U1726/ZN (MAOI222D1BWP)                                 0.07       1.09 r
+  U944/ZN (INVD2BWP)                                      0.03       1.13 f
+  U1211/ZN (MAOI222D1BWP)                                 0.06       1.19 r
+  U1139/CON (FCICOND2BWP)                                 0.12       1.31 f
+  U1135/ZN (MAOI222D1BWP)                                 0.07       1.38 r
+  U945/ZN (INVD2BWP)                                      0.03       1.41 f
+  U1223/ZN (MAOI222D1BWP)                                 0.06       1.48 r
+  U1140/CON (FCICOND2BWP)                                 0.12       1.60 f
+  U1119/ZN (MAOI222D1BWP)                                 0.06       1.66 r
+  U946/ZN (INVD1BWP)                                      0.04       1.70 f
+  U1230/ZN (MAOI222D1BWP)                                 0.06       1.76 r
+  U1638/CON (FCICOND1BWP)                                 0.07       1.83 f
+  U1727/ZN (MAOI222D1BWP)                                 0.09       1.92 r
+  U947/ZN (INVD2BWP)                                      0.04       1.95 f
+  U1631/ZN (MAOI222D1BWP)                                 0.07       2.02 r
+  U1635/Z (XOR4D2BWP)                                     0.18       2.20 f
+  U1238/ZN (CKND2BWP)                                     0.02       2.22 r
+  U943/ZN (CKND2D2BWP)                                    0.02       2.24 f
+  U942/ZN (ND2D2BWP)                                      0.02       2.26 r
+  Inertial_Interface/intgr/ptch_int_reg[26]/D (EDFCNQD1BWP)
+                                                          0.00       2.26 r
+  data arrival time                                                  2.26
 
   clock clk (rise edge)                                   2.50       2.50
   clock network delay (ideal)                             0.00       2.50
   clock uncertainty                                      -0.15       2.35
-  output external delay                                  -0.50       1.85
-  data required time                                                 1.85
+  Inertial_Interface/intgr/ptch_int_reg[26]/CP (EDFCNQD1BWP)
+                                                          0.00       2.35 r
+  library setup time                                     -0.09       2.26
+  data required time                                                 2.26
   --------------------------------------------------------------------------
-  data required time                                                 1.85
-  data arrival time                                                 -2.45
+  data required time                                                 2.26
+  data arrival time                                                 -2.26
   --------------------------------------------------------------------------
-  slack (VIOLATED)                                                  -0.60
+  slack (MET)                                                        0.00
 
 
 1
