@@ -138,7 +138,6 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			end 
 			else nxt_state = INIT4;
 		  end
-		  
 		  //Now we're at the point in which we've completed initializing
           	  //the sensor and we go into an infinite loop of reading gyro
           	  //and accel data.
@@ -151,7 +150,7 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 			else nxt_state = WAIT;
 		  end
 		  
-		  //pitch L state: pitch rate low
+		  //pitch L state: pitch rate lowtx_data
 		  READ1: begin
 		    	//Read and store pitchL from gyro
 			cmd = 16'hA300;

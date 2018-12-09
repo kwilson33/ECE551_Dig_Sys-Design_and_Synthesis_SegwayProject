@@ -78,12 +78,12 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
 			
 			
   //   balance_cntrl 	GOOD 
-  balance_cntrl balance_control(.clk(clk), .rst_n(rst_n), .vld(vld), .ptch(ptch), .ld_cell_diff(ld_cell_diff),
+  balance_cntrl  #(.fast_sim(fast_sim)) balance_control(.clk(clk), .rst_n(rst_n), .vld(vld), .ptch(ptch), .ld_cell_diff(ld_cell_diff),
 							   .lft_spd(lft_spd), .lft_rev(lft_rev), .rght_spd(rght_spd), .rght_rev(rght_rev),
 							   .rider_off(rider_off), .en_steer(en_steer), .pwr_up(pwr_up), .ovr_spd(ovr_spd));
 							   
   //   steer_en			GOOD
-  steer_en steer_enable(.clk(clk), .rst_n(rst_n), .lft_ld(lft_ld), .rght_ld(rght_ld), .ld_cell_diff(ld_cell_diff),
+  steer_en  #(.fast_sim(fast_sim)) steer_enable(.clk(clk), .rst_n(rst_n), .lft_ld(lft_ld), .rght_ld(rght_ld), .ld_cell_diff(ld_cell_diff),
 						.en_steer(en_steer), .rider_off(rider_off));
   
   

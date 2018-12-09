@@ -142,7 +142,7 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
      ensure integral term is reset when ~pwr_up to prevent from winding up 
      if device is powered up  but not authorized to move
   */ 
-  assign ptch_I_term = $signed(pwr_up ? (integrator[17:6]) : (12'd0)); //12 bits
+  assign ptch_I_term = $signed(integrator[17:6]); //12 bits
   assign ptch_I_term_SignExt = $signed({{4{ptch_I_term[11]}}, ptch_I_term}); 
  
   //Flop that gets integrator, will clear if rider is off or reset is asserted
@@ -215,7 +215,7 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
 	
 	assign ld_cell_diff_div8_SignExt = $signed({{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}); //getting rid of 3 LSBs, same as dividing by 8
 	//either add sped up version of integrator or normal sign extended version based on fast_sim parameter
-	assign PID_cntrl = $signed(ptch_P_term_SignExt + ptch_D_term_SignExt + (fast_sim ? ptch_I_term[17:2] : ptch_I_term_SignExt)); //16 bits
+	assign PID_cntrl = $signed(ptch_P_term_SignExt + ptch_D_term_SignExt + (pwr_up ? (fast_sim ? integrator[17:2] : ptch_I_term_SignExt) : 0 )); //16 bits
 	
 	//if steering is enabled, get left and right torque by subtracting from/ adding to the PID_cntrl
 	//if not, just use the PID cntrl

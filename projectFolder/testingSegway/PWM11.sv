@@ -39,7 +39,7 @@ module PWM11 (PWM_sig, clk, rst_n, duty);
 			PWM_sig <= 1'b1;
 		// else, retain current value of PWM_sig
 	end
-
+ 
 endmodule
 		
 	

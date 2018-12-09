@@ -68,8 +68,10 @@ module A2D_Intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_
 		
 		
 		//Round robin counter, incremented when update is asserted
-		always_ff @(posedge clk) begin
-			if (update) begin
+		always_ff @(posedge clk, negedge rst_n) begin
+		    if (!rst_n)
+		        round_robin_cnt <= 2'b00;
+			else if (update) begin
 				if (round_robin_cnt == 2'b10) begin			// counter should only be 0, 1, 2 and wrap around to 0
 					round_robin_cnt <= 2'b00;
 				end

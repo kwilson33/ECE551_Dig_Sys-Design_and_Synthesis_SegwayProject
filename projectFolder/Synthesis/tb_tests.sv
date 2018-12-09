@@ -1,38 +1,3 @@
-<<<<<<< HEAD
-//`include "tb_tasks.sv"	
-task test1;
-    Initialize();
-    batt = BATT_THRESHOLD + 1;
-    lft_ld = MIN_RIDER_WEIGHT;
-    rght_ld = MIN_RIDER_WEIGHT;
-    rider_lean = 0;
-    SendCmd(8'h67);
-    repeat(100000)@(posedge clk);
-    @(negedge clk);
-    rider_lean = 14'h1fff;
-    repeat(1000000)@(posedge clk);
-    @(negedge clk);
-    rider_lean = 14'h0;
-    repeat(1000000)@(posedge clk);
-    $stop();
-    
-endtask
-
-
-task test2;
-
-
-endtask
-
-
-
-task test3;
-
-
-endtask
-
-
-=======
 //`include "tb_tasks.sv"
 /*  SendCmd is going to send 'g' or 's' into Segway.v, mimicing real siganls from usr's bluetooth
    'g' go is 0x67
@@ -41,17 +6,17 @@ endtask
 task test1;
     Initialize();
     batt = BATT_THRESHOLD + 1;
-    lft_ld = MIN_RIDER_WEIGHT;
-    rght_ld = MIN_RIDER_WEIGHT;
+    lft_ld = MIN_RIDER_WEIGHT + 1;
+    rght_ld = MIN_RIDER_WEIGHT + 1;
     rider_lean = 0;
     SendCmd(8'h67);
     repeat(100000)@(posedge clk);   // power up, wait for a short time
     @(negedge clk);
-    rider_lean = 14'h1fff;          // test most positive lean
-    repeat(1000000)@(posedge clk);
+    rider_lean = 16'h1fff;          // test most positive lean
+    repeat(1500000)@(posedge clk);
     @(negedge clk);
-    rider_lean = 14'h2000;          // most negative lean
-    repeat(1000000)@(posedge clk);
+    rider_lean = 16'hE000;          // most negative lean
+    repeat(1500000)@(posedge clk);
     $stop();
     
 endtask
@@ -102,4 +67,4 @@ task test3;
 endtask
 
 
->>>>>>> 3261bc955fa4d6532abfea5e8294380fdb22aa96
+

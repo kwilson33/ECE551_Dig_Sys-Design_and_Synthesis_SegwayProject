@@ -35,8 +35,8 @@ SegwayModel iPHYS(.clk(clk),.RST_n(RST_n),.SS_n(SS_n),.SCLK(SCLK),
 /////////////////////////////////////////////////////////
 // Instantiate Model of A2D for load cell and battery //
 ///////////////////////////////////////////////////////
-ADC128S drivenSPI (.clk(clk), .rst_n(rst_n), .SS_n(SS_n), 
-							.SCLK(SCLK), .MOSI(MOSI), .MISO(MISO),
+ADC128S drivenSPI (.clk(clk), .rst_n(RST_n), .SS_n(A2D_SS_n), 
+							.SCLK(A2D_SCLK), .MOSI(A2D_MOSI), .MISO(A2D_MISO),
 							.lft_ld(lft_ld), .rght_ld(rght_ld), .batt(batt)); 
   
 ////// Instantiate DUT ////////
@@ -54,6 +54,7 @@ UART_tx iTX(.clk(clk),.rst_n(RST_n),.TX(RX_TX),.trmt(send_cmd),.tx_data(cmd),.tx
 
 
 initial begin     
+  //repeat(1000)@(posedge clk);
   test1;
 	
   $display("YAHOO! test passed!");
@@ -62,7 +63,7 @@ initial begin
 end
 
 always
-  #5 clk = ~clk;
+  #10 clk = ~clk;
 
 
 `include "tb_tasks.sv"	

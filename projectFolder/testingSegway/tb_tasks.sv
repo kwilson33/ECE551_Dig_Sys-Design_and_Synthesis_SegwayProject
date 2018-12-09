@@ -18,7 +18,7 @@ task SendCmd(input byte command);
 	@(negedge clk);
 	cmd = command;
 	send_cmd = 1;
-	@(posedge clk);
+	repeat (20) @(posedge clk);
 	send_cmd = 0;
 endtask
 

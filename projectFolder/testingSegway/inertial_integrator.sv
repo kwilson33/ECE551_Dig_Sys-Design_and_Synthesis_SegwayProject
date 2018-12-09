@@ -22,7 +22,7 @@ module inertial_integrator(clk,rst_n,vld,ptch_rt,AZ,ptch);
 	logic signed [15:0]ptch_acc;
 		
   
-  /*
+  /*ptch
   ptch_acc is sign extended version of ptch_acc_product
   which is calculated from multiplying the AZ_comp ( subtracting a pre-determined offset from AZ)
   by the fudge_factor, allowing for some room of error.
