@@ -1,0 +1,90 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : Segway
+Version: N-2017.09-SP5
+Date   : Sun Dec  9 14:43:48 2018
+****************************************
+
+Operating Conditions: NCCOM   Library: tcbn40lpbwptc
+Wire Load Model Mode: segmented
+
+  Startpoint: Inertial_Interface/AZL_reg[2]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: Inertial_Interface/intgr/ptch_int_reg[26]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Segway             TSMC32K_Lowk_Conservative
+                                           tcbn40lpbwptc
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  Inertial_Interface/AZL_reg[2]/CP (DFD4BWP)              0.00       0.00 r
+  Inertial_Interface/AZL_reg[2]/Q (DFD4BWP)               0.12       0.12 f
+  U2771/ZN (CKND2D2BWP)                                   0.04       0.16 r
+  U2648/Z (XOR3D1BWP)                                     0.11       0.27 f
+  U2279/ZN (INVD1BWP)                                     0.04       0.31 r
+  U3153/ZN (IOA21D2BWP)                                   0.06       0.37 r
+  U3221/ZN (CKND4BWP)                                     0.02       0.39 f
+  U3231/CON (FCICOND1BWP)                                 0.06       0.45 r
+  U2659/ZN (OAI21D1BWP)                                   0.06       0.51 f
+  U3307/ZN (IOA21D2BWP)                                   0.04       0.55 r
+  U3091/ZN (IOA21D2BWP)                                   0.06       0.61 r
+  U4351/ZN (MAOI222D1BWP)                                 0.06       0.67 f
+  U2639/ZN (INVD2BWP)                                     0.04       0.70 r
+  U2830/ZN (MAOI222D1BWP)                                 0.06       0.76 f
+  U1986/ZN (INVD2BWP)                                     0.04       0.80 r
+  U4354/ZN (MAOI222D1BWP)                                 0.06       0.86 f
+  U2498/ZN (INVD2BWP)                                     0.05       0.90 r
+  U4293/Z (XOR4D1BWP)                                     0.15       1.05 f
+  U3220/Z (XOR2D2BWP)                                     0.10       1.15 r
+  U3174/ZN (ND4D2BWP)                                     0.06       1.21 f
+  U3068/ZN (CKND1BWP)                                     0.04       1.25 r
+  U3067/ZN (INVD2BWP)                                     0.02       1.28 f
+  U3375/ZN (XNR2D2BWP)                                    0.08       1.36 r
+  U2329/ZN (ND2D2BWP)                                     0.03       1.38 f
+  U3296/ZN (ND3D3BWP)                                     0.03       1.41 r
+  U3311/Z (OA221D4BWP)                                    0.08       1.49 r
+  U4263/Z (OA222D4BWP)                                    0.07       1.56 r
+  U2242/ZN (OAI31D2BWP)                                   0.03       1.60 f
+  U2652/ZN (AOI222D4BWP)                                  0.17       1.76 r
+  U2076/ZN (NR2D3BWP)                                     0.02       1.78 f
+  U2965/ZN (ND2D1BWP)                                     0.04       1.82 r
+  U2609/ZN (CKND2D3BWP)                                   0.03       1.85 f
+  U2608/ZN (DCCKND4BWP)                                   0.02       1.87 r
+  U3374/ZN (OAI211D2BWP)                                  0.04       1.91 f
+  U3373/Z (AO211D4BWP)                                    0.12       2.03 f
+  U3310/ZN (IND2D4BWP)                                    0.05       2.09 f
+  U2613/ZN (ND2D4BWP)                                     0.02       2.11 r
+  U2636/Z (AN2D4BWP)                                      0.05       2.15 r
+  U3301/ZN (OAI211D2BWP)                                  0.04       2.20 f
+  U2814/Z (CKXOR2D2BWP)                                   0.06       2.26 r
+  Inertial_Interface/intgr/ptch_int_reg[26]/D (EDFCND1BWP)
+                                                          0.00       2.26 r
+  data arrival time                                                  2.26
+
+  clock clk (rise edge)                                   2.50       2.50
+  clock network delay (ideal)                             0.00       2.50
+  clock uncertainty                                      -0.15       2.35
+  Inertial_Interface/intgr/ptch_int_reg[26]/CP (EDFCND1BWP)
+                                                          0.00       2.35 r
+  library setup time                                     -0.09       2.26
+  data required time                                                 2.26
+  --------------------------------------------------------------------------
+  data required time                                                 2.26
+  data arrival time                                                 -2.26
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+1
