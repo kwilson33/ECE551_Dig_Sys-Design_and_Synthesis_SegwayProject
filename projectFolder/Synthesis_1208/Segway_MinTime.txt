@@ -1,0 +1,56 @@
+Warning: Design 'Segway' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 1
+Design : Segway
+Version: N-2017.09-SP5
+Date   : Fri Dec  7 12:17:01 2018
+****************************************
+
+Operating Conditions: NCCOM   Library: tcbn40lpbwptc
+Wire Load Model Mode: segmented
+
+  Startpoint: Inertial_Interface/spi/shft_reg_reg[13]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: Inertial_Interface/spi/shft_reg_reg[14]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Segway             TSMC32K_Lowk_Conservative
+                                           tcbn40lpbwptc
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  Inertial_Interface/spi/shft_reg_reg[13]/CP (DFQD1BWP)
+                                                          0.00       0.00 r
+  Inertial_Interface/spi/shft_reg_reg[13]/Q (DFQD1BWP)
+                                                          0.12       0.12 f
+  U1623/ZN (INVD1BWP)                                     0.03       0.14 r
+  U1420/ZN (OAI22D1BWP)                                   0.03       0.17 f
+  Inertial_Interface/spi/shft_reg_reg[14]/D (DFQD1BWP)
+                                                          0.00       0.17 f
+  data arrival time                                                  0.17
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.15       0.15
+  Inertial_Interface/spi/shft_reg_reg[14]/CP (DFQD1BWP)
+                                                          0.00       0.15 r
+  library hold time                                       0.02       0.17
+  data required time                                                 0.17
+  --------------------------------------------------------------------------
+  data required time                                                 0.17
+  data arrival time                                                 -0.17
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+1

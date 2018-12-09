@@ -1,0 +1,2664 @@
+/////////////////////////////////////////////////////////////
+// Created by: Synopsys DC Expert(TM) in wire load mode
+// Version   : N-2017.09-SP5
+// Date      : Fri Dec  7 12:17:01 2018
+/////////////////////////////////////////////////////////////
+
+
+module Segway ( clk, RST_n, LED, INERT_SS_n, INERT_MOSI, INERT_SCLK, 
+        INERT_MISO, A2D_SS_n, A2D_MOSI, A2D_SCLK, A2D_MISO, PWM_rev_rght, 
+        PWM_frwrd_rght, PWM_rev_lft, PWM_frwrd_lft, piezo_n, piezo, INT, RX );
+  output [7:0] LED;
+  input clk, RST_n, INERT_MISO, A2D_MISO, INT, RX;
+  output INERT_SS_n, INERT_MOSI, INERT_SCLK, A2D_SS_n, A2D_MOSI, A2D_SCLK,
+         PWM_rev_rght, PWM_frwrd_rght, PWM_rev_lft, PWM_frwrd_lft, piezo_n,
+         piezo;
+  wire   n1144, n1145, n1146, n1147, n1148, n1149, n1150, n1151, rst_n,
+         rider_off, pwr_up, vld, lft_rev, rght_rev, en_steer, ld_cell_diff,
+         \Auth_block/rx_rdy , \Auth_block/receiver/n42 ,
+         \Auth_block/receiver/n41 , \Auth_block/receiver/n40 ,
+         \Auth_block/receiver/n39 , \Auth_block/receiver/n38 ,
+         \Auth_block/receiver/n37 , \Auth_block/receiver/n36 ,
+         \Auth_block/receiver/n35 , \Auth_block/receiver/n34 ,
+         \Auth_block/receiver/n33 , \Auth_block/receiver/n32 ,
+         \Auth_block/receiver/n31 , \Auth_block/receiver/n30 ,
+         \Auth_block/receiver/n29 , \Auth_block/receiver/n28 ,
+         \Auth_block/receiver/n27 , \Auth_block/receiver/n26 ,
+         \Auth_block/receiver/n25 , \Auth_block/receiver/rx_ff1 ,
+         \Auth_block/receiver/shift_reg[8] , \Auth_block/receiver/rx_ff2 ,
+         \Auth_block/receiver/nxt_state , \Auth_block/receiver/state ,
+         \Auth_block/receiver/n56 , \Inertial_Interface/n33 ,
+         \Inertial_Interface/N29 , \Inertial_Interface/N28 ,
+         \Inertial_Interface/N27 , \Inertial_Interface/N26 ,
+         \Inertial_Interface/N25 , \Inertial_Interface/N24 ,
+         \Inertial_Interface/N23 , \Inertial_Interface/N22 ,
+         \Inertial_Interface/N21 , \Inertial_Interface/N20 ,
+         \Inertial_Interface/N19 , \Inertial_Interface/N18 ,
+         \Inertial_Interface/N17 , \Inertial_Interface/N16 ,
+         \Inertial_Interface/N15 , \Inertial_Interface/INT_meta2 ,
+         \Inertial_Interface/INT_meta1 , \Inertial_Interface/done ,
+         \Inertial_Interface/spi/add_66/carry[2] ,
+         \Inertial_Interface/spi/add_66/carry[3] ,
+         \Inertial_Interface/spi/add_66/carry[4] ,
+         \Inertial_Interface/spi/add_72_S2/carry[2] ,
+         \Inertial_Interface/spi/add_72_S2/carry[3] ,
+         \Inertial_Interface/spi/n38 , \Inertial_Interface/spi/n37 ,
+         \Inertial_Interface/spi/n36 , \Inertial_Interface/spi/n35 ,
+         \Inertial_Interface/spi/n34 , \Inertial_Interface/spi/n33 ,
+         \Inertial_Interface/spi/n32 , \Inertial_Interface/spi/n31 ,
+         \Inertial_Interface/spi/n30 , \Inertial_Interface/spi/n29 ,
+         \Inertial_Interface/spi/n28 , \Inertial_Interface/spi/n27 ,
+         \Inertial_Interface/spi/n26 , \Inertial_Interface/spi/n25 ,
+         \Inertial_Interface/spi/n24 , \Inertial_Interface/spi/n23 ,
+         \Inertial_Interface/spi/n22 , \Inertial_Interface/spi/n21 ,
+         \Inertial_Interface/spi/n20 , \Inertial_Interface/spi/n18 ,
+         \Inertial_Interface/spi/n9 , \Inertial_Interface/spi/n5 ,
+         \Inertial_Interface/spi/MISO_smpl , \Inertial_Interface/spi/N25 ,
+         \Inertial_Interface/spi/N24 , \Inertial_Interface/spi/N23 ,
+         \Inertial_Interface/spi/N12 , \Inertial_Interface/spi/N11 ,
+         \Inertial_Interface/spi/N10 , \Inertial_Interface/spi/n62 ,
+         \Inertial_Interface/spi/n61 , \Inertial_Interface/spi/n60 ,
+         \Inertial_Interface/spi/n59 , \Inertial_Interface/spi/n58 ,
+         \Inertial_Interface/spi/n57 , \Inertial_Interface/spi/n56 ,
+         \Inertial_Interface/spi/n55 , \Inertial_Interface/spi/rd_data[8] ,
+         \Inertial_Interface/spi/rd_data[9] ,
+         \Inertial_Interface/spi/rd_data[10] ,
+         \Inertial_Interface/spi/rd_data[11] ,
+         \Inertial_Interface/spi/rd_data[12] ,
+         \Inertial_Interface/spi/rd_data[13] ,
+         \Inertial_Interface/spi/rd_data[14] , \Inertial_Interface/intgr/n227 ,
+         \Inertial_Interface/intgr/n226 , \Inertial_Interface/intgr/n225 ,
+         \Inertial_Interface/intgr/n5 , \Inertial_Interface/intgr/N54 ,
+         \Inertial_Interface/intgr/N52 , \Inertial_Interface/intgr/N51 ,
+         \Inertial_Interface/intgr/N50 , \Inertial_Interface/intgr/N49 ,
+         \Inertial_Interface/intgr/N48 , \Inertial_Interface/intgr/N47 ,
+         \Inertial_Interface/intgr/N46 , \Inertial_Interface/intgr/N45 ,
+         \Inertial_Interface/intgr/N44 , \Inertial_Interface/intgr/N43 ,
+         \Inertial_Interface/intgr/N42 , \Inertial_Interface/intgr/N41 ,
+         \Inertial_Interface/intgr/N39 , \Inertial_Interface/intgr/N38 ,
+         \Inertial_Interface/intgr/N37 , \Inertial_Interface/intgr/N36 ,
+         \Inertial_Interface/intgr/N35 , \Inertial_Interface/intgr/N34 ,
+         \Inertial_Interface/intgr/N33 , \Inertial_Interface/intgr/N32 ,
+         \Inertial_Interface/intgr/N31 , \Inertial_Interface/intgr/N30 ,
+         \motor_drive/rghtMotor , \motor_drive/lftMotor ,
+         \motor_drive/lftPWM/n10 , \motor_drive/lftPWM/N13 ,
+         \motor_drive/lftPWM/N12 , \motor_drive/lftPWM/N11 ,
+         \motor_drive/lftPWM/N10 , \motor_drive/lftPWM/N9 ,
+         \motor_drive/lftPWM/N8 , \motor_drive/lftPWM/N7 ,
+         \motor_drive/lftPWM/N6 , \motor_drive/lftPWM/N5 ,
+         \motor_drive/lftPWM/N4 , \motor_drive/rghtPWM/n27 ,
+         \motor_drive/rghtPWM/N13 , \motor_drive/rghtPWM/N12 ,
+         \motor_drive/rghtPWM/N11 , \motor_drive/rghtPWM/N10 ,
+         \motor_drive/rghtPWM/N9 , \motor_drive/rghtPWM/N8 ,
+         \motor_drive/rghtPWM/N7 , \motor_drive/rghtPWM/N6 ,
+         \motor_drive/rghtPWM/N5 , \motor_drive/rghtPWM/N4 ,
+         \A2D_interface/n40 , \A2D_interface/n25 , \A2D_interface/n24 ,
+         \A2D_interface/n23 , \A2D_interface/n22 , \A2D_interface/n21 ,
+         \A2D_interface/n20 , \A2D_interface/n19 , \A2D_interface/n18 ,
+         \A2D_interface/n17 , \A2D_interface/n16 , \A2D_interface/n15 ,
+         \A2D_interface/n14 , \A2D_interface/n13 , \A2D_interface/n12 ,
+         \A2D_interface/n11 , \A2D_interface/n10 , \A2D_interface/n9 ,
+         \A2D_interface/n8 , \A2D_interface/n7 , \A2D_interface/n6 ,
+         \A2D_interface/n5 , \A2D_interface/n4 , \A2D_interface/n3 ,
+         \A2D_interface/n2 , \A2D_interface/state[0] ,
+         \A2D_interface/SPI_Interface/n78 , \A2D_interface/SPI_Interface/n77 ,
+         \A2D_interface/SPI_Interface/n68 , \A2D_interface/SPI_Interface/n66 ,
+         \A2D_interface/SPI_Interface/n64 , \A2D_interface/SPI_Interface/n63 ,
+         \A2D_interface/SPI_Interface/n62 , \A2D_interface/SPI_Interface/n61 ,
+         \A2D_interface/SPI_Interface/n60 , \A2D_interface/SPI_Interface/n59 ,
+         \A2D_interface/SPI_Interface/n58 , \A2D_interface/SPI_Interface/n57 ,
+         \A2D_interface/SPI_Interface/n56 , \A2D_interface/SPI_Interface/n55 ,
+         \A2D_interface/SPI_Interface/n54 , \A2D_interface/SPI_Interface/n53 ,
+         \A2D_interface/SPI_Interface/n52 , \A2D_interface/SPI_Interface/n51 ,
+         \A2D_interface/SPI_Interface/n50 , \A2D_interface/SPI_Interface/n49 ,
+         \A2D_interface/SPI_Interface/n48 ,
+         \A2D_interface/SPI_Interface/add_66/carry[2] ,
+         \A2D_interface/SPI_Interface/add_66/carry[3] ,
+         \A2D_interface/SPI_Interface/add_66/carry[4] ,
+         \A2D_interface/SPI_Interface/add_72_S2/carry[2] ,
+         \A2D_interface/SPI_Interface/add_72_S2/carry[3] ,
+         \A2D_interface/SPI_Interface/MISO_smpl ,
+         \A2D_interface/SPI_Interface/N25 , \A2D_interface/SPI_Interface/N24 ,
+         \A2D_interface/SPI_Interface/N23 , \A2D_interface/SPI_Interface/N12 ,
+         \A2D_interface/SPI_Interface/N11 , \A2D_interface/SPI_Interface/N10 ,
+         \A2D_interface/SPI_Interface/rd_data[11] , \pepperoni_piezo/N28 ,
+         \pepperoni_piezo/N27 , \pepperoni_piezo/N26 , \pepperoni_piezo/N25 ,
+         \pepperoni_piezo/N24 , \pepperoni_piezo/N23 , \pepperoni_piezo/N22 ,
+         \pepperoni_piezo/N21 , \pepperoni_piezo/N20 , \pepperoni_piezo/N19 ,
+         \pepperoni_piezo/N18 , \pepperoni_piezo/N17 , \pepperoni_piezo/N16 ,
+         \pepperoni_piezo/N15 , \pepperoni_piezo/N14 , \pepperoni_piezo/N13 ,
+         \pepperoni_piezo/N12 , \pepperoni_piezo/N11 , \pepperoni_piezo/N10 ,
+         \pepperoni_piezo/N9 , \pepperoni_piezo/N8 , \pepperoni_piezo/N7 ,
+         \pepperoni_piezo/N6 , \pepperoni_piezo/N5 , \pepperoni_piezo/N4 , n36,
+         n37, n38, n39, n40, n41, n42, n43, n44, n45, n46, n47, n49, n51, n52,
+         n53, n54, n55, n109, n111, n113, n114, n116, n117, n118, n120, n121,
+         n122, n123, n124, n125, n131, n132, n133, n134, n135, n136, n137,
+         n138, n139, n140, n142, n143, n144, n145, n146, n147, n148, n149,
+         n150, n151, n152, n153, n155, n156, n157, n158, n159, n160, n161,
+         n162, n163, n164, n165, n166, n167, n169, n170, n171, n172, n173,
+         n174, n175, n176, n177, n178, n179, n180, n181, n182, n183, n184,
+         n185, n187, n188, n189, n190, n191, n192, n193, n194, n200, n202,
+         n203, n204, n205, n206, n207, n208, n209, n210, n213, n214, n215,
+         n216, n217, n218, n219, n220, n221, n222, n223, n224, n225, n226,
+         n227, n228, n229, n230, n231, n232, n233, n234, n235, n236, n237,
+         n238, n239, n240, n241, n242, n243, n244, n245, n246, n247, n248,
+         n250, n252, n253, n254, n255, n256, n257, n258, n259, n260, n261,
+         n262, n263, n264, n265, n266, n267, n268, n269, n270, n271, n273,
+         n274, n275, n276, n277, n278, n279, n280, n282, n283, n284, n285,
+         n286, n504, n506, n507, n508, n509, n510, n511, n512, n513, n514,
+         n516, n517, n518, n519, n520, n521, n522, n524, n526, n527, n528,
+         n530, n531, n532, n534, n535, n536, n537, n538, n539, n540, n541,
+         n542, n543, n544, n545, n546, n547, n548, n549, n550, n551, n552,
+         n553, n554, n555, n556, n557, n558, n559, n567, n568, n573, n575,
+         n576, n577, net21727, net21729, net21730, net21734, net21735,
+         net21738, net21744, net21746, net21751, net21752, net21753, net21763,
+         net21771, net21773, net21774, net21780, net21781, net21789, net21793,
+         net21794, net21795, net21801, net21802, net21804, net21806, net21808,
+         net21809, net21813, net21815, net21819, net21822, net21823, net21825,
+         net21828, net21838, net21839, net21844, net21846, net21849, net21850,
+         net21852, net21853, net21855, net21856, net21857, net21859, net21860,
+         net21862, net21863, net21868, net21874, net21876, net21879, net21881,
+         net21883, net21886, net21892, net21914, net21917, net21929, net21930,
+         net21931, net21932, net21936, net21939, net21950, net21953, net21954,
+         net21962, net21964, net21971, net21973, net22011, net22016, net22018,
+         net22039, net22040, net22042, net22045, net22048, net22049, net22050,
+         net22051, net22069, net22072, net22075, net22079, net22087, net22088,
+         net22091, net22095, net22099, net22116, net22121, net22126, net22130,
+         net22132, net22142, net22146, net22147, net22155, net22160, net22171,
+         net22178, net22185, net22190, net22228, net22231, net22232, net22234,
+         net22235, net22243, net22248, net22249, net22254, net22257, net22261,
+         net22265, net22268, net22269, net22278, net22281, net22283, net22287,
+         net22288, net22291, net22292, net22299, net22301, net22304, net22305,
+         net22309, net22310, net22313, net22322, net22357, net22355, net22353,
+         net22351, net22349, net22441, net23530, net23633, net23634, net23659,
+         net23671, net23691, net23767, net23823, net23835, net23929, net23960,
+         net23977, net24022, net24048, net24050, net24117, net24129, net24132,
+         net24131, net24223, net24222, net24233, net24239, net24241, net24250,
+         net24261, net24267, net24271, net24273, net24288, net32092, net32096,
+         net32099, net32107, net32106, net32140, net32153, net32165, net32183,
+         net32199, net32203, net32217, net21921, n99, n98, n566, n565, n564,
+         n563, n201, n199, n198, n197, n196,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[9] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[8] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[7] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[10] ,
+         net23834, n562, n561, n560, n195,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[6] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[5] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[4] ,
+         \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[3] ,
+         net22294, net23525, net22316, net22314, net22312, net22311, net22290,
+         net22279, net22318, net22317, net22259, net22251, net22195, net22320,
+         net22277, net21811, net23647, net23644, net21865, net21851, net21812,
+         net22442, net22363, net21756, net23699, net21928, net21882, net21800,
+         n578, n579, n580, n581, n582, n583, n584, n585, n586, n587, n588,
+         n589, n590, n591, n592, n593, n594, n595, n596, n597, n598, n599,
+         n600, n601, n602, n603, n604, n605, n606, n607, n608, n609, n610,
+         n611, n612, n613, n614, n615, n616, n617, n618, n619, n620, n621,
+         n622, n623, n624, n625, n626, n627, n628, n629, n630, n631, n632,
+         n633, n634, n635, n636, n637, n638, n639, n640, n641, n642, n643,
+         n644, n645, n646, n647, n648, n649, n650, n651, n652, n653, n654,
+         n655, n656, n657, n658, n659, n660, n661, n662, n663, n664, n665,
+         n666, n667, n668, n669, n670, n671, n672, n673, n674, n675, n676,
+         n677, n678, n679, n680, n681, n682, n683, n684, n685, n686, n687,
+         n688, n689, n690, n691, n692, n693, n694, n695, n696, n697, n698,
+         n699, n700, n701, n702, n703, n704, n705, n706, n707, n708, n709,
+         n710, n711, n712, n713, n714, n715, n716, n717, n719, n721, n723,
+         n725, n726, n727, n728, n729, n730, n731, n732, n733, n734, n735,
+         n736, n737, n738, n739, n740, n741, n742, n743, n744, n745, n746,
+         n747, n748, n749, n750, n751, n752, n753, n754, n755, n756, n757,
+         n758, n759, n760, n761, n762, n763, n764, n765, n772, n773, n774,
+         n775, n776, n777, n778, n779, n780, n781, n782, n783, n784, n785,
+         n786, n787, n788, n789, n790, n791, n792, n793, n794, n795, n796,
+         n797, n798, n799, n800, n801, n802, n803, n804, n805, n806, n807,
+         n808, n809, n810, n811, n812, n813, n814, n815, n816, n817, n818,
+         n819, n820, n821, n822, n823, n824, n825, n826, n827, n828, n829,
+         n830, n831, n832, n833, n834, n835, n836, n837, n838, n839, n840,
+         n841, n842, n843, n844, n845, n846, n847, n848, n849, n850, n851,
+         n852, n853, n854, n855, n856, n857, n858, n859, n860, n861, n862,
+         n863, n864, n865, n866, n867, n868, n869, n870, n871, n872, n873,
+         n874, n875, n876, n877, n878, n879, n880, n881, n882, n883, n884,
+         n885, n886, n887, n888, n889, n890, n891, n892, n893, n894, n895,
+         n896, n897, n898, n899, n900, n901, n902, n903, n904, n905, n906,
+         n907, n908, n909, n910, n911, n912, n913, n914, n915, n916, n917,
+         n918, n919, n920, n921, n922, n923, n924, n925, n926, n927, n928,
+         n929, n930, n931, n932, n933, n934, n935, n936, n937, n938, n939,
+         n940, n941, n942, n943, n944, n945, n946, n947, n948, n949, n950,
+         n951, n952, n953, n954, n955, n956, n957, n958, n959, n960, n961,
+         n962, n963, n964, n965, n966, n967, n968, n969, n970, n971, n972,
+         n973, n974, n975, n976, n977, n978, n979, n980, n981, n982, n983,
+         n984, n985, n986, n987, n988, n989, n990, n991, n992, n993, n994,
+         n995, n996, n997, n998, n999, n1000, n1001, n1002, n1003, n1004,
+         n1005, n1006, n1007, n1008, n1009, n1010, n1011, n1012, n1013, n1014,
+         n1015, n1016, n1017, n1018, n1019, n1020, n1021, n1022, n1023, n1024,
+         n1025, n1026, n1027, n1028, n1029, n1030, n1031, n1032, n1033, n1034,
+         n1035, n1036, n1037, n1038, n1039, n1040, n1041, n1042, n1043, n1044,
+         n1045, n1046, n1047, n1048, n1049, n1050, n1051, n1052, n1053, n1054,
+         n1055, n1056, n1057, n1058, n1059, n1060, n1061, n1062, n1063, n1064,
+         n1065, n1066, n1067, n1068, n1069, n1070, n1071, n1072, n1073, n1074,
+         n1075, n1076, n1077, n1078, n1079, n1080, n1081, n1082, n1083, n1084,
+         n1085, n1086, n1087, n1088, n1089, n1090, n1091, n1092, n1093, n1094,
+         n1095, n1096, n1097, n1098, n1099, n1100, n1101, n1102, n1103, n1104,
+         n1105, n1106, n1107, n1108, n1109, n1110, n1111, n1112, n1113, n1114,
+         n1115, n1116, n1117, n1118, n1119, n1120, n1121, n1122, n1123, n1124,
+         n1125, n1126, n1127, n1128, n1129, n1130, n1131, n1132, n1133, n1134,
+         n1135, n1136, n1137, n1138, n1139, n1140, n1141, n1142, n1143;
+  wire   [11:0] batt;
+  wire   [15:0] ptch;
+  wire   [10:0] lft_spd;
+  wire   [10:0] rght_spd;
+  wire   [1:0] \Auth_block/nxt_state ;
+  wire   [1:0] \Auth_block/state ;
+  wire   [7:0] \Auth_block/rx_data ;
+  wire   [11:0] \Auth_block/receiver/baud_cnt ;
+  wire   [3:0] \Auth_block/receiver/bit_cnt ;
+  wire   [3:0] \Inertial_Interface/nxt_state ;
+  wire   [3:0] \Inertial_Interface/state ;
+  wire   [15:0] \Inertial_Interface/timer ;
+  wire   [7:0] \Inertial_Interface/pitch_L ;
+  wire   [7:0] \Inertial_Interface/pitch_H ;
+  wire   [7:0] \Inertial_Interface/AZL ;
+  wire   [7:0] \Inertial_Interface/AZH ;
+  wire   [1:0] \Inertial_Interface/spi/nxt_state ;
+  wire   [1:0] \Inertial_Interface/spi/state ;
+  wire   [4:0] \Inertial_Interface/spi/shft_cnt ;
+  wire   [3:0] \Inertial_Interface/spi/sclk_div ;
+  wire   [10:0] \Inertial_Interface/intgr/ptch_int ;
+  wire   [15:2] \Inertial_Interface/add_64/carry ;
+  wire   [10:0] \motor_drive/lftPWM/count ;
+  wire   [10:2] \motor_drive/lftPWM/add_29/carry ;
+  wire   [10:0] \motor_drive/rghtPWM/count ;
+  wire   [10:2] \motor_drive/rghtPWM/add_29/carry ;
+  wire   [1:0] \A2D_interface/round_robin_cnt ;
+  wire   [1:0] \A2D_interface/SPI_Interface/nxt_state ;
+  wire   [1:0] \A2D_interface/SPI_Interface/state ;
+  wire   [4:0] \A2D_interface/SPI_Interface/shft_cnt ;
+  wire   [3:0] \A2D_interface/SPI_Interface/sclk_div ;
+  wire   [25:0] \pepperoni_piezo/timer ;
+  wire   [25:2] \pepperoni_piezo/add_16/carry ;
+
+  balance_ctrl balance_control ( .clk(clk), .rst_n(rst_n), .vld(vld), .ptch(
+        ptch), .ld_cell_diff(ld_cell_diff), .lft_spd(lft_spd), .lft_rev(
+        lft_rev), .rght_spd(rght_spd), .rght_rev(rght_rev), .rider_off(
+        rider_off), .en_steer(en_steer), .pwr_up(pwr_up) );
+  steer_en steer_enable ( .clk(clk), .rst_n(rst_n), .lft_ld({
+        \A2D_interface/n2 , \A2D_interface/n6 , \A2D_interface/n9 , 
+        \A2D_interface/n8 , \A2D_interface/n10 , \A2D_interface/n15 , 
+        \A2D_interface/n14 , \A2D_interface/n16 , \A2D_interface/n21 , 
+        \A2D_interface/n20 , \A2D_interface/n22 , \A2D_interface/n25 }), 
+        .rght_ld({\A2D_interface/n3 , \A2D_interface/n4 , \A2D_interface/n5 , 
+        \A2D_interface/n7 , \A2D_interface/n12 , \A2D_interface/n11 , 
+        \A2D_interface/n13 , \A2D_interface/n18 , \A2D_interface/n17 , 
+        \A2D_interface/n19 , \A2D_interface/n24 , \A2D_interface/n23 }), 
+        .ld_cell_diff(ld_cell_diff), .en_steer(en_steer), .rider_off(rider_off) );
+  reset_synch iRST ( .clk(clk), .RST_n(RST_n), .rst_n(rst_n) );
+  DFCNQD1BWP \Auth_block/state_reg[1]  ( .D(\Auth_block/nxt_state [1]), .CP(
+        clk), .CDN(rst_n), .Q(\Auth_block/state [1]) );
+  DFCNQD1BWP \Auth_block/state_reg[0]  ( .D(\Auth_block/nxt_state [0]), .CP(
+        clk), .CDN(rst_n), .Q(\Auth_block/state [0]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[9]  ( .D(
+        \Auth_block/receiver/n34 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [9]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[7]  ( .D(
+        \Auth_block/receiver/n32 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [7]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[6]  ( .D(
+        \Auth_block/receiver/n31 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [6]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[5]  ( .D(
+        \Auth_block/receiver/n30 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [5]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[3]  ( .D(
+        \Auth_block/receiver/n28 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [3]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[0]  ( .D(
+        \Auth_block/receiver/n36 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [0]) );
+  DFCNQD1BWP \Auth_block/receiver/baud_cnt_reg[11]  ( .D(
+        \Auth_block/receiver/n41 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [11]) );
+  DFCNQD1BWP \Auth_block/receiver/rdy_reg  ( .D(\Auth_block/receiver/n25 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Auth_block/rx_rdy ) );
+  DFCNQD1BWP \Auth_block/receiver/state_reg  ( .D(
+        \Auth_block/receiver/nxt_state ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/state ) );
+  DFCNQD1BWP \Auth_block/receiver/bit_cnt_reg[3]  ( .D(n588), .CP(clk), .CDN(
+        rst_n), .Q(\Auth_block/receiver/bit_cnt [3]) );
+  DFCNQD1BWP \Auth_block/receiver/bit_cnt_reg[2]  ( .D(
+        \Auth_block/receiver/n38 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/bit_cnt [2]) );
+  DFCNQD1BWP \Auth_block/receiver/bit_cnt_reg[1]  ( .D(
+        \Auth_block/receiver/n40 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/bit_cnt [1]) );
+  DFCNQD1BWP \Auth_block/receiver/bit_cnt_reg[0]  ( .D(
+        \Auth_block/receiver/n39 ), .CP(clk), .CDN(rst_n), .Q(
+        \Auth_block/receiver/bit_cnt [0]) );
+  NR4D8BWP \Inertial_Interface/U5  ( .A1(n118), .A2(n120), .A3(
+        \Inertial_Interface/state [1]), .A4(\Inertial_Interface/state [2]), 
+        .ZN(vld) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[7]  ( .D(\Inertial_Interface/spi/n55 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [7]) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[6]  ( .D(\Inertial_Interface/spi/n56 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [6]) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[5]  ( .D(\Inertial_Interface/spi/n57 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [5]) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[4]  ( .D(\Inertial_Interface/spi/n58 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [4]) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[3]  ( .D(\Inertial_Interface/spi/n59 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [3]) );
+  DFCNQD1BWP \Inertial_Interface/state_reg[3]  ( .D(
+        \Inertial_Interface/nxt_state [3]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/state [3]) );
+  DFCNQD1BWP \Inertial_Interface/state_reg[1]  ( .D(
+        \Inertial_Interface/nxt_state [1]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/state [1]) );
+  DFCNQD1BWP \Inertial_Interface/state_reg[0]  ( .D(
+        \Inertial_Interface/nxt_state [0]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/state [0]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[15]  ( .D(\Inertial_Interface/N29 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [15]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[14]  ( .D(\Inertial_Interface/N28 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [14]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[13]  ( .D(\Inertial_Interface/N27 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [13]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[12]  ( .D(\Inertial_Interface/N26 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [12]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[11]  ( .D(\Inertial_Interface/N25 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [11]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[10]  ( .D(\Inertial_Interface/N24 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [10]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[9]  ( .D(\Inertial_Interface/N23 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [9]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[8]  ( .D(\Inertial_Interface/N22 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [8]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[7]  ( .D(\Inertial_Interface/N21 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [7]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[6]  ( .D(\Inertial_Interface/N20 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [6]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[5]  ( .D(\Inertial_Interface/N19 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [5]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[4]  ( .D(\Inertial_Interface/N18 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [4]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[3]  ( .D(\Inertial_Interface/N17 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [3]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[2]  ( .D(\Inertial_Interface/N16 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [2]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[1]  ( .D(\Inertial_Interface/N15 ), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/timer [1]) );
+  DFCNQD1BWP \Inertial_Interface/timer_reg[0]  ( .D(n121), .CP(clk), .CDN(
+        rst_n), .Q(\Inertial_Interface/timer [0]) );
+  DFCNQD1BWP \Inertial_Interface/INT_meta2_reg  ( .D(n579), .CP(clk), .CDN(
+        rst_n), .Q(\Inertial_Interface/INT_meta2 ) );
+  DFCNQD1BWP \Inertial_Interface/INT_meta1_reg  ( .D(INT), .CP(clk), .CDN(
+        rst_n), .Q(\Inertial_Interface/INT_meta1 ) );
+  XOR2D1BWP \Inertial_Interface/spi/U56  ( .A1(
+        \Inertial_Interface/spi/shft_cnt [3]), .A2(
+        \Inertial_Interface/spi/add_72_S2/carry[3] ), .Z(
+        \Inertial_Interface/spi/N25 ) );
+  DFCNQD1BWP \Inertial_Interface/spi/state_reg[1]  ( .D(
+        \Inertial_Interface/spi/nxt_state [1]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/spi/state [1]) );
+  DFCNQD1BWP \Inertial_Interface/spi/state_reg[0]  ( .D(
+        \Inertial_Interface/spi/nxt_state [0]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/spi/state [0]) );
+  DFCNQD1BWP \motor_drive/lftPWM/PWM_sig_reg  ( .D(\motor_drive/lftPWM/n10 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftMotor ) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[10]  ( .D(\motor_drive/lftPWM/N13 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [10]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[9]  ( .D(\motor_drive/lftPWM/N12 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [9]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[8]  ( .D(\motor_drive/lftPWM/N11 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [8]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[7]  ( .D(\motor_drive/lftPWM/N10 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [7]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[6]  ( .D(\motor_drive/lftPWM/N9 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [6]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[5]  ( .D(\motor_drive/lftPWM/N8 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [5]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[4]  ( .D(\motor_drive/lftPWM/N7 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [4]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[3]  ( .D(\motor_drive/lftPWM/N6 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [3]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[2]  ( .D(\motor_drive/lftPWM/N5 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [2]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[1]  ( .D(\motor_drive/lftPWM/N4 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/lftPWM/count [1]) );
+  DFCNQD1BWP \motor_drive/lftPWM/count_reg[0]  ( .D(n153), .CP(clk), .CDN(
+        rst_n), .Q(\motor_drive/lftPWM/count [0]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/PWM_sig_reg  ( .D(\motor_drive/rghtPWM/n27 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtMotor ) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[10]  ( .D(
+        \motor_drive/rghtPWM/N13 ), .CP(clk), .CDN(rst_n), .Q(
+        \motor_drive/rghtPWM/count [10]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[9]  ( .D(\motor_drive/rghtPWM/N12 ), .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [9]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[8]  ( .D(\motor_drive/rghtPWM/N11 ), .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [8]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[7]  ( .D(\motor_drive/rghtPWM/N10 ), .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [7]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[6]  ( .D(\motor_drive/rghtPWM/N9 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [6]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[5]  ( .D(\motor_drive/rghtPWM/N8 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [5]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[4]  ( .D(\motor_drive/rghtPWM/N7 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [4]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[3]  ( .D(\motor_drive/rghtPWM/N6 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [3]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[2]  ( .D(\motor_drive/rghtPWM/N5 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [2]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[1]  ( .D(\motor_drive/rghtPWM/N4 ), 
+        .CP(clk), .CDN(rst_n), .Q(\motor_drive/rghtPWM/count [1]) );
+  DFCNQD1BWP \motor_drive/rghtPWM/count_reg[0]  ( .D(n165), .CP(clk), .CDN(
+        rst_n), .Q(\motor_drive/rghtPWM/count [0]) );
+  DFCNQD1BWP \A2D_interface/state_reg[0]  ( .D(\A2D_interface/n40 ), .CP(clk), 
+        .CDN(rst_n), .Q(\A2D_interface/state[0] ) );
+  XOR2D1BWP \A2D_interface/SPI_Interface/U49  ( .A1(
+        \A2D_interface/SPI_Interface/shft_cnt [3]), .A2(
+        \A2D_interface/SPI_Interface/add_72_S2/carry[3] ), .Z(
+        \A2D_interface/SPI_Interface/N25 ) );
+  DFCNQD1BWP \A2D_interface/SPI_Interface/state_reg[1]  ( .D(
+        \A2D_interface/SPI_Interface/nxt_state [1]), .CP(clk), .CDN(rst_n), 
+        .Q(\A2D_interface/SPI_Interface/state [1]) );
+  DFCNQD1BWP \A2D_interface/SPI_Interface/state_reg[0]  ( .D(
+        \A2D_interface/SPI_Interface/nxt_state [0]), .CP(clk), .CDN(rst_n), 
+        .Q(\A2D_interface/SPI_Interface/state [0]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[25]  ( .D(\pepperoni_piezo/N28 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [25]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[24]  ( .D(\pepperoni_piezo/N27 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [24]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[23]  ( .D(\pepperoni_piezo/N26 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [23]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[22]  ( .D(\pepperoni_piezo/N25 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [22]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[21]  ( .D(\pepperoni_piezo/N24 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [21]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[20]  ( .D(\pepperoni_piezo/N23 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [20]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[19]  ( .D(\pepperoni_piezo/N22 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [19]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[18]  ( .D(\pepperoni_piezo/N21 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [18]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[17]  ( .D(\pepperoni_piezo/N20 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [17]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[16]  ( .D(\pepperoni_piezo/N19 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [16]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[15]  ( .D(\pepperoni_piezo/N18 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [15]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[14]  ( .D(\pepperoni_piezo/N17 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [14]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[13]  ( .D(\pepperoni_piezo/N16 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [13]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[12]  ( .D(\pepperoni_piezo/N15 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [12]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[11]  ( .D(\pepperoni_piezo/N14 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [11]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[10]  ( .D(\pepperoni_piezo/N13 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [10]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[9]  ( .D(\pepperoni_piezo/N12 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [9]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[8]  ( .D(\pepperoni_piezo/N11 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [8]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[7]  ( .D(\pepperoni_piezo/N10 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [7]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[6]  ( .D(\pepperoni_piezo/N9 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [6]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[5]  ( .D(\pepperoni_piezo/N8 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [5]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[4]  ( .D(\pepperoni_piezo/N7 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [4]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[3]  ( .D(\pepperoni_piezo/N6 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [3]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[2]  ( .D(\pepperoni_piezo/N5 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [2]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[1]  ( .D(\pepperoni_piezo/N4 ), .CP(
+        clk), .CDN(rst_n), .Q(\pepperoni_piezo/timer [1]) );
+  DFCNQD1BWP \pepperoni_piezo/timer_reg[0]  ( .D(n578), .CP(clk), .CDN(rst_n), 
+        .Q(\pepperoni_piezo/timer [0]) );
+  XOR2D1BWP U16 ( .A1(\pepperoni_piezo/timer [25]), .A2(
+        \pepperoni_piezo/add_16/carry [25]), .Z(\pepperoni_piezo/N28 ) );
+  XNR2D1BWP U27 ( .A1(n202), .A2(\Inertial_Interface/pitch_H [3]), .ZN(n568)
+         );
+  AO221D1BWP U53 ( .A1(rght_spd[8]), .A2(n157), .B1(rght_spd[7]), .B2(n158), 
+        .C(n217), .Z(n216) );
+  AO221D1BWP U55 ( .A1(rght_spd[6]), .A2(n159), .B1(rght_spd[5]), .B2(n160), 
+        .C(n219), .Z(n218) );
+  AO221D1BWP U57 ( .A1(rght_spd[4]), .A2(n161), .B1(rght_spd[3]), .B2(n162), 
+        .C(n221), .Z(n220) );
+  AO222D1BWP U59 ( .A1(rght_spd[2]), .A2(n163), .B1(n223), .B2(rght_spd[0]), 
+        .C1(rght_spd[1]), .C2(n164), .Z(n222) );
+  XOR2D1BWP U61 ( .A1(\motor_drive/rghtPWM/count [10]), .A2(
+        \motor_drive/rghtPWM/add_29/carry [10]), .Z(\motor_drive/rghtPWM/N13 )
+         );
+  AO221D1BWP U71 ( .A1(lft_spd[8]), .A2(n145), .B1(lft_spd[7]), .B2(n146), .C(
+        n233), .Z(n232) );
+  AO221D1BWP U73 ( .A1(lft_spd[6]), .A2(n147), .B1(lft_spd[5]), .B2(n148), .C(
+        n235), .Z(n234) );
+  AO221D1BWP U75 ( .A1(lft_spd[4]), .A2(n149), .B1(lft_spd[3]), .B2(n150), .C(
+        n237), .Z(n236) );
+  AO222D1BWP U77 ( .A1(lft_spd[2]), .A2(n151), .B1(n239), .B2(lft_spd[0]), 
+        .C1(lft_spd[1]), .C2(n152), .Z(n238) );
+  XOR2D1BWP U79 ( .A1(\motor_drive/lftPWM/count [10]), .A2(
+        \motor_drive/lftPWM/add_29/carry [10]), .Z(\motor_drive/lftPWM/N13 )
+         );
+  XOR2D1BWP U90 ( .A1(n559), .A2(\Inertial_Interface/spi/add_66/carry[4] ), 
+        .Z(n246) );
+  AO222D1BWP U107 ( .A1(n1143), .A2(\Inertial_Interface/spi/rd_data[11] ), 
+        .B1(n259), .B2(n109), .C1(\Inertial_Interface/spi/n18 ), .C2(
+        \Inertial_Interface/spi/rd_data[10] ), .Z(\Inertial_Interface/spi/n27 ) );
+  INR3D1BWP U115 ( .A1(n261), .B1(n264), .B2(n256), .ZN(n263) );
+  IND2D2BWP U126 ( .A1(n244), .B1(INERT_SCLK), .ZN(n240) );
+  XOR2D1BWP U420 ( .A1(\Inertial_Interface/timer [15]), .A2(
+        \Inertial_Interface/add_64/carry [15]), .Z(\Inertial_Interface/N29 )
+         );
+  OA21D1BWP U438 ( .A1(n518), .A2(n38), .B(n514), .Z(n517) );
+  AO221D1BWP U439 ( .A1(n519), .A2(\Auth_block/receiver/baud_cnt [8]), .B1(
+        n518), .B2(n507), .C(n520), .Z(\Auth_block/receiver/n33 ) );
+  OA21D1BWP U442 ( .A1(n522), .A2(n38), .B(n514), .Z(n521) );
+  ND2D2BWP U458 ( .A1(n510), .A2(n38), .ZN(n514) );
+  ND2D2BWP U461 ( .A1(\Auth_block/receiver/n42 ), .A2(n43), .ZN(n506) );
+  ND2D2BWP U463 ( .A1(n518), .A2(n46), .ZN(n516) );
+  NR3D2BWP U464 ( .A1(\Auth_block/receiver/baud_cnt [7]), .A2(
+        \Auth_block/receiver/baud_cnt [8]), .A3(n41), .ZN(n518) );
+  ND4D2BWP U482 ( .A1(\Auth_block/rx_data [1]), .A2(\Auth_block/rx_data [0]), 
+        .A3(n544), .A4(n545), .ZN(n537) );
+  AO21D1BWP U486 ( .A1(n546), .A2(\A2D_interface/SPI_Interface/state [1]), .B(
+        \A2D_interface/SPI_Interface/n77 ), .Z(
+        \A2D_interface/SPI_Interface/nxt_state [1]) );
+  XOR2D1BWP U496 ( .A1(\A2D_interface/round_robin_cnt [1]), .A2(n166), .Z(n553) );
+  XOR2D1BWP U515 ( .A1(n558), .A2(
+        \A2D_interface/SPI_Interface/add_66/carry[4] ), .Z(n557) );
+  NR2XD2BWP U519 ( .A1(n546), .A2(n183), .ZN(\A2D_interface/SPI_Interface/n68 ) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[1]  ( .D(\Inertial_Interface/spi/n61 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [1]) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[0]  ( .D(\Inertial_Interface/spi/n62 ), 
+        .E(n1139), .CP(clk), .Q(\Inertial_Interface/AZL [0]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[26]  ( .D(
+        \Inertial_Interface/intgr/n226 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[15]) );
+  EDFQD1BWP \Inertial_Interface/spi/MISO_smpl_reg  ( .D(INERT_MISO), .E(
+        \Inertial_Interface/spi/n9 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/MISO_smpl ) );
+  EDFQD1BWP \A2D_interface/SPI_Interface/MISO_smpl_reg  ( .D(A2D_MISO), .E(
+        \A2D_interface/SPI_Interface/n77 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/MISO_smpl ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[14]  ( .D(
+        \Inertial_Interface/spi/n24 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[14] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[13]  ( .D(
+        \Inertial_Interface/spi/n25 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[13] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[12]  ( .D(
+        \Inertial_Interface/spi/n26 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[12] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[9]  ( .D(
+        \Inertial_Interface/spi/n29 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[9] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[8]  ( .D(
+        \Inertial_Interface/spi/n30 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[8] ) );
+  EDFKCND1BWP \A2D_interface/SPI_Interface/shft_cnt_reg[3]  ( .CN(
+        \A2D_interface/SPI_Interface/n66 ), .D(
+        \A2D_interface/SPI_Interface/N25 ), .E(
+        \A2D_interface/SPI_Interface/n68 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/shft_cnt [3]) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[0]  ( .D(n625), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [0]) );
+  DFQD1BWP \A2D_interface/round_robin_cnt_reg[0]  ( .D(n624), .CP(clk), .Q(
+        \A2D_interface/round_robin_cnt [0]) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[11]  ( .D(
+        \Inertial_Interface/spi/n27 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[11] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[10]  ( .D(
+        \Inertial_Interface/spi/n28 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/rd_data[10] ) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[4]  ( .D(n623), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/receiver/n56 ) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[7]  ( .D(n622), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [7]) );
+  DFQD1BWP \A2D_interface/round_robin_cnt_reg[1]  ( .D(n621), .CP(clk), .Q(
+        \A2D_interface/round_robin_cnt [1]) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[7]  ( .D(
+        \Inertial_Interface/spi/n31 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n55 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[2]  ( .D(
+        \Inertial_Interface/spi/n36 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n60 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[0]  ( .D(
+        \Inertial_Interface/spi/n38 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n62 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[4]  ( .D(
+        \Inertial_Interface/spi/n34 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n58 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[5]  ( .D(
+        \Inertial_Interface/spi/n33 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n57 ) );
+  DFSNQD1BWP \Auth_block/receiver/baud_cnt_reg[8]  ( .D(
+        \Auth_block/receiver/n33 ), .CP(clk), .SDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [8]) );
+  DFSNQD1BWP \Auth_block/receiver/rx_ff2_reg  ( .D(n620), .CP(clk), .SDN(rst_n), .Q(\Auth_block/receiver/rx_ff2 ) );
+  DFKSND1BWP \Inertial_Interface/spi/sclk_div_reg[0]  ( .D(n619), .SN(
+        \Inertial_Interface/spi/n20 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/sclk_div [0]), .QN(n576) );
+  DFKSND1BWP \A2D_interface/SPI_Interface/sclk_div_reg[0]  ( .D(n618), .SN(
+        \A2D_interface/SPI_Interface/n66 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/sclk_div [0]), .QN(n577) );
+  DFSNQD1BWP \Auth_block/receiver/baud_cnt_reg[4]  ( .D(
+        \Auth_block/receiver/n29 ), .CP(clk), .SDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [4]) );
+  DFSNQD1BWP \Auth_block/receiver/baud_cnt_reg[2]  ( .D(
+        \Auth_block/receiver/n27 ), .CP(clk), .SDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [2]) );
+  EDFKCND1BWP \A2D_interface/SPI_Interface/shft_cnt_reg[1]  ( .CN(
+        \A2D_interface/SPI_Interface/n66 ), .D(
+        \A2D_interface/SPI_Interface/N23 ), .E(
+        \A2D_interface/SPI_Interface/n68 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/shft_cnt [1]) );
+  EDFKCND1BWP \A2D_interface/SPI_Interface/shft_cnt_reg[2]  ( .CN(
+        \A2D_interface/SPI_Interface/n66 ), .D(
+        \A2D_interface/SPI_Interface/N24 ), .E(
+        \A2D_interface/SPI_Interface/n68 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/shft_cnt [2]) );
+  EDFKCND1BWP \Inertial_Interface/spi/shft_cnt_reg[0]  ( .CN(
+        \Inertial_Interface/spi/n20 ), .D(\Inertial_Interface/spi/n5 ), .E(
+        \Inertial_Interface/spi/n18 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/shft_cnt [0]), .QN(\Inertial_Interface/spi/n5 ) );
+  EDFKCND1BWP \A2D_interface/SPI_Interface/shft_cnt_reg[0]  ( .CN(
+        \A2D_interface/SPI_Interface/n66 ), .D(
+        \A2D_interface/SPI_Interface/n78 ), .E(
+        \A2D_interface/SPI_Interface/n68 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/shft_cnt [0]), .QN(
+        \A2D_interface/SPI_Interface/n78 ) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[1]  ( .D(n617), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [1]) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[5]  ( .D(n616), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [5]) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[6]  ( .D(n615), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [6]) );
+  DFKCNQD1BWP \Inertial_Interface/spi/sclk_div_reg[3]  ( .CN(
+        \Inertial_Interface/spi/n20 ), .D(\Inertial_Interface/spi/N12 ), .CP(
+        clk), .Q(\Inertial_Interface/spi/sclk_div [3]) );
+  DFKCNQD1BWP \A2D_interface/SPI_Interface/sclk_div_reg[3]  ( .CN(
+        \A2D_interface/SPI_Interface/n66 ), .D(
+        \A2D_interface/SPI_Interface/N12 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/sclk_div [3]) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[2]  ( .D(n614), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [2]) );
+  DFKSND1BWP \Inertial_Interface/spi/sclk_div_reg[2]  ( .D(
+        \Inertial_Interface/spi/N11 ), .SN(\Inertial_Interface/spi/n20 ), .CP(
+        clk), .Q(\Inertial_Interface/spi/sclk_div [2]) );
+  DFKSND1BWP \A2D_interface/SPI_Interface/sclk_div_reg[2]  ( .D(
+        \A2D_interface/SPI_Interface/N11 ), .SN(
+        \A2D_interface/SPI_Interface/n66 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/sclk_div [2]) );
+  DFKSND1BWP \Inertial_Interface/spi/sclk_div_reg[1]  ( .D(
+        \Inertial_Interface/spi/N10 ), .SN(\Inertial_Interface/spi/n20 ), .CP(
+        clk), .Q(\Inertial_Interface/spi/sclk_div [1]) );
+  DFKSND1BWP \A2D_interface/SPI_Interface/sclk_div_reg[1]  ( .D(
+        \A2D_interface/SPI_Interface/N10 ), .SN(
+        \A2D_interface/SPI_Interface/n66 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/sclk_div [1]) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[3]  ( .D(n613), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(\Auth_block/rx_data [3]) );
+  DFSNQD1BWP \Auth_block/receiver/baud_cnt_reg[1]  ( .D(
+        \Auth_block/receiver/n26 ), .CP(clk), .SDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [1]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[21]  ( .D(
+        \Inertial_Interface/intgr/N51 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[10]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[24]  ( .D(
+        \Inertial_Interface/intgr/N54 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[13]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[17]  ( .D(
+        \Inertial_Interface/intgr/N47 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[6]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[25]  ( .D(
+        \Inertial_Interface/intgr/n225 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[14]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[18]  ( .D(
+        \Inertial_Interface/intgr/N48 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[7]) );
+  DFSNQD2BWP \Auth_block/receiver/baud_cnt_reg[10]  ( .D(
+        \Auth_block/receiver/n35 ), .CP(clk), .SDN(rst_n), .Q(
+        \Auth_block/receiver/baud_cnt [10]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[23]  ( .D(
+        \Inertial_Interface/intgr/n227 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[12]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[7]  ( .D(\Inertial_Interface/spi/n55 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [7]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[1]  ( .D(
+        \Inertial_Interface/spi/n61 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [1]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[3]  ( .D(
+        \Inertial_Interface/spi/n59 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [3]) );
+  EDFQD1BWP \Inertial_Interface/pitch_L_reg[3]  ( .D(
+        \Inertial_Interface/spi/n59 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [3]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[6]  ( .D(
+        \Inertial_Interface/spi/n56 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [6]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[5]  ( .D(
+        \Inertial_Interface/spi/n57 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [5]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[4]  ( .D(
+        \Inertial_Interface/spi/n58 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [4]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[0]  ( .D(
+        \Inertial_Interface/spi/n62 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [0]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[7]  ( .D(
+        \Inertial_Interface/spi/n55 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [7]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[5]  ( .D(\Inertial_Interface/spi/n57 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [5]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[4]  ( .D(\Inertial_Interface/spi/n58 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [4]) );
+  EDFQD1BWP \Inertial_Interface/pitch_H_reg[2]  ( .D(
+        \Inertial_Interface/spi/n60 ), .E(\Inertial_Interface/n33 ), .CP(clk), 
+        .Q(\Inertial_Interface/pitch_H [2]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[8]  ( .D(
+        \Inertial_Interface/intgr/N38 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [8]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[9]  ( .D(
+        \Inertial_Interface/intgr/N39 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [9]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[5]  ( .D(
+        \Inertial_Interface/intgr/N35 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [5]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[4]  ( .D(
+        \Inertial_Interface/intgr/N34 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [4]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[6]  ( .D(
+        \Inertial_Interface/intgr/N36 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [6]) );
+  DFQD1BWP \A2D_interface/batt_reg[7]  ( .D(n612), .CP(clk), .Q(batt[7]) );
+  DFQD1BWP \A2D_interface/batt_reg[4]  ( .D(n611), .CP(clk), .Q(batt[4]) );
+  DFQD1BWP \A2D_interface/batt_reg[1]  ( .D(n610), .CP(clk), .Q(batt[1]) );
+  DFQD1BWP \A2D_interface/batt_reg[0]  ( .D(n608), .CP(clk), .Q(batt[0]) );
+  DFQD1BWP \A2D_interface/batt_reg[9]  ( .D(n609), .CP(clk), .Q(batt[9]) );
+  DFQD1BWP \A2D_interface/batt_reg[6]  ( .D(n606), .CP(clk), .Q(batt[6]) );
+  DFQD1BWP \A2D_interface/batt_reg[3]  ( .D(n607), .CP(clk), .Q(batt[3]) );
+  DFQD1BWP \A2D_interface/batt_reg[11]  ( .D(n605), .CP(clk), .Q(batt[11]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[6]  ( .D(\Inertial_Interface/spi/n56 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [6]) );
+  DFQD1BWP \A2D_interface/batt_reg[8]  ( .D(n604), .CP(clk), .Q(batt[8]) );
+  DFQD1BWP \A2D_interface/batt_reg[5]  ( .D(n602), .CP(clk), .Q(batt[5]) );
+  DFQD1BWP \A2D_interface/batt_reg[2]  ( .D(n603), .CP(clk), .Q(batt[2]) );
+  DFQD1BWP \A2D_interface/batt_reg[10]  ( .D(n601), .CP(clk), .Q(batt[10]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[10]  ( .D(n1137), .E(vld), 
+        .CP(clk), .CDN(rst_n), .Q(\Inertial_Interface/intgr/ptch_int [10]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[11]  ( .D(
+        \Inertial_Interface/intgr/N41 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[0]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[15]  ( .D(
+        \Inertial_Interface/intgr/N45 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[4]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[16]  ( .D(
+        \Inertial_Interface/intgr/N46 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[5]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[13]  ( .D(
+        \Inertial_Interface/intgr/N43 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[2]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[14]  ( .D(
+        \Inertial_Interface/intgr/N44 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[3]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[12]  ( .D(
+        \Inertial_Interface/intgr/N42 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[1]) );
+  IOA21D1BWP \Auth_block/U19  ( .A1(n37), .A2(\Auth_block/state [1]), .B(n36), 
+        .ZN(pwr_up) );
+  HA1D0BWP \Inertial_Interface/spi/U54  ( .A(
+        \Inertial_Interface/spi/shft_cnt [2]), .B(
+        \Inertial_Interface/spi/add_72_S2/carry[2] ), .CO(
+        \Inertial_Interface/spi/add_72_S2/carry[3] ), .S(
+        \Inertial_Interface/spi/N24 ) );
+  HA1D0BWP \A2D_interface/SPI_Interface/U47  ( .A(
+        \A2D_interface/SPI_Interface/shft_cnt [2]), .B(
+        \A2D_interface/SPI_Interface/add_72_S2/carry[2] ), .CO(
+        \A2D_interface/SPI_Interface/add_72_S2/carry[3] ), .S(
+        \A2D_interface/SPI_Interface/N24 ) );
+  HA1D0BWP \Inertial_Interface/spi/U57  ( .A(
+        \Inertial_Interface/spi/sclk_div [3]), .B(
+        \Inertial_Interface/spi/add_66/carry[3] ), .CO(
+        \Inertial_Interface/spi/add_66/carry[4] ), .S(
+        \Inertial_Interface/spi/N12 ) );
+  HA1D0BWP \A2D_interface/SPI_Interface/U50  ( .A(
+        \A2D_interface/SPI_Interface/sclk_div [3]), .B(
+        \A2D_interface/SPI_Interface/add_66/carry[3] ), .CO(
+        \A2D_interface/SPI_Interface/add_66/carry[4] ), .S(
+        \A2D_interface/SPI_Interface/N12 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_14  ( .A(
+        \Inertial_Interface/timer [14]), .B(
+        \Inertial_Interface/add_64/carry [14]), .CO(
+        \Inertial_Interface/add_64/carry [15]), .S(\Inertial_Interface/N28 )
+         );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_9  ( .A(
+        \motor_drive/lftPWM/count [9]), .B(
+        \motor_drive/lftPWM/add_29/carry [9]), .CO(
+        \motor_drive/lftPWM/add_29/carry [10]), .S(\motor_drive/lftPWM/N12 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_9  ( .A(
+        \motor_drive/rghtPWM/count [9]), .B(
+        \motor_drive/rghtPWM/add_29/carry [9]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [10]), .S(\motor_drive/rghtPWM/N12 )
+         );
+  HA1D0BWP \Inertial_Interface/spi/U55  ( .A(
+        \Inertial_Interface/spi/shft_cnt [1]), .B(
+        \Inertial_Interface/spi/shft_cnt [0]), .CO(
+        \Inertial_Interface/spi/add_72_S2/carry[2] ), .S(
+        \Inertial_Interface/spi/N23 ) );
+  HA1D0BWP \A2D_interface/SPI_Interface/U48  ( .A(
+        \A2D_interface/SPI_Interface/shft_cnt [1]), .B(
+        \A2D_interface/SPI_Interface/shft_cnt [0]), .CO(
+        \A2D_interface/SPI_Interface/add_72_S2/carry[2] ), .S(
+        \A2D_interface/SPI_Interface/N23 ) );
+  HA1D0BWP \Inertial_Interface/spi/U52  ( .A(
+        \Inertial_Interface/spi/sclk_div [2]), .B(
+        \Inertial_Interface/spi/add_66/carry[2] ), .CO(
+        \Inertial_Interface/spi/add_66/carry[3] ), .S(
+        \Inertial_Interface/spi/N11 ) );
+  HA1D0BWP \A2D_interface/SPI_Interface/U45  ( .A(
+        \A2D_interface/SPI_Interface/sclk_div [2]), .B(
+        \A2D_interface/SPI_Interface/add_66/carry[2] ), .CO(
+        \A2D_interface/SPI_Interface/add_66/carry[3] ), .S(
+        \A2D_interface/SPI_Interface/N11 ) );
+  HA1D0BWP \Inertial_Interface/spi/U53  ( .A(
+        \Inertial_Interface/spi/sclk_div [1]), .B(
+        \Inertial_Interface/spi/sclk_div [0]), .CO(
+        \Inertial_Interface/spi/add_66/carry[2] ), .S(
+        \Inertial_Interface/spi/N10 ) );
+  HA1D0BWP \A2D_interface/SPI_Interface/U46  ( .A(
+        \A2D_interface/SPI_Interface/sclk_div [1]), .B(
+        \A2D_interface/SPI_Interface/sclk_div [0]), .CO(
+        \A2D_interface/SPI_Interface/add_66/carry[2] ), .S(
+        \A2D_interface/SPI_Interface/N10 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_10  ( .A(
+        \Inertial_Interface/timer [10]), .B(
+        \Inertial_Interface/add_64/carry [10]), .CO(
+        \Inertial_Interface/add_64/carry [11]), .S(\Inertial_Interface/N24 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_7  ( .A(
+        \Inertial_Interface/timer [7]), .B(
+        \Inertial_Interface/add_64/carry [7]), .CO(
+        \Inertial_Interface/add_64/carry [8]), .S(\Inertial_Interface/N21 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_3  ( .A(
+        \Inertial_Interface/timer [3]), .B(
+        \Inertial_Interface/add_64/carry [3]), .CO(
+        \Inertial_Interface/add_64/carry [4]), .S(\Inertial_Interface/N17 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_11  ( .A(
+        \Inertial_Interface/timer [11]), .B(
+        \Inertial_Interface/add_64/carry [11]), .CO(
+        \Inertial_Interface/add_64/carry [12]), .S(\Inertial_Interface/N25 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_8  ( .A(
+        \Inertial_Interface/timer [8]), .B(
+        \Inertial_Interface/add_64/carry [8]), .CO(
+        \Inertial_Interface/add_64/carry [9]), .S(\Inertial_Interface/N22 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_4  ( .A(
+        \Inertial_Interface/timer [4]), .B(
+        \Inertial_Interface/add_64/carry [4]), .CO(
+        \Inertial_Interface/add_64/carry [5]), .S(\Inertial_Interface/N18 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_7  ( .A(
+        \motor_drive/lftPWM/count [7]), .B(
+        \motor_drive/lftPWM/add_29/carry [7]), .CO(
+        \motor_drive/lftPWM/add_29/carry [8]), .S(\motor_drive/lftPWM/N10 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_6  ( .A(
+        \motor_drive/lftPWM/count [6]), .B(
+        \motor_drive/lftPWM/add_29/carry [6]), .CO(
+        \motor_drive/lftPWM/add_29/carry [7]), .S(\motor_drive/lftPWM/N9 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_5  ( .A(
+        \motor_drive/lftPWM/count [5]), .B(
+        \motor_drive/lftPWM/add_29/carry [5]), .CO(
+        \motor_drive/lftPWM/add_29/carry [6]), .S(\motor_drive/lftPWM/N8 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_2  ( .A(
+        \motor_drive/lftPWM/count [2]), .B(
+        \motor_drive/lftPWM/add_29/carry [2]), .CO(
+        \motor_drive/lftPWM/add_29/carry [3]), .S(\motor_drive/lftPWM/N5 ) );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_7  ( .A(
+        \motor_drive/rghtPWM/count [7]), .B(
+        \motor_drive/rghtPWM/add_29/carry [7]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [8]), .S(\motor_drive/rghtPWM/N10 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_6  ( .A(
+        \motor_drive/rghtPWM/count [6]), .B(
+        \motor_drive/rghtPWM/add_29/carry [6]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [7]), .S(\motor_drive/rghtPWM/N9 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_5  ( .A(
+        \motor_drive/rghtPWM/count [5]), .B(
+        \motor_drive/rghtPWM/add_29/carry [5]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [6]), .S(\motor_drive/rghtPWM/N8 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_2  ( .A(
+        \motor_drive/rghtPWM/count [2]), .B(
+        \motor_drive/rghtPWM/add_29/carry [2]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [3]), .S(\motor_drive/rghtPWM/N5 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_12  ( .A(
+        \Inertial_Interface/timer [12]), .B(
+        \Inertial_Interface/add_64/carry [12]), .CO(
+        \Inertial_Interface/add_64/carry [13]), .S(\Inertial_Interface/N26 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_9  ( .A(
+        \Inertial_Interface/timer [9]), .B(
+        \Inertial_Interface/add_64/carry [9]), .CO(
+        \Inertial_Interface/add_64/carry [10]), .S(\Inertial_Interface/N23 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_5  ( .A(
+        \Inertial_Interface/timer [5]), .B(
+        \Inertial_Interface/add_64/carry [5]), .CO(
+        \Inertial_Interface/add_64/carry [6]), .S(\Inertial_Interface/N19 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_13  ( .A(
+        \Inertial_Interface/timer [13]), .B(
+        \Inertial_Interface/add_64/carry [13]), .CO(
+        \Inertial_Interface/add_64/carry [14]), .S(\Inertial_Interface/N27 )
+         );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_6  ( .A(
+        \Inertial_Interface/timer [6]), .B(
+        \Inertial_Interface/add_64/carry [6]), .CO(
+        \Inertial_Interface/add_64/carry [7]), .S(\Inertial_Interface/N20 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_2  ( .A(
+        \Inertial_Interface/timer [2]), .B(
+        \Inertial_Interface/add_64/carry [2]), .CO(
+        \Inertial_Interface/add_64/carry [3]), .S(\Inertial_Interface/N16 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_1  ( .A(
+        \motor_drive/lftPWM/count [1]), .B(\motor_drive/lftPWM/count [0]), 
+        .CO(\motor_drive/lftPWM/add_29/carry [2]), .S(\motor_drive/lftPWM/N4 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_1  ( .A(
+        \motor_drive/rghtPWM/count [1]), .B(\motor_drive/rghtPWM/count [0]), 
+        .CO(\motor_drive/rghtPWM/add_29/carry [2]), .S(
+        \motor_drive/rghtPWM/N4 ) );
+  HA1D0BWP \Inertial_Interface/add_64/U1_1_1  ( .A(
+        \Inertial_Interface/timer [1]), .B(\Inertial_Interface/timer [0]), 
+        .CO(\Inertial_Interface/add_64/carry [2]), .S(\Inertial_Interface/N15 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_4  ( .A(
+        \motor_drive/lftPWM/count [4]), .B(
+        \motor_drive/lftPWM/add_29/carry [4]), .CO(
+        \motor_drive/lftPWM/add_29/carry [5]), .S(\motor_drive/lftPWM/N7 ) );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_4  ( .A(
+        \motor_drive/rghtPWM/count [4]), .B(
+        \motor_drive/rghtPWM/add_29/carry [4]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [5]), .S(\motor_drive/rghtPWM/N7 )
+         );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_8  ( .A(
+        \motor_drive/lftPWM/count [8]), .B(
+        \motor_drive/lftPWM/add_29/carry [8]), .CO(
+        \motor_drive/lftPWM/add_29/carry [9]), .S(\motor_drive/lftPWM/N11 ) );
+  HA1D0BWP \motor_drive/lftPWM/add_29/U1_1_3  ( .A(
+        \motor_drive/lftPWM/count [3]), .B(
+        \motor_drive/lftPWM/add_29/carry [3]), .CO(
+        \motor_drive/lftPWM/add_29/carry [4]), .S(\motor_drive/lftPWM/N6 ) );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_8  ( .A(
+        \motor_drive/rghtPWM/count [8]), .B(
+        \motor_drive/rghtPWM/add_29/carry [8]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [9]), .S(\motor_drive/rghtPWM/N11 )
+         );
+  HA1D0BWP \motor_drive/rghtPWM/add_29/U1_1_3  ( .A(
+        \motor_drive/rghtPWM/count [3]), .B(
+        \motor_drive/rghtPWM/add_29/carry [3]), .CO(
+        \motor_drive/rghtPWM/add_29/carry [4]), .S(\motor_drive/rghtPWM/N6 )
+         );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_24  ( .A(\pepperoni_piezo/timer [24]), 
+        .B(\pepperoni_piezo/add_16/carry [24]), .CO(
+        \pepperoni_piezo/add_16/carry [25]), .S(\pepperoni_piezo/N27 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_23  ( .A(\pepperoni_piezo/timer [23]), 
+        .B(\pepperoni_piezo/add_16/carry [23]), .CO(
+        \pepperoni_piezo/add_16/carry [24]), .S(\pepperoni_piezo/N26 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_22  ( .A(\pepperoni_piezo/timer [22]), 
+        .B(\pepperoni_piezo/add_16/carry [22]), .CO(
+        \pepperoni_piezo/add_16/carry [23]), .S(\pepperoni_piezo/N25 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_21  ( .A(\pepperoni_piezo/timer [21]), 
+        .B(\pepperoni_piezo/add_16/carry [21]), .CO(
+        \pepperoni_piezo/add_16/carry [22]), .S(\pepperoni_piezo/N24 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_20  ( .A(\pepperoni_piezo/timer [20]), 
+        .B(\pepperoni_piezo/add_16/carry [20]), .CO(
+        \pepperoni_piezo/add_16/carry [21]), .S(\pepperoni_piezo/N23 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_19  ( .A(\pepperoni_piezo/timer [19]), 
+        .B(\pepperoni_piezo/add_16/carry [19]), .CO(
+        \pepperoni_piezo/add_16/carry [20]), .S(\pepperoni_piezo/N22 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_18  ( .A(\pepperoni_piezo/timer [18]), 
+        .B(\pepperoni_piezo/add_16/carry [18]), .CO(
+        \pepperoni_piezo/add_16/carry [19]), .S(\pepperoni_piezo/N21 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_17  ( .A(\pepperoni_piezo/timer [17]), 
+        .B(\pepperoni_piezo/add_16/carry [17]), .CO(
+        \pepperoni_piezo/add_16/carry [18]), .S(\pepperoni_piezo/N20 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_14  ( .A(\pepperoni_piezo/timer [14]), 
+        .B(\pepperoni_piezo/add_16/carry [14]), .CO(
+        \pepperoni_piezo/add_16/carry [15]), .S(\pepperoni_piezo/N17 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_13  ( .A(\pepperoni_piezo/timer [13]), 
+        .B(\pepperoni_piezo/add_16/carry [13]), .CO(
+        \pepperoni_piezo/add_16/carry [14]), .S(\pepperoni_piezo/N16 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_12  ( .A(\pepperoni_piezo/timer [12]), 
+        .B(\pepperoni_piezo/add_16/carry [12]), .CO(
+        \pepperoni_piezo/add_16/carry [13]), .S(\pepperoni_piezo/N15 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_11  ( .A(\pepperoni_piezo/timer [11]), 
+        .B(\pepperoni_piezo/add_16/carry [11]), .CO(
+        \pepperoni_piezo/add_16/carry [12]), .S(\pepperoni_piezo/N14 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_10  ( .A(\pepperoni_piezo/timer [10]), 
+        .B(\pepperoni_piezo/add_16/carry [10]), .CO(
+        \pepperoni_piezo/add_16/carry [11]), .S(\pepperoni_piezo/N13 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_9  ( .A(\pepperoni_piezo/timer [9]), 
+        .B(\pepperoni_piezo/add_16/carry [9]), .CO(
+        \pepperoni_piezo/add_16/carry [10]), .S(\pepperoni_piezo/N12 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_8  ( .A(\pepperoni_piezo/timer [8]), 
+        .B(\pepperoni_piezo/add_16/carry [8]), .CO(
+        \pepperoni_piezo/add_16/carry [9]), .S(\pepperoni_piezo/N11 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_7  ( .A(\pepperoni_piezo/timer [7]), 
+        .B(\pepperoni_piezo/add_16/carry [7]), .CO(
+        \pepperoni_piezo/add_16/carry [8]), .S(\pepperoni_piezo/N10 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_6  ( .A(\pepperoni_piezo/timer [6]), 
+        .B(\pepperoni_piezo/add_16/carry [6]), .CO(
+        \pepperoni_piezo/add_16/carry [7]), .S(\pepperoni_piezo/N9 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_5  ( .A(\pepperoni_piezo/timer [5]), 
+        .B(\pepperoni_piezo/add_16/carry [5]), .CO(
+        \pepperoni_piezo/add_16/carry [6]), .S(\pepperoni_piezo/N8 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_4  ( .A(\pepperoni_piezo/timer [4]), 
+        .B(\pepperoni_piezo/add_16/carry [4]), .CO(
+        \pepperoni_piezo/add_16/carry [5]), .S(\pepperoni_piezo/N7 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_3  ( .A(\pepperoni_piezo/timer [3]), 
+        .B(\pepperoni_piezo/add_16/carry [3]), .CO(
+        \pepperoni_piezo/add_16/carry [4]), .S(\pepperoni_piezo/N6 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_2  ( .A(\pepperoni_piezo/timer [2]), 
+        .B(\pepperoni_piezo/add_16/carry [2]), .CO(
+        \pepperoni_piezo/add_16/carry [3]), .S(\pepperoni_piezo/N5 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_1  ( .A(\pepperoni_piezo/timer [1]), 
+        .B(\pepperoni_piezo/timer [0]), .CO(\pepperoni_piezo/add_16/carry [2]), 
+        .S(\pepperoni_piezo/N4 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_15  ( .A(\pepperoni_piezo/timer [15]), 
+        .B(\pepperoni_piezo/add_16/carry [15]), .CO(
+        \pepperoni_piezo/add_16/carry [16]), .S(\pepperoni_piezo/N18 ) );
+  HA1D0BWP \pepperoni_piezo/add_16/U1_1_16  ( .A(\pepperoni_piezo/timer [16]), 
+        .B(\pepperoni_piezo/add_16/carry [16]), .CO(
+        \pepperoni_piezo/add_16/carry [17]), .S(\pepperoni_piezo/N19 ) );
+  EDFQD1BWP \Auth_block/receiver/shift_reg_reg[8]  ( .D(n600), .E(
+        \Auth_block/receiver/n42 ), .CP(clk), .Q(
+        \Auth_block/receiver/shift_reg[8] ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[3]  ( .D(
+        \Inertial_Interface/spi/n35 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n59 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[1]  ( .D(
+        \Inertial_Interface/spi/n37 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n61 ) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[6]  ( .D(
+        \Inertial_Interface/spi/n32 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/n56 ) );
+  EDFQD4BWP \Inertial_Interface/pitch_L_reg[1]  ( .D(
+        \Inertial_Interface/spi/n61 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [1]) );
+  EDFCNQD4BWP \Inertial_Interface/intgr/ptch_int_reg[0]  ( .D(
+        \Inertial_Interface/intgr/N30 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [0]) );
+  DFSNQD1BWP \Auth_block/receiver/rx_ff1_reg  ( .D(RX), .CP(clk), .SDN(rst_n), 
+        .Q(\Auth_block/receiver/rx_ff1 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[11]  ( .D(n599), .CP(clk), .Q(
+        \A2D_interface/n3 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[11]  ( .D(n598), .CP(clk), .Q(
+        \A2D_interface/n2 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[10]  ( .D(n597), .CP(clk), .Q(
+        \A2D_interface/n4 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[10]  ( .D(n596), .CP(clk), .Q(
+        \A2D_interface/n6 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[9]  ( .D(n595), .CP(clk), .Q(
+        \A2D_interface/n5 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[9]  ( .D(n594), .CP(clk), .Q(
+        \A2D_interface/n9 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[8]  ( .D(n593), .CP(clk), .Q(
+        \A2D_interface/n7 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[8]  ( .D(n592), .CP(clk), .Q(
+        \A2D_interface/n8 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[7]  ( .D(n591), .CP(clk), .Q(
+        \A2D_interface/n12 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[7]  ( .D(n590), .CP(clk), .Q(
+        \A2D_interface/n10 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[6]  ( .D(n589), .CP(clk), .Q(
+        \A2D_interface/n11 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[6]  ( .D(n582), .CP(clk), .Q(
+        \A2D_interface/n15 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[5]  ( .D(n583), .CP(clk), .Q(
+        \A2D_interface/n13 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[5]  ( .D(n584), .CP(clk), .Q(
+        \A2D_interface/n14 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[4]  ( .D(n585), .CP(clk), .Q(
+        \A2D_interface/n18 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[4]  ( .D(n580), .CP(clk), .Q(
+        \A2D_interface/n16 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[3]  ( .D(n581), .CP(clk), .Q(
+        \A2D_interface/n17 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[3]  ( .D(n586), .CP(clk), .Q(
+        \A2D_interface/n21 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[2]  ( .D(n587), .CP(clk), .Q(
+        \A2D_interface/n19 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[2]  ( .D(n626), .CP(clk), .Q(
+        \A2D_interface/n20 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[1]  ( .D(n629), .CP(clk), .Q(
+        \A2D_interface/n24 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[1]  ( .D(n628), .CP(clk), .Q(
+        \A2D_interface/n22 ) );
+  DFQD1BWP \A2D_interface/rght_ld_reg[0]  ( .D(n630), .CP(clk), .Q(
+        \A2D_interface/n23 ) );
+  DFQD1BWP \A2D_interface/lft_ld_reg[0]  ( .D(n627), .CP(clk), .Q(
+        \A2D_interface/n25 ) );
+  DFSNQD1BWP \A2D_interface/SPI_Interface/SS_n_reg  ( .D(
+        \A2D_interface/SPI_Interface/n64 ), .CP(clk), .SDN(rst_n), .Q(n1146)
+         );
+  DFSNQD1BWP \Inertial_Interface/spi/SS_n_reg  ( .D(
+        \Inertial_Interface/spi/n22 ), .CP(clk), .SDN(rst_n), .Q(n1144) );
+  DFCNQD2BWP \Inertial_Interface/state_reg[2]  ( .D(
+        \Inertial_Interface/nxt_state [2]), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/state [2]) );
+  DFQD1BWP \Inertial_Interface/spi/shft_reg_reg[15]  ( .D(
+        \Inertial_Interface/spi/n23 ), .CP(clk), .Q(n1145) );
+  DFCNQD2BWP \Inertial_Interface/spi/done_reg  ( .D(
+        \Inertial_Interface/spi/n21 ), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/done ) );
+  EDFQD4BWP \Inertial_Interface/pitch_L_reg[2]  ( .D(
+        \Inertial_Interface/spi/n60 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [2]) );
+  DFD1BWP \Inertial_Interface/spi/sclk_div_reg[4]  ( .D(n707), .CP(clk), .Q(
+        n559), .QN(n124) );
+  DFD1BWP \A2D_interface/SPI_Interface/sclk_div_reg[4]  ( .D(n708), .CP(clk), 
+        .Q(n558), .QN(n1148) );
+  EDFKCNQD1BWP \Inertial_Interface/spi/shft_cnt_reg[3]  ( .CN(
+        \Inertial_Interface/spi/n20 ), .D(\Inertial_Interface/spi/N25 ), .E(
+        \Inertial_Interface/spi/n18 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/shft_cnt [3]) );
+  EDFKCNQD1BWP \Inertial_Interface/spi/shft_cnt_reg[2]  ( .CN(
+        \Inertial_Interface/spi/n20 ), .D(\Inertial_Interface/spi/N24 ), .E(
+        \Inertial_Interface/spi/n18 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/shft_cnt [2]) );
+  EDFKCNQD1BWP \Inertial_Interface/spi/shft_cnt_reg[1]  ( .CN(
+        \Inertial_Interface/spi/n20 ), .D(\Inertial_Interface/spi/N23 ), .E(
+        \Inertial_Interface/spi/n18 ), .CP(clk), .Q(
+        \Inertial_Interface/spi/shft_cnt [1]) );
+  DFCNQD4BWP \Inertial_Interface/intgr/ptch_int_reg[1]  ( .D(n816), .CP(clk), 
+        .CDN(rst_n), .Q(\Inertial_Interface/intgr/ptch_int [1]) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[12]  ( .D(
+        \A2D_interface/SPI_Interface/n60 ), .CP(clk), .QN(n171) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[0]  ( .D(
+        \A2D_interface/SPI_Interface/n48 ), .CP(clk), .QN(n182) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[13]  ( .D(
+        \A2D_interface/SPI_Interface/n61 ), .CP(clk), .QN(n170) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[14]  ( .D(
+        \A2D_interface/SPI_Interface/n62 ), .CP(clk), .QN(n169) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[10]  ( .D(
+        \A2D_interface/SPI_Interface/n58 ), .CP(clk), .QN(n172) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[9]  ( .D(
+        \A2D_interface/SPI_Interface/n57 ), .CP(clk), .QN(n173) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[8]  ( .D(
+        \A2D_interface/SPI_Interface/n56 ), .CP(clk), .QN(n174) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[7]  ( .D(
+        \A2D_interface/SPI_Interface/n55 ), .CP(clk), .QN(n175) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[6]  ( .D(
+        \A2D_interface/SPI_Interface/n54 ), .CP(clk), .QN(n176) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[5]  ( .D(
+        \A2D_interface/SPI_Interface/n53 ), .CP(clk), .QN(n177) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[4]  ( .D(
+        \A2D_interface/SPI_Interface/n52 ), .CP(clk), .QN(n178) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[3]  ( .D(
+        \A2D_interface/SPI_Interface/n51 ), .CP(clk), .QN(n179) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[2]  ( .D(
+        \A2D_interface/SPI_Interface/n50 ), .CP(clk), .QN(n180) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[1]  ( .D(
+        \A2D_interface/SPI_Interface/n49 ), .CP(clk), .QN(n181) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[15]  ( .D(
+        \A2D_interface/SPI_Interface/n63 ), .CP(clk), .Q(n1147) );
+  DFD1BWP \A2D_interface/SPI_Interface/shft_reg_reg[11]  ( .D(
+        \A2D_interface/SPI_Interface/n59 ), .CP(clk), .Q(
+        \A2D_interface/SPI_Interface/rd_data[11] ) );
+  EDFQD4BWP \Inertial_Interface/AZL_reg[2]  ( .D(\Inertial_Interface/spi/n60 ), 
+        .E(n1139), .CP(clk), .Q(net32096) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[20]  ( .D(
+        \Inertial_Interface/intgr/N50 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[9]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[0]  ( .D(\Inertial_Interface/spi/n62 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [0]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[1]  ( .D(\Inertial_Interface/spi/n61 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [1]) );
+  EDFQD1BWP \Inertial_Interface/pitch_L_reg[4]  ( .D(
+        \Inertial_Interface/spi/n58 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [4]) );
+  EDFQD1BWP \Inertial_Interface/pitch_L_reg[6]  ( .D(
+        \Inertial_Interface/spi/n56 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [6]) );
+  EDFQD1BWP \Inertial_Interface/pitch_L_reg[7]  ( .D(
+        \Inertial_Interface/spi/n55 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [7]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[3]  ( .D(\Inertial_Interface/spi/n59 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [3]) );
+  EDFQD1BWP \Inertial_Interface/AZH_reg[2]  ( .D(\Inertial_Interface/spi/n60 ), 
+        .E(n1138), .CP(clk), .Q(\Inertial_Interface/AZH [2]) );
+  DFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[2]  ( .D(
+        \Inertial_Interface/intgr/n5 ), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [2]) );
+  EDFQD1BWP \Inertial_Interface/pitch_L_reg[5]  ( .D(
+        \Inertial_Interface/spi/n57 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [5]) );
+  EDFQD2BWP \Inertial_Interface/pitch_L_reg[0]  ( .D(
+        \Inertial_Interface/spi/n62 ), .E(n575), .CP(clk), .Q(
+        \Inertial_Interface/pitch_L [0]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[19]  ( .D(
+        \Inertial_Interface/intgr/N49 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[8]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[22]  ( .D(
+        \Inertial_Interface/intgr/N52 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        ptch[11]) );
+  EDFCNQD1BWP \Inertial_Interface/intgr/ptch_int_reg[7]  ( .D(
+        \Inertial_Interface/intgr/N37 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [7]) );
+  EDFCNQD2BWP \Inertial_Interface/intgr/ptch_int_reg[3]  ( .D(
+        \Inertial_Interface/intgr/N33 ), .E(vld), .CP(clk), .CDN(rst_n), .Q(
+        \Inertial_Interface/intgr/ptch_int [3]) );
+  AO21D1BWP U22 ( .A1(n197), .A2(\Inertial_Interface/pitch_L [6]), .B(
+        \Inertial_Interface/pitch_L [7]), .Z(n199) );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_7  ( .A(
+        \Inertial_Interface/intgr/ptch_int [7]), .B(n564), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[7] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[8] ), 
+        .S(\Inertial_Interface/intgr/N37 ) );
+  XOR2D1BWP U23 ( .A1(\Inertial_Interface/pitch_H [0]), .A2(n198), .Z(n565) );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_8  ( .A(
+        \Inertial_Interface/intgr/ptch_int [8]), .B(n565), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[8] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[9] ), 
+        .S(\Inertial_Interface/intgr/N38 ) );
+  XOR2D1BWP U26 ( .A1(\Inertial_Interface/pitch_H [2]), .A2(n200), .Z(n567) );
+  FA1D2BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_9  ( .A(
+        \Inertial_Interface/intgr/ptch_int [9]), .B(n566), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[9] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[10] ), 
+        .S(\Inertial_Interface/intgr/N39 ) );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_6  ( .A(
+        \Inertial_Interface/intgr/ptch_int [6]), .B(n563), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[6] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[7] ), 
+        .S(\Inertial_Interface/intgr/N36 ) );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_3  ( .A(
+        \Inertial_Interface/intgr/ptch_int [3]), .B(n560), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[3] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[4] ), 
+        .S(\Inertial_Interface/intgr/N33 ) );
+  XNR2D1BWP U18 ( .A1(\Inertial_Interface/pitch_L [4]), .A2(n195), .ZN(n561)
+         );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_4  ( .A(
+        \Inertial_Interface/intgr/ptch_int [4]), .B(n561), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[4] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[5] ), 
+        .S(\Inertial_Interface/intgr/N34 ) );
+  FA1D1BWP \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/U2_5  ( .A(
+        \Inertial_Interface/intgr/ptch_int [5]), .B(n562), .CI(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[5] ), 
+        .CO(\Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[6] ), 
+        .S(\Inertial_Interface/intgr/N35 ) );
+  CKBD1BWP U674 ( .I(n185), .Z(n578) );
+  DEL050D1BWP U675 ( .I(\Inertial_Interface/INT_meta1 ), .Z(n579) );
+  CKND0BWP U676 ( .I(\Inertial_Interface/timer [0]), .ZN(n121) );
+  DEL050D1BWP U677 ( .I(\A2D_interface/n16 ), .Z(n580) );
+  DEL050D1BWP U678 ( .I(\A2D_interface/n17 ), .Z(n581) );
+  DEL050D1BWP U679 ( .I(\A2D_interface/n15 ), .Z(n582) );
+  DEL050D1BWP U680 ( .I(\A2D_interface/n13 ), .Z(n583) );
+  DEL050D1BWP U681 ( .I(\A2D_interface/n14 ), .Z(n584) );
+  DEL050D1BWP U682 ( .I(\A2D_interface/n18 ), .Z(n585) );
+  DEL050D1BWP U683 ( .I(\A2D_interface/n21 ), .Z(n586) );
+  DEL050D1BWP U684 ( .I(\A2D_interface/n19 ), .Z(n587) );
+  CKBD1BWP U685 ( .I(\Auth_block/receiver/n37 ), .Z(n588) );
+  OAI22D0BWP U686 ( .A1(\Auth_block/state [0]), .A2(n537), .B1(n36), .B2(n541), 
+        .ZN(\Auth_block/nxt_state [0]) );
+  DEL050D1BWP U687 ( .I(\A2D_interface/n11 ), .Z(n589) );
+  DEL050D1BWP U688 ( .I(\A2D_interface/n10 ), .Z(n590) );
+  DEL050D1BWP U689 ( .I(\A2D_interface/n12 ), .Z(n591) );
+  DEL050D1BWP U690 ( .I(\A2D_interface/n8 ), .Z(n592) );
+  DEL050D1BWP U691 ( .I(\A2D_interface/n7 ), .Z(n593) );
+  DEL050D1BWP U692 ( .I(\A2D_interface/n9 ), .Z(n594) );
+  DEL050D1BWP U693 ( .I(\A2D_interface/n5 ), .Z(n595) );
+  DEL050D1BWP U694 ( .I(\A2D_interface/n6 ), .Z(n596) );
+  DEL050D1BWP U695 ( .I(\A2D_interface/n4 ), .Z(n597) );
+  DEL050D1BWP U696 ( .I(\A2D_interface/n2 ), .Z(n598) );
+  DEL050D1BWP U697 ( .I(\A2D_interface/n3 ), .Z(n599) );
+  CKBD1BWP U698 ( .I(\Auth_block/receiver/rx_ff2 ), .Z(n600) );
+  DEL050D1BWP U699 ( .I(batt[10]), .Z(n601) );
+  DEL050D1BWP U700 ( .I(batt[5]), .Z(n602) );
+  DEL050D1BWP U701 ( .I(batt[2]), .Z(n603) );
+  DEL050D1BWP U702 ( .I(batt[8]), .Z(n604) );
+  DEL050D1BWP U703 ( .I(batt[11]), .Z(n605) );
+  DEL050D1BWP U704 ( .I(batt[6]), .Z(n606) );
+  DEL050D1BWP U705 ( .I(batt[3]), .Z(n607) );
+  DEL050D1BWP U706 ( .I(batt[0]), .Z(n608) );
+  DEL050D1BWP U707 ( .I(batt[9]), .Z(n609) );
+  DEL050D1BWP U708 ( .I(batt[1]), .Z(n610) );
+  DEL050D1BWP U709 ( .I(batt[4]), .Z(n611) );
+  DEL050D1BWP U710 ( .I(batt[7]), .Z(n612) );
+  CKBD1BWP U711 ( .I(\Auth_block/receiver/n56 ), .Z(n613) );
+  CKBD1BWP U712 ( .I(\Auth_block/rx_data [3]), .Z(n614) );
+  CKBD1BWP U713 ( .I(\Auth_block/rx_data [7]), .Z(n615) );
+  CKBD1BWP U714 ( .I(\Auth_block/rx_data [6]), .Z(n616) );
+  CKBD1BWP U715 ( .I(\Auth_block/rx_data [2]), .Z(n617) );
+  CKBD1BWP U716 ( .I(n577), .Z(n618) );
+  CKBD1BWP U717 ( .I(n576), .Z(n619) );
+  DEL050D1BWP U718 ( .I(\Auth_block/receiver/rx_ff1 ), .Z(n620) );
+  AO221D0BWP U719 ( .A1(\Inertial_Interface/spi/MISO_smpl ), .A2(
+        \Inertial_Interface/spi/n18 ), .B1(\Inertial_Interface/spi/n62 ), .B2(
+        n1143), .C(n829), .Z(\Inertial_Interface/spi/n38 ) );
+  BUFFD0BWP U720 ( .I(\A2D_interface/round_robin_cnt [1]), .Z(n621) );
+  CKBD1BWP U721 ( .I(\Auth_block/receiver/shift_reg[8] ), .Z(n622) );
+  CKBD1BWP U722 ( .I(\Auth_block/rx_data [5]), .Z(n623) );
+  DEL050D1BWP U723 ( .I(\A2D_interface/round_robin_cnt [0]), .Z(n624) );
+  CKBD1BWP U724 ( .I(\Auth_block/rx_data [1]), .Z(n625) );
+  DEL050D1BWP U725 ( .I(\A2D_interface/n20 ), .Z(n626) );
+  DEL050D1BWP U726 ( .I(\A2D_interface/n25 ), .Z(n627) );
+  DEL050D1BWP U727 ( .I(\A2D_interface/n22 ), .Z(n628) );
+  DEL050D1BWP U728 ( .I(\A2D_interface/n24 ), .Z(n629) );
+  DEL050D1BWP U729 ( .I(\A2D_interface/n23 ), .Z(n630) );
+  ND2D3BWP U730 ( .A1(\Inertial_Interface/pitch_L [1]), .A2(
+        \Inertial_Interface/intgr/ptch_int [1]), .ZN(n674) );
+  CKXOR2D2BWP U731 ( .A1(\Inertial_Interface/pitch_L [2]), .A2(
+        \Inertial_Interface/pitch_L [1]), .Z(n573) );
+  CKND2D2BWP U732 ( .A1(n573), .A2(\Inertial_Interface/intgr/ptch_int [2]), 
+        .ZN(net23834) );
+  INR2XD1BWP U733 ( .A1(n680), .B1(n573), .ZN(n677) );
+  ND2D1BWP U734 ( .A1(n194), .A2(\Inertial_Interface/pitch_L [3]), .ZN(n633)
+         );
+  ND2D2BWP U735 ( .A1(n631), .A2(n632), .ZN(n634) );
+  ND2D2BWP U736 ( .A1(n633), .A2(n634), .ZN(n560) );
+  INVD1BWP U737 ( .I(n194), .ZN(n631) );
+  INVD1BWP U738 ( .I(\Inertial_Interface/pitch_L [3]), .ZN(n632) );
+  ND4D4BWP U739 ( .A1(n998), .A2(n979), .A3(n996), .A4(n978), .ZN(n726) );
+  XOR3D0BWP U740 ( .A1(n698), .A2(n973), .A3(net22072), .Z(n974) );
+  OAI21D2BWP U741 ( .A1(n677), .A2(n678), .B(net23834), .ZN(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[3] ) );
+  CKND6BWP U742 ( .I(\Inertial_Interface/AZL [1]), .ZN(n651) );
+  OAI21D4BWP U743 ( .A1(net21928), .A2(net21886), .B(net21882), .ZN(net21800)
+         );
+  INVD4BWP U744 ( .I(net21883), .ZN(net21928) );
+  CKND2D4BWP U745 ( .A1(net23699), .A2(net21932), .ZN(net21882) );
+  CKBD8BWP U746 ( .I(net21800), .Z(net22363) );
+  ND3D3BWP U747 ( .A1(n635), .A2(n636), .A3(n637), .ZN(net23699) );
+  CKND1BWP U748 ( .I(net21929), .ZN(n635) );
+  CKND1BWP U749 ( .I(net21930), .ZN(n636) );
+  CKND2BWP U750 ( .I(net21931), .ZN(n637) );
+  OA21D1BWP U751 ( .A1(net21928), .A2(net21886), .B(net21882), .Z(net24271) );
+  CKND0BWP U752 ( .I(net21882), .ZN(net21881) );
+  ND2D3BWP U753 ( .A1(net22442), .A2(net21860), .ZN(net21756) );
+  INVD6BWP U754 ( .I(net22363), .ZN(net22442) );
+  CKBD1BWP U755 ( .I(net21756), .Z(net32165) );
+  INVD1BWP U756 ( .I(net21756), .ZN(net21865) );
+  ND4D1BWP U757 ( .A1(net21752), .A2(net21738), .A3(net21756), .A4(net21744), 
+        .ZN(net21838) );
+  CKND2D2BWP U758 ( .A1(net22442), .A2(net21839), .ZN(net21744) );
+  ND2D4BWP U759 ( .A1(net22442), .A2(net21868), .ZN(net21752) );
+  OA211D4BWP U760 ( .A1(net22442), .A2(net21879), .B(net21734), .C(net21735), 
+        .Z(net23633) );
+  INVD1BWP U761 ( .I(net22363), .ZN(net22441) );
+  CKND2D1BWP U762 ( .A1(net21876), .A2(net22363), .ZN(net21844) );
+  OAI211D2BWP U763 ( .A1(net23644), .A2(net21851), .B(net23647), .C(net21780), 
+        .ZN(net21812) );
+  INR3D4BWP U764 ( .A1(net21753), .B1(net21771), .B2(net21874), .ZN(net23644)
+         );
+  CKND2D2BWP U765 ( .A1(n639), .A2(net21738), .ZN(net21851) );
+  CKND2BWP U766 ( .I(n638), .ZN(n639) );
+  AO211D4BWP U767 ( .A1(net22357), .A2(n640), .B(net21763), .C(net21865), .Z(
+        n638) );
+  ND2D4BWP U768 ( .A1(net22441), .A2(net21862), .ZN(net21738) );
+  AN2D4BWP U769 ( .A1(net32183), .A2(net21855), .Z(net23647) );
+  CKND2D1BWP U770 ( .A1(net21852), .A2(net32153), .ZN(net21780) );
+  INVD1BWP U771 ( .I(net21812), .ZN(net21811) );
+  ND4D2BWP U772 ( .A1(net21850), .A2(net21793), .A3(net21812), .A4(net21822), 
+        .ZN(net21849) );
+  CKBD8BWP U773 ( .I(net24271), .Z(net22357) );
+  ND4D1BWP U774 ( .A1(net21804), .A2(net21746), .A3(net21856), .A4(net21857), 
+        .ZN(n640) );
+  CKND0BWP U775 ( .I(net21773), .ZN(net21804) );
+  INVD1BWP U776 ( .I(net21839), .ZN(net21746) );
+  INVD1BWP U777 ( .I(net21774), .ZN(net21856) );
+  CKND0BWP U778 ( .I(net21802), .ZN(net21857) );
+  INVD4BWP U779 ( .I(net21752), .ZN(net21763) );
+  OAI31D4BWP U780 ( .A1(n638), .A2(net21825), .A3(net23644), .B(net23647), 
+        .ZN(net21823) );
+  ND2D2BWP U781 ( .A1(n641), .A2(n642), .ZN(\Inertial_Interface/intgr/n225 )
+         );
+  AOI33D2BWP U782 ( .A1(net21789), .A2(n647), .A3(n645), .B1(n649), .B2(n643), 
+        .B3(n648), .ZN(n641) );
+  CKND1BWP U783 ( .I(n646), .ZN(net21789) );
+  OR3D4BWP U784 ( .A1(n650), .A2(net21809), .A3(net21811), .Z(n647) );
+  CKND4BWP U785 ( .I(n643), .ZN(n645) );
+  CKND4BWP U786 ( .I(n647), .ZN(n649) );
+  XOR2D2BWP U787 ( .A1(net22349), .A2(net21795), .Z(n643) );
+  INVD1BWP U788 ( .I(n644), .ZN(n648) );
+  ND2D1BWP U789 ( .A1(net21793), .A2(net21794), .ZN(n644) );
+  OAI22D1BWP U790 ( .A1(n643), .A2(n644), .B1(n645), .B2(n646), .ZN(n642) );
+  OAI21D1BWP U791 ( .A1(net22349), .A2(net21828), .B(net21808), .ZN(n646) );
+  MUX2ND0BWP U792 ( .I0(net21806), .I1(n649), .S(net23659), .ZN(
+        \Inertial_Interface/intgr/n227 ) );
+  CKND1BWP U793 ( .I(net21813), .ZN(n650) );
+  CKND2D1BWP U794 ( .A1(net22353), .A2(net21846), .ZN(net21813) );
+  CKND0BWP U795 ( .I(net21781), .ZN(net21809) );
+  INVD2BWP U796 ( .I(net22320), .ZN(net22277) );
+  MAOI222D1BWP U797 ( .A(n652), .B(\Inertial_Interface/AZL [5]), .C(net24267), 
+        .ZN(net22320) );
+  CKND2BWP U798 ( .I(n653), .ZN(n652) );
+  INVD1BWP U799 ( .I(net22130), .ZN(net24267) );
+  MAOI222D1BWP U800 ( .A(net22277), .B(\Inertial_Interface/AZL [6]), .C(
+        net24250), .ZN(net22259) );
+  XOR2D1BWP U801 ( .A1(net24022), .A2(net22277), .Z(net22261) );
+  FCICOND1BWP U802 ( .A(net23767), .B(\Inertial_Interface/AZL [4]), .CI(n654), 
+        .CON(n653) );
+  INVD6BWP U803 ( .I(net22228), .ZN(net23767) );
+  FCICOND1BWP U804 ( .A(net22322), .B(net22130), .CI(n651), .CON(n654) );
+  CKND2D4BWP U805 ( .A1(net32096), .A2(\Inertial_Interface/AZL [0]), .ZN(
+        net22322) );
+  CKND6BWP U806 ( .I(\Inertial_Interface/AZL [3]), .ZN(net22130) );
+  CKND0BWP U807 ( .I(n652), .ZN(net32106) );
+  MAOI222D1BWP U808 ( .A(net32092), .B(net22130), .C(n651), .ZN(net24233) );
+  OAI21D1BWP U809 ( .A1(net22228), .A2(n651), .B(net22147), .ZN(net22142) );
+  XOR2D1BWP U810 ( .A1(net32099), .A2(n651), .Z(net22235) );
+  CKND2D2BWP U811 ( .A1(net22317), .A2(net22318), .ZN(net22251) );
+  CKND2D1BWP U812 ( .A1(n657), .A2(n655), .ZN(net22317) );
+  ND2D1BWP U813 ( .A1(net22121), .A2(net22265), .ZN(n657) );
+  INVD0BWP U814 ( .I(\Inertial_Interface/AZL [6]), .ZN(net22121) );
+  OA21D2BWP U815 ( .A1(net22116), .A2(net22268), .B(net22269), .Z(net22265) );
+  IND2D4BWP U816 ( .A1(n658), .B1(n656), .ZN(n655) );
+  CKND2D0BWP U817 ( .A1(\Inertial_Interface/AZL [6]), .A2(net22099), .ZN(
+        net22318) );
+  OAI21D4BWP U818 ( .A1(net22116), .A2(net22268), .B(net22269), .ZN(net22099)
+         );
+  IOA21D0BWP U819 ( .A1(net22087), .A2(\Inertial_Interface/AZL [7]), .B(
+        net22251), .ZN(net22316) );
+  CKND1BWP U820 ( .I(net22251), .ZN(net22178) );
+  CKAN2D4BWP U821 ( .A1(net22116), .A2(\Inertial_Interface/AZL [5]), .Z(n658)
+         );
+  CKND4BWP U822 ( .I(\Inertial_Interface/AZL [7]), .ZN(net22116) );
+  OAI21D4BWP U823 ( .A1(\Inertial_Interface/AZL [5]), .A2(net22116), .B(
+        net22195), .ZN(n656) );
+  CKND2BWP U824 ( .I(net22259), .ZN(net22195) );
+  CKND4BWP U825 ( .I(n655), .ZN(net22185) );
+  INVD1BWP U826 ( .I(net23960), .ZN(net24250) );
+  CKND1BWP U827 ( .I(net22195), .ZN(net23691) );
+  MAOI222D1BWP U828 ( .A(n661), .B(net22069), .C(net22257), .ZN(n660) );
+  INVD1BWP U829 ( .I(n663), .ZN(n661) );
+  MAOI222D1BWP U830 ( .A(net22072), .B(net22311), .C(net22312), .ZN(n663) );
+  CKND2BWP U831 ( .I(net22018), .ZN(net22072) );
+  AOI22D4BWP U832 ( .A1(net22279), .A2(net22314), .B1(net22190), .B2(net22087), 
+        .ZN(net22311) );
+  XOR2D1BWP U833 ( .A1(\Inertial_Interface/AZH [2]), .A2(net22313), .Z(
+        net22312) );
+  OA21D1BWP U834 ( .A1(\Inertial_Interface/AZH [5]), .A2(net22310), .B(
+        net22299), .Z(net22069) );
+  OA21D1BWP U835 ( .A1(\Inertial_Interface/AZH [3]), .A2(net23530), .B(
+        net22309), .Z(net22257) );
+  INVD2BWP U836 ( .I(n660), .ZN(net22294) );
+  CKND2BWP U837 ( .I(net22290), .ZN(net22279) );
+  ND2D1BWP U838 ( .A1(net22075), .A2(net22091), .ZN(net22314) );
+  CKND2BWP U839 ( .I(net22190), .ZN(net22075) );
+  CKND3BWP U840 ( .I(net22087), .ZN(net22091) );
+  OAI21D4BWP U841 ( .A1(\Inertial_Interface/AZH [3]), .A2(net23530), .B(
+        net22309), .ZN(net22190) );
+  CKND3BWP U842 ( .I(net23525), .ZN(net22087) );
+  MAOI222D1BWP U843 ( .A(net22072), .B(net22311), .C(net22312), .ZN(net22292)
+         );
+  ND2D2BWP U844 ( .A1(n664), .A2(n662), .ZN(net22290) );
+  ND2D3BWP U845 ( .A1(net22099), .A2(net22079), .ZN(n664) );
+  CKND2BWP U846 ( .I(net22088), .ZN(net22079) );
+  ND2D4BWP U847 ( .A1(n666), .A2(n659), .ZN(n662) );
+  ND2D1BWP U848 ( .A1(net22088), .A2(net22095), .ZN(n666) );
+  XOR2D2BWP U849 ( .A1(\Inertial_Interface/AZH [2]), .A2(net22291), .Z(
+        net22088) );
+  CKND2BWP U850 ( .I(net22099), .ZN(net22095) );
+  ND2D2BWP U851 ( .A1(n665), .A2(net22316), .ZN(n659) );
+  OAI21D1BWP U852 ( .A1(net22190), .A2(net22287), .B(net22279), .ZN(net22288)
+         );
+  XOR3D1BWP U853 ( .A1(net22091), .A2(net22279), .A3(net22190), .Z(net22160)
+         );
+  ND2D1BWP U854 ( .A1(net22116), .A2(net23525), .ZN(n665) );
+  OA21D0BWP U855 ( .A1(\Inertial_Interface/AZH [1]), .A2(net22269), .B(
+        net22291), .Z(net23525) );
+  XOR3D0BWP U856 ( .A1(net22095), .A2(n659), .A3(net22088), .Z(net22249) );
+  XOR3D0BWP U857 ( .A1(net22079), .A2(net22095), .A3(n659), .Z(net22171) );
+  XNR2D1BWP U858 ( .A1(net21962), .A2(n667), .ZN(net23671) );
+  AOI32XD4BWP U859 ( .A1(net21973), .A2(net21971), .A3(net22050), .B1(net21971), .B2(net22051), .ZN(net21962) );
+  ND2D1BWP U860 ( .A1(net21964), .A2(n668), .ZN(n667) );
+  ND2D1BWP U861 ( .A1(net22045), .A2(n670), .ZN(net21964) );
+  CKND2D1BWP U862 ( .A1(n671), .A2(net22048), .ZN(n668) );
+  XOR2D1BWP U863 ( .A1(net22049), .A2(n669), .Z(n671) );
+  ND2D2BWP U864 ( .A1(net22283), .A2(net21936), .ZN(net22048) );
+  INVD1BWP U865 ( .I(net22042), .ZN(net22049) );
+  CKND2BWP U866 ( .I(n670), .ZN(n669) );
+  AN2XD1BWP U867 ( .A1(n671), .A2(net22048), .Z(net24288) );
+  XOR2D1BWP U868 ( .A1(net22155), .A2(n672), .Z(n670) );
+  OAI21D1BWP U869 ( .A1(n669), .A2(net22042), .B(net21950), .ZN(net21953) );
+  OR3D1BWP U870 ( .A1(net21950), .A2(net22042), .A3(n669), .Z(net21954) );
+  CKND2BWP U871 ( .I(net22016), .ZN(net22155) );
+  INVD1BWP U872 ( .I(n673), .ZN(n672) );
+  MAOI222D1BWP U873 ( .A(net22294), .B(net22248), .C(net22254), .ZN(n673) );
+  XOR2D1BWP U874 ( .A1(\Inertial_Interface/AZH [6]), .A2(net22301), .Z(
+        net22248) );
+  OA21D0BWP U875 ( .A1(\Inertial_Interface/AZH [4]), .A2(net22304), .B(
+        net22305), .Z(net22254) );
+  CKAN2D0BWP U876 ( .A1(net22155), .A2(n672), .Z(net23634) );
+  XOR3D2BWP U877 ( .A1(net22072), .A2(net22011), .A3(net22294), .Z(net22243)
+         );
+  AOI21D4BWP U878 ( .A1(n674), .A2(n675), .B(n676), .ZN(net24241) );
+  CKND2BWP U879 ( .I(net24131), .ZN(net24132) );
+  ND2D2BWP U880 ( .A1(n681), .A2(n682), .ZN(n678) );
+  CKND2BWP U881 ( .I(\Inertial_Interface/intgr/ptch_int [2]), .ZN(n680) );
+  CKND2BWP U882 ( .I(n682), .ZN(n676) );
+  INVD4BWP U883 ( .I(\Inertial_Interface/intgr/ptch_int [0]), .ZN(net24129) );
+  DCCKND4BWP U884 ( .I(n679), .ZN(n675) );
+  CKND2D4BWP U885 ( .A1(n674), .A2(n675), .ZN(n681) );
+  IND2D4BWP U886 ( .A1(\Inertial_Interface/intgr/ptch_int [1]), .B1(net24131), 
+        .ZN(n682) );
+  IND2D4BWP U887 ( .A1(\Inertial_Interface/intgr/ptch_int [0]), .B1(
+        \Inertial_Interface/pitch_L [0]), .ZN(n679) );
+  CKND2D1BWP U888 ( .A1(n685), .A2(n686), .ZN(n562) );
+  CKND2D0BWP U889 ( .A1(n196), .A2(\Inertial_Interface/pitch_L [5]), .ZN(n685)
+         );
+  INR2D2BWP U890 ( .A1(net24239), .B1(\Inertial_Interface/pitch_L [4]), .ZN(
+        n196) );
+  ND2D1BWP U891 ( .A1(n683), .A2(n684), .ZN(n686) );
+  INVD0BWP U892 ( .I(n196), .ZN(n683) );
+  CKND0BWP U893 ( .I(\Inertial_Interface/pitch_L [5]), .ZN(n684) );
+  INR2XD1BWP U894 ( .A1(n194), .B1(\Inertial_Interface/pitch_L [3]), .ZN(n195)
+         );
+  NR2XD3BWP U895 ( .A1(\Inertial_Interface/pitch_L [2]), .A2(
+        \Inertial_Interface/pitch_L [1]), .ZN(n194) );
+  FCICOND1BWP U896 ( .A(net24223), .B(net24222), .CI(n687), .CON(n688) );
+  CKND2BWP U897 ( .I(n568), .ZN(net24222) );
+  MAOI222D1BWP U898 ( .A(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[10] ), 
+        .B(n567), .C(\Inertial_Interface/intgr/ptch_int [10]), .ZN(n687) );
+  IOA21D2BWP U899 ( .A1(net24117), .A2(net32199), .B(n688), .ZN(net21921) );
+  IND2D1BWP U900 ( .A1(n200), .B1(n201), .ZN(n566) );
+  NR3D1BWP U901 ( .A1(n198), .A2(n98), .A3(n99), .ZN(n200) );
+  OAI21D1BWP U902 ( .A1(n98), .A2(n198), .B(n99), .ZN(n201) );
+  INVD1BWP U903 ( .I(\Inertial_Interface/pitch_H [0]), .ZN(n98) );
+  ND3D2BWP U904 ( .A1(n197), .A2(\Inertial_Interface/pitch_L [6]), .A3(
+        \Inertial_Interface/pitch_L [7]), .ZN(n198) );
+  INVD1BWP U905 ( .I(\Inertial_Interface/pitch_H [1]), .ZN(n99) );
+  ND2D1BWP U906 ( .A1(n198), .A2(n199), .ZN(n564) );
+  IND2D1BWP U907 ( .A1(\Inertial_Interface/pitch_L [5]), .B1(n196), .ZN(n197)
+         );
+  XNR2D0BWP U908 ( .A1(n197), .A2(\Inertial_Interface/pitch_L [6]), .ZN(n563)
+         );
+  DEL100D1BWP U909 ( .I(
+        \Inertial_Interface/intgr/sub_1_root_sub_0_root_add_49/carry[10] ), 
+        .Z(net32140) );
+  IND2D4BWP U910 ( .A1(n695), .B1(n691), .ZN(net21892) );
+  NR2XD0BWP U911 ( .A1(net24261), .A2(net21914), .ZN(n695) );
+  XOR2D1BWP U912 ( .A1(n206), .A2(\Inertial_Interface/pitch_H [6]), .Z(
+        net24261) );
+  IOA21D2BWP U913 ( .A1(net21914), .A2(net24261), .B(n690), .ZN(n691) );
+  IND2D4BWP U914 ( .A1(n694), .B1(n692), .ZN(n690) );
+  DEL100D1BWP U915 ( .I(net21892), .Z(net32217) );
+  NR2XD0BWP U916 ( .A1(net32203), .A2(net21917), .ZN(n694) );
+  XOR2D1BWP U917 ( .A1(n204), .A2(\Inertial_Interface/pitch_H [5]), .Z(
+        net32203) );
+  IOA21D2BWP U918 ( .A1(net21917), .A2(net32203), .B(n689), .ZN(n692) );
+  IND2D4BWP U919 ( .A1(n693), .B1(net21921), .ZN(n689) );
+  DEL100D1BWP U920 ( .I(n690), .Z(net24050) );
+  NR2XD0BWP U921 ( .A1(net32199), .A2(net24117), .ZN(n693) );
+  XOR2D1BWP U922 ( .A1(n203), .A2(\Inertial_Interface/pitch_H [4]), .Z(
+        net32199) );
+  DEL100D1BWP U923 ( .I(n689), .Z(net24048) );
+  FCICOND2BWP U924 ( .A(net32140), .B(n567), .CI(
+        \Inertial_Interface/intgr/ptch_int [10]), .CON(n727) );
+  INVD3BWP U925 ( .I(n1103), .ZN(n1094) );
+  CKXOR2D1BWP U926 ( .A1(n998), .A2(n997), .Z(n995) );
+  CKND2D0BWP U927 ( .A1(n704), .A2(n908), .ZN(n755) );
+  CKND3BWP U928 ( .I(n908), .ZN(n903) );
+  ND2D3BWP U929 ( .A1(n760), .A2(n852), .ZN(n889) );
+  CKND2D3BWP U930 ( .A1(n752), .A2(n845), .ZN(n865) );
+  CKBD4BWP U931 ( .I(n739), .Z(n696) );
+  XNR3D4BWP U932 ( .A1(\Inertial_Interface/AZL [6]), .A2(net22185), .A3(
+        net22099), .ZN(n805) );
+  BUFFD1BWP U933 ( .I(net22357), .Z(net22353) );
+  CKND6BWP U934 ( .I(net22357), .ZN(net23835) );
+  CKND2D2BWP U935 ( .A1(net32183), .A2(n1092), .ZN(n1103) );
+  OA21D2BWP U936 ( .A1(net22357), .A2(net21773), .B(n1121), .Z(net32183) );
+  ND2D3BWP U937 ( .A1(net21753), .A2(n1123), .ZN(n1113) );
+  CKND2D2BWP U938 ( .A1(net21751), .A2(net23835), .ZN(net21753) );
+  CKXOR2D0BWP U939 ( .A1(n797), .A2(n1122), .Z(\Inertial_Interface/intgr/N47 )
+         );
+  ND2D2BWP U940 ( .A1(n797), .A2(net32165), .ZN(n1114) );
+  CKND2D2BWP U941 ( .A1(n1124), .A2(n1126), .ZN(net21771) );
+  ND2D2BWP U942 ( .A1(n749), .A2(n750), .ZN(\Inertial_Interface/intgr/n226 )
+         );
+  CKND2D2BWP U943 ( .A1(n747), .A2(n1087), .ZN(n750) );
+  INVD2BWP U944 ( .I(n1064), .ZN(n1078) );
+  INVD2BWP U945 ( .I(n1066), .ZN(n1084) );
+  INVD1BWP U946 ( .I(n711), .ZN(n1077) );
+  INVD2BWP U947 ( .I(n1070), .ZN(n1074) );
+  ND2D3BWP U948 ( .A1(n956), .A2(net22099), .ZN(n879) );
+  FCICOND1BWP U949 ( .A(n851), .B(net22265), .CI(n850), .CON(n882) );
+  XOR3D2BWP U950 ( .A1(\Inertial_Interface/AZL [1]), .A2(net23767), .A3(
+        net22146), .Z(n920) );
+  ND2D2BWP U951 ( .A1(\Inertial_Interface/AZL [1]), .A2(
+        \Inertial_Interface/AZL [0]), .ZN(net22147) );
+  XOR3D0BWP U952 ( .A1(net22079), .A2(n703), .A3(n917), .Z(n971) );
+  ND2D4BWP U953 ( .A1(n917), .A2(net22079), .ZN(n887) );
+  OAI21D4BWP U954 ( .A1(net21962), .A2(net24288), .B(net21964), .ZN(n989) );
+  XOR2D2BWP U955 ( .A1(n1001), .A2(n1012), .Z(n1017) );
+  ND3D3BWP U956 ( .A1(n1043), .A2(n1047), .A3(ptch[6]), .ZN(n1044) );
+  CKND2D4BWP U957 ( .A1(n1042), .A2(n1041), .ZN(n1047) );
+  CKND2D2BWP U958 ( .A1(n991), .A2(net21939), .ZN(n979) );
+  INVD4BWP U959 ( .I(n991), .ZN(n992) );
+  ND2D4BWP U960 ( .A1(n755), .A2(n756), .ZN(n991) );
+  OAI211D4BWP U961 ( .A1(n1025), .A2(n1024), .B(n1023), .C(n1022), .ZN(n1032)
+         );
+  IND2D2BWP U962 ( .A1(n983), .B1(n863), .ZN(net21971) );
+  IOA21D2BWP U963 ( .A1(net22045), .A2(net22049), .B(n822), .ZN(n983) );
+  IND2D2BWP U964 ( .A1(n1017), .B1(n1016), .ZN(n1023) );
+  DCCKND4BWP U965 ( .I(n1130), .ZN(n1089) );
+  CKND2D2BWP U966 ( .A1(net24271), .A2(net21879), .ZN(n1130) );
+  CKND4BWP U967 ( .I(n726), .ZN(n1036) );
+  INVD4BWP U968 ( .I(n937), .ZN(n870) );
+  AOI22D4BWP U969 ( .A1(n1032), .A2(n1031), .B1(n1030), .B2(n1029), .ZN(n1048)
+         );
+  CKND2BWP U970 ( .I(n1087), .ZN(n748) );
+  OAI211D2BWP U971 ( .A1(net22349), .A2(net21795), .B(net21789), .C(net21849), 
+        .ZN(n1087) );
+  FCICOND2BWP U972 ( .A(n873), .B(\Inertial_Interface/AZL [7]), .CI(n872), 
+        .CON(n877) );
+  OAI31D4BWP U973 ( .A1(n870), .A2(n869), .A3(n807), .B(n948), .ZN(n873) );
+  MAOI222D1BWP U974 ( .A(n727), .B(net24222), .C(net24223), .ZN(n728) );
+  XOR3D1BWP U975 ( .A1(ptch[14]), .A2(n1086), .A3(n1074), .Z(net21795) );
+  INVD1BWP U976 ( .I(n857), .ZN(n901) );
+  CKND2D2BWP U977 ( .A1(n1008), .A2(net21936), .ZN(n994) );
+  INVD1BWP U978 ( .I(n1068), .ZN(n713) );
+  NR3D0BWP U979 ( .A1(net21856), .A2(net21857), .A3(n710), .ZN(n781) );
+  CKND2D2BWP U980 ( .A1(n746), .A2(n866), .ZN(n918) );
+  ND2D1BWP U981 ( .A1(\Inertial_Interface/AZL [5]), .A2(n806), .ZN(n938) );
+  CKND2D2BWP U982 ( .A1(n874), .A2(n879), .ZN(n883) );
+  IOA21D1BWP U983 ( .A1(n880), .A2(net22095), .B(n877), .ZN(n874) );
+  IND2D0BWP U984 ( .A1(net22278), .B1(net22249), .ZN(n860) );
+  ND2D2BWP U985 ( .A1(n864), .A2(n803), .ZN(n985) );
+  ND2D1BWP U986 ( .A1(n996), .A2(n1018), .ZN(n999) );
+  CKND2D3BWP U987 ( .A1(\Inertial_Interface/AZH [5]), .A2(net22310), .ZN(
+        net22299) );
+  INR2D1BWP U988 ( .A1(n203), .B1(\Inertial_Interface/pitch_H [4]), .ZN(n204)
+         );
+  INVD1BWP U989 ( .I(n717), .ZN(n740) );
+  ND2D1BWP U990 ( .A1(net22228), .A2(net22130), .ZN(n926) );
+  ND2D2BWP U991 ( .A1(n744), .A2(n936), .ZN(n941) );
+  ND2D1BWP U992 ( .A1(n935), .A2(\Inertial_Interface/AZL [6]), .ZN(n744) );
+  OAI21D1BWP U993 ( .A1(\Inertial_Interface/AZL [6]), .A2(n935), .B(n934), 
+        .ZN(n936) );
+  ND2D2BWP U994 ( .A1(n941), .A2(net22116), .ZN(n944) );
+  ND2D1BWP U995 ( .A1(n751), .A2(\Inertial_Interface/AZL [6]), .ZN(n752) );
+  CKND2BWP U996 ( .I(n880), .ZN(n956) );
+  CKND2BWP U997 ( .I(n876), .ZN(n851) );
+  CKND3BWP U998 ( .I(n877), .ZN(n955) );
+  CKND2BWP U999 ( .I(n887), .ZN(n894) );
+  AO222D1BWP U1000 ( .A1(net22079), .A2(n968), .B1(n966), .B2(n967), .C1(
+        net22075), .C2(n971), .Z(n970) );
+  OAI211D1BWP U1001 ( .A1(n965), .A2(n964), .B(n963), .C(n962), .ZN(n966) );
+  IOA21D1BWP U1002 ( .A1(net22190), .A2(net22287), .B(net22288), .ZN(n842) );
+  INVD1BWP U1003 ( .I(net22309), .ZN(net22304) );
+  INVD1BWP U1004 ( .I(n975), .ZN(n1005) );
+  XNR3D1BWP U1005 ( .A1(net22155), .A2(n900), .A3(n901), .ZN(n907) );
+  MAOI222D2BWP U1006 ( .A(n901), .B(net22069), .C(n858), .ZN(n904) );
+  XOR2D1BWP U1007 ( .A1(n992), .A2(n993), .Z(n1008) );
+  IND2D2BWP U1008 ( .A1(n980), .B1(n982), .ZN(n1018) );
+  IND2D1BWP U1009 ( .A1(n844), .B1(net22048), .ZN(n863) );
+  OAI21D1BWP U1010 ( .A1(n864), .A2(n803), .B(n985), .ZN(n1019) );
+  XOR3D1BWP U1011 ( .A1(net22075), .A2(net22016), .A3(net22292), .Z(net22283)
+         );
+  IND2D1BWP U1012 ( .A1(n863), .B1(n983), .ZN(n1038) );
+  INVD1BWP U1013 ( .I(n1019), .ZN(n1037) );
+  INVD1BWP U1014 ( .I(n986), .ZN(n987) );
+  INVD1BWP U1015 ( .I(n1043), .ZN(n1030) );
+  INVD1BWP U1016 ( .I(n841), .ZN(n990) );
+  INVD1BWP U1017 ( .I(net21953), .ZN(net22039) );
+  INVD1BWP U1018 ( .I(net22299), .ZN(net22301) );
+  ND2D2BWP U1019 ( .A1(n1091), .A2(n1090), .ZN(n1111) );
+  CKBD1BWP U1020 ( .I(n713), .Z(n714) );
+  INVD1BWP U1021 ( .I(n1071), .ZN(n716) );
+  XOR2D1BWP U1022 ( .A1(n205), .A2(\Inertial_Interface/pitch_H [7]), .Z(n1071)
+         );
+  NR3D1BWP U1023 ( .A1(\Auth_block/receiver/baud_cnt [1]), .A2(
+        \Auth_block/receiver/baud_cnt [2]), .A3(
+        \Auth_block/receiver/baud_cnt [0]), .ZN(n530) );
+  NR3D1BWP U1024 ( .A1(\Auth_block/receiver/baud_cnt [3]), .A2(
+        \Auth_block/receiver/baud_cnt [4]), .A3(n45), .ZN(n526) );
+  BUFFD1BWP U1025 ( .I(n728), .Z(n734) );
+  CKND2BWP U1026 ( .I(n1111), .ZN(n1128) );
+  ND2D3BWP U1027 ( .A1(net21863), .A2(net23835), .ZN(n1126) );
+  ND2D2BWP U1028 ( .A1(net21746), .A2(net23835), .ZN(n1124) );
+  ND3D2BWP U1029 ( .A1(n1140), .A2(n120), .A3(\Inertial_Interface/state [2]), 
+        .ZN(n261) );
+  AN2XD1BWP U1030 ( .A1(n1113), .A2(net21752), .Z(n797) );
+  ND2D3BWP U1031 ( .A1(net21859), .A2(net23835), .ZN(n1121) );
+  INR2D1BWP U1032 ( .A1(n276), .B1(n264), .ZN(n257) );
+  ND2D1BWP U1033 ( .A1(n286), .A2(\Inertial_Interface/state [2]), .ZN(n276) );
+  INVD1BWP U1034 ( .I(\Inertial_Interface/spi/state [1]), .ZN(n139) );
+  NR4D1BWP U1035 ( .A1(n282), .A2(n283), .A3(n284), .A4(n285), .ZN(n266) );
+  NR2XD0BWP U1036 ( .A1(n269), .A2(\Inertial_Interface/state [2]), .ZN(n250)
+         );
+  NR4D1BWP U1037 ( .A1(n52), .A2(n54), .A3(\Auth_block/receiver/bit_cnt [0]), 
+        .A4(\Auth_block/receiver/bit_cnt [2]), .ZN(n504) );
+  MAOI22D0BWP U1038 ( .A1(n188), .A2(n189), .B1(\pepperoni_piezo/timer [15]), 
+        .B2(n189), .ZN(n187) );
+  OA31D1BWP U1039 ( .A1(n1102), .A2(net21815), .A3(n1101), .B(n1100), .Z(
+        \Inertial_Interface/intgr/N54 ) );
+  NR2D8BWP U1040 ( .A1(n240), .A2(n139), .ZN(\Inertial_Interface/spi/n18 ) );
+  ND4D2BWP U1041 ( .A1(n1061), .A2(ptch[11]), .A3(net21936), .A4(n1060), .ZN(
+        n697) );
+  ND4D2BWP U1042 ( .A1(n1061), .A2(ptch[11]), .A3(net21936), .A4(n1060), .ZN(
+        net21931) );
+  MAOI222D1BWP U1043 ( .A(n717), .B(ptch[10]), .C(n696), .ZN(n1068) );
+  OR3D4BWP U1044 ( .A1(n1051), .A2(net21930), .A3(net21929), .Z(net21883) );
+  ND2D1BWP U1045 ( .A1(net22355), .A2(net21853), .ZN(net21781) );
+  CKND2D4BWP U1046 ( .A1(n972), .A2(n783), .ZN(n1003) );
+  CKND2BWP U1047 ( .I(n989), .ZN(n1049) );
+  CKND2BWP U1048 ( .I(n867), .ZN(n778) );
+  CKND2D4BWP U1049 ( .A1(n775), .A2(n902), .ZN(n911) );
+  CKND0BWP U1050 ( .I(net23691), .ZN(net24273) );
+  CKBD3BWP U1051 ( .I(net22353), .Z(net22349) );
+  CKND3BWP U1052 ( .I(net22357), .ZN(net32153) );
+  XNR3D1BWP U1053 ( .A1(net22075), .A2(n705), .A3(n891), .ZN(n698) );
+  INVD1BWP U1054 ( .I(ptch[3]), .ZN(net21914) );
+  CKND6BWP U1055 ( .I(n716), .ZN(n717) );
+  INVD1BWP U1056 ( .I(n863), .ZN(n984) );
+  INVD1BWP U1057 ( .I(\Inertial_Interface/AZL [4]), .ZN(net23960) );
+  NR2D2BWP U1058 ( .A1(n765), .A2(net32153), .ZN(n764) );
+  XNR2D1BWP U1059 ( .A1(net21936), .A2(net22040), .ZN(n699) );
+  OR2D0BWP U1060 ( .A1(net21802), .A2(net21773), .Z(n700) );
+  XNR3D1BWP U1061 ( .A1(\Inertial_Interface/AZL [5]), .A2(net24267), .A3(
+        net32107), .ZN(n701) );
+  XNR3D1BWP U1062 ( .A1(net22155), .A2(n914), .A3(n913), .ZN(n702) );
+  XNR3D1BWP U1063 ( .A1(net22091), .A2(n701), .A3(n729), .ZN(n703) );
+  CKND3BWP U1064 ( .I(net32096), .ZN(net22228) );
+  XOR2D1BWP U1065 ( .A1(net22232), .A2(net22235), .Z(n848) );
+  CKBD0BWP U1066 ( .I(net22357), .Z(net22355) );
+  CKXOR2D1BWP U1067 ( .A1(net22011), .A2(n907), .Z(n704) );
+  XNR3D1BWP U1068 ( .A1(\Inertial_Interface/AZL [5]), .A2(
+        \Inertial_Interface/AZL [7]), .A3(net24273), .ZN(n705) );
+  INVD1BWP U1069 ( .I(\Inertial_Interface/AZL [0]), .ZN(net22231) );
+  OR2D2BWP U1070 ( .A1(lft_rev), .A2(n142), .Z(n706) );
+  INVD1BWP U1071 ( .I(n823), .ZN(n109) );
+  AN2XD1BWP U1072 ( .A1(\Inertial_Interface/spi/n20 ), .A2(n246), .Z(n707) );
+  AN2XD1BWP U1073 ( .A1(\A2D_interface/SPI_Interface/n66 ), .A2(n557), .Z(n708) );
+  INVD1BWP U1074 ( .I(ptch[12]), .ZN(n820) );
+  ND3D4BWP U1075 ( .A1(n1033), .A2(n1038), .A3(n1034), .ZN(net22051) );
+  CKND2D2BWP U1076 ( .A1(n1109), .A2(n1108), .ZN(n1110) );
+  OAI22D2BWP U1077 ( .A1(ptch[8]), .A2(net23671), .B1(ptch[9]), .B2(n1052), 
+        .ZN(net21930) );
+  MUX2ND2BWP U1078 ( .I0(net21950), .I1(n1050), .S(n1049), .ZN(n1052) );
+  CKND2D0BWP U1079 ( .A1(net32165), .A2(n1121), .ZN(n1122) );
+  INVD0BWP U1080 ( .I(n898), .ZN(n914) );
+  BUFFD1BWP U1081 ( .I(n712), .Z(n732) );
+  CKND2D2BWP U1082 ( .A1(n995), .A2(n994), .ZN(n1013) );
+  MAOI222D1BWP U1083 ( .A(n778), .B(\Inertial_Interface/AZL [5]), .C(
+        \Inertial_Interface/AZL [1]), .ZN(n871) );
+  INVD1BWP U1084 ( .I(n892), .ZN(n916) );
+  XOR3D1BWP U1085 ( .A1(ptch[11]), .A2(n1086), .A3(n714), .Z(net21853) );
+  CKND2BWP U1086 ( .I(net21815), .ZN(net21822) );
+  DCCKND4BWP U1087 ( .I(n1125), .ZN(n1112) );
+  CKND0BWP U1088 ( .I(n1112), .ZN(n709) );
+  OAI21D4BWP U1089 ( .A1(n1098), .A2(net21819), .B(net21822), .ZN(n1099) );
+  ND2D3BWP U1090 ( .A1(net21780), .A2(n1106), .ZN(n1098) );
+  ND2D2BWP U1091 ( .A1(net22353), .A2(n1076), .ZN(net21794) );
+  XNR3D1BWP U1092 ( .A1(ptch[12]), .A2(n1086), .A3(n743), .ZN(n1076) );
+  CKND2D4BWP U1093 ( .A1(n1128), .A2(net21738), .ZN(n1125) );
+  XOR3D1BWP U1094 ( .A1(ptch[13]), .A2(n1086), .A3(n818), .Z(net21828) );
+  IND3D4BWP U1095 ( .A1(n1019), .B1(n788), .B2(net21973), .ZN(n1033) );
+  CKND2D1BWP U1096 ( .A1(n1075), .A2(net32153), .ZN(net21808) );
+  CKND1BWP U1097 ( .I(net32106), .ZN(net32107) );
+  OA211D4BWP U1098 ( .A1(n880), .A2(n955), .B(n879), .C(n878), .Z(n881) );
+  OA21D4BWP U1099 ( .A1(net22095), .A2(n955), .B(net22087), .Z(n878) );
+  OAI21D4BWP U1100 ( .A1(n846), .A2(net22116), .B(n865), .ZN(n847) );
+  CKND1BWP U1101 ( .I(n848), .ZN(n846) );
+  XOR3D0BWP U1102 ( .A1(\Inertial_Interface/AZL [7]), .A2(net22087), .A3(
+        net22178), .Z(n900) );
+  CKND1BWP U1103 ( .I(net22305), .ZN(net22310) );
+  OA21D0BWP U1104 ( .A1(\Inertial_Interface/AZL [7]), .A2(n945), .B(net22095), 
+        .Z(n943) );
+  XOR3D0BWP U1105 ( .A1(\Inertial_Interface/AZL [7]), .A2(n951), .A3(n950), 
+        .Z(n952) );
+  ND2D2BWP U1106 ( .A1(\Inertial_Interface/AZH [1]), .A2(net22269), .ZN(
+        net22291) );
+  CKBD2BWP U1107 ( .I(\Inertial_Interface/AZL [3]), .Z(net32099) );
+  CKND2D1BWP U1108 ( .A1(\Inertial_Interface/AZH [4]), .A2(net22304), .ZN(
+        net22305) );
+  INVD1BWP U1109 ( .I(net22232), .ZN(net32092) );
+  CKND1BWP U1110 ( .I(net22322), .ZN(net22232) );
+  AN2D4BWP U1111 ( .A1(\Inertial_Interface/AZL [6]), .A2(n939), .Z(n807) );
+  XNR3D0BWP U1112 ( .A1(n730), .A2(n1086), .A3(ptch[10]), .ZN(n710) );
+  CKND4BWP U1113 ( .I(n1072), .ZN(n1086) );
+  INVD1BWP U1114 ( .I(net21808), .ZN(net21819) );
+  OA21D0BWP U1115 ( .A1(net21809), .A2(n1106), .B(net21780), .Z(net21806) );
+  CKND2D1BWP U1116 ( .A1(n887), .A2(n888), .ZN(n915) );
+  CKND2BWP U1117 ( .I(n1109), .ZN(n1093) );
+  ND2D1BWP U1118 ( .A1(net24271), .A2(net21727), .ZN(n1090) );
+  MAOI222D1BWP U1119 ( .A(n739), .B(ptch[10]), .C(n717), .ZN(n711) );
+  DEL100D1BWP U1120 ( .I(n1078), .Z(n712) );
+  ND2D2BWP U1121 ( .A1(\Inertial_Interface/AZL [4]), .A2(
+        \Inertial_Interface/AZL [0]), .ZN(n867) );
+  XNR3D4BWP U1122 ( .A1(net22079), .A2(net22261), .A3(n889), .ZN(n892) );
+  FCICOND1BWP U1123 ( .A(n742), .B(n820), .CI(n821), .CON(n818) );
+  MAOI222D1BWP U1124 ( .A(n717), .B(ptch[11]), .C(n714), .ZN(n742) );
+  CKND0BWP U1125 ( .I(net22261), .ZN(net23977) );
+  INVD2BWP U1126 ( .I(n903), .ZN(n774) );
+  OAI21D4BWP U1127 ( .A1(n892), .A2(net22190), .B(net22018), .ZN(n893) );
+  CKND2D0BWP U1128 ( .A1(net21801), .A2(net32153), .ZN(n1129) );
+  OAI31D2BWP U1129 ( .A1(n894), .A2(net22075), .A3(n895), .B(n916), .ZN(n890)
+         );
+  ND2D3BWP U1130 ( .A1(n774), .A2(net23823), .ZN(n775) );
+  AOI32D1BWP U1131 ( .A1(\Inertial_Interface/AZL [5]), .A2(n925), .A3(n924), 
+        .B1(n923), .B2(\Inertial_Interface/AZL [5]), .ZN(n931) );
+  XOR3D0BWP U1132 ( .A1(\Inertial_Interface/AZL [5]), .A2(n806), .A3(n918), 
+        .Z(n935) );
+  CKND2D1BWP U1133 ( .A1(n868), .A2(net22121), .ZN(n948) );
+  XOR3D2BWP U1134 ( .A1(\Inertial_Interface/AZL [1]), .A2(
+        \Inertial_Interface/AZL [5]), .A3(n867), .Z(n868) );
+  MAOI222D1BWP U1135 ( .A(n741), .B(ptch[7]), .C(n717), .ZN(n1066) );
+  MAOI222D1BWP U1136 ( .A(n717), .B(ptch[11]), .C(n713), .ZN(n743) );
+  ND2D3BWP U1137 ( .A1(n785), .A2(n918), .ZN(n937) );
+  OAI33D4BWP U1138 ( .A1(net22018), .A2(n973), .A3(n898), .B1(n698), .B2(n898), 
+        .B3(n897), .ZN(n899) );
+  FCICOND2BWP U1139 ( .A(n1072), .B(n1029), .CI(n1065), .CON(n741) );
+  FCICOND2BWP U1140 ( .A(n740), .B(n1055), .CI(n1067), .CON(n739) );
+  MAOI222D1BWP U1141 ( .A(n891), .B(net22257), .C(n854), .ZN(n715) );
+  OAI21D2BWP U1142 ( .A1(net23977), .A2(net22088), .B(n853), .ZN(n891) );
+  XOR3D0BWP U1143 ( .A1(\Inertial_Interface/AZL [5]), .A2(
+        \Inertial_Interface/AZL [7]), .A3(net23691), .Z(n854) );
+  AOI21D1BWP U1144 ( .A1(n1012), .A2(n1013), .B(net21914), .ZN(n1025) );
+  INVD1BWP U1145 ( .I(n981), .ZN(n982) );
+  ND2D2BWP U1146 ( .A1(n981), .A2(n980), .ZN(n996) );
+  ND4D1BWP U1147 ( .A1(net21939), .A2(n1058), .A3(n1057), .A4(n820), .ZN(n1059) );
+  XOR2D2BWP U1148 ( .A1(\Inertial_Interface/AZH [7]), .A2(n840), .Z(net21939)
+         );
+  MAOI222D1BWP U1149 ( .A(net22232), .B(net24267), .C(
+        \Inertial_Interface/AZL [1]), .ZN(n849) );
+  XOR3D1BWP U1150 ( .A1(n736), .A2(n1086), .A3(ptch[8]), .Z(net21802) );
+  MAOI222D1BWP U1151 ( .A(n736), .B(ptch[8]), .C(n717), .ZN(n737) );
+  XOR3D1BWP U1152 ( .A1(n732), .A2(n1086), .A3(ptch[5]), .Z(net21868) );
+  OAI21D2BWP U1153 ( .A1(net23634), .A2(n699), .B(n841), .ZN(net21950) );
+  CKND2BWP U1154 ( .I(ptch[0]), .ZN(net24223) );
+  INVD1BWP U1155 ( .I(ptch[2]), .ZN(net21917) );
+  XOR3D1BWP U1156 ( .A1(ptch[6]), .A2(n1086), .A3(n1085), .Z(net21860) );
+  INVD1BWP U1157 ( .I(ptch[1]), .ZN(net24117) );
+  CKND16BWP U1158 ( .I(n706), .ZN(PWM_frwrd_lft) );
+  CKND2BWP U1159 ( .I(n1148), .ZN(n719) );
+  CKND16BWP U1160 ( .I(n719), .ZN(A2D_SCLK) );
+  CKND2BWP U1161 ( .I(n1150), .ZN(n721) );
+  CKND16BWP U1162 ( .I(n721), .ZN(PWM_rev_lft) );
+  INR2XD0BWP U1163 ( .A1(lft_rev), .B1(n142), .ZN(n1150) );
+  CKND2BWP U1164 ( .I(n124), .ZN(n723) );
+  CKND16BWP U1165 ( .I(n723), .ZN(INERT_SCLK) );
+  CKND2D0BWP U1166 ( .A1(net21738), .A2(n1126), .ZN(n1127) );
+  AN2XD1BWP U1167 ( .A1(n1124), .A2(n1126), .Z(n772) );
+  IND2D4BWP U1168 ( .A1(n997), .B1(n998), .ZN(n1000) );
+  ND4D4BWP U1169 ( .A1(n998), .A2(n979), .A3(n996), .A4(n978), .ZN(n725) );
+  OAI21D4BWP U1170 ( .A1(net21939), .A2(n991), .B(n977), .ZN(n978) );
+  XOR3D0BWP U1171 ( .A1(\Inertial_Interface/AZL [7]), .A2(net22178), .A3(
+        net22091), .Z(n858) );
+  CKND6BWP U1172 ( .I(n906), .ZN(n998) );
+  AO211D4BWP U1173 ( .A1(n1062), .A2(n1061), .B(ptch[11]), .C(n1059), .Z(
+        net21886) );
+  CKND2D4BWP U1174 ( .A1(net22243), .A2(net21936), .ZN(net22042) );
+  IOA21D2BWP U1175 ( .A1(net22040), .A2(n702), .B(n1005), .ZN(n976) );
+  INVD1BWP U1176 ( .I(net22040), .ZN(net22011) );
+  XOR2D2BWP U1177 ( .A1(\Inertial_Interface/AZH [6]), .A2(net22299), .Z(
+        net22040) );
+  IOA21D2BWP U1178 ( .A1(net22087), .A2(n701), .B(n882), .ZN(n852) );
+  CKND2D3BWP U1179 ( .A1(n776), .A2(n890), .ZN(n1002) );
+  OAI22D4BWP U1180 ( .A1(n958), .A2(net22087), .B1(n959), .B2(n881), .ZN(n917)
+         );
+  CKND1BWP U1181 ( .I(net21868), .ZN(net21751) );
+  CKND0BWP U1182 ( .I(n733), .ZN(n1085) );
+  XOR3D0BWP U1183 ( .A1(net22095), .A2(n956), .A3(n955), .Z(n961) );
+  INR2XD1BWP U1184 ( .A1(n194), .B1(\Inertial_Interface/pitch_L [3]), .ZN(
+        net24239) );
+  XOR3D0BWP U1185 ( .A1(\Inertial_Interface/AZL [6]), .A2(n804), .A3(n817), 
+        .Z(n872) );
+  XOR3D0BWP U1186 ( .A1(\Inertial_Interface/AZL [6]), .A2(n804), .A3(n947), 
+        .Z(n951) );
+  FCICOND1BWP U1187 ( .A(n851), .B(net22265), .CI(n850), .CON(n729) );
+  INVD1BWP U1188 ( .I(n727), .ZN(n1079) );
+  CKBD0BWP U1189 ( .I(n696), .Z(n730) );
+  DEL100D1BWP U1190 ( .I(n741), .Z(n731) );
+  ND2D1BWP U1191 ( .A1(n911), .A2(n912), .ZN(n980) );
+  INR2XD2BWP U1192 ( .A1(n1037), .B1(n725), .ZN(net22050) );
+  OAI21D4BWP U1193 ( .A1(n1112), .A2(net21771), .B(net21744), .ZN(n1123) );
+  OAI31D2BWP U1194 ( .A1(n1082), .A2(n1089), .A3(net23633), .B(net21844), .ZN(
+        net21874) );
+  OAI21D2BWP U1195 ( .A1(net22011), .A2(n908), .B(n907), .ZN(n902) );
+  OAI21D0BWP U1196 ( .A1(n788), .A2(n1036), .B(n1037), .ZN(n1027) );
+  INVD1BWP U1197 ( .I(n896), .ZN(n856) );
+  CKXOR2D2BWP U1198 ( .A1(n905), .A2(n912), .Z(n906) );
+  IOA21D2BWP U1199 ( .A1(n786), .A2(n787), .B(n1014), .ZN(n1015) );
+  AO22D4BWP U1200 ( .A1(n954), .A2(net22099), .B1(n953), .B2(n952), .Z(n960)
+         );
+  OAI211D2BWP U1201 ( .A1(n946), .A2(n945), .B(n944), .C(n943), .ZN(n953) );
+  CKND1BWP U1202 ( .I(n941), .ZN(n946) );
+  MAOI22D1BWP U1203 ( .A1(n1000), .A2(n999), .B1(n999), .B2(n1000), .ZN(n1001)
+         );
+  ND2D2BWP U1204 ( .A1(n1095), .A2(n1108), .ZN(n798) );
+  OAI21D1BWP U1205 ( .A1(net22116), .A2(n941), .B(n942), .ZN(n940) );
+  OAI21D4BWP U1206 ( .A1(n1089), .A2(net23633), .B(net21844), .ZN(n1091) );
+  OAI21D4BWP U1207 ( .A1(net22091), .A2(n884), .B(n883), .ZN(n885) );
+  ND2D2BWP U1208 ( .A1(n703), .A2(n886), .ZN(n888) );
+  OAI211D2BWP U1209 ( .A1(n959), .A2(net22087), .B(net22088), .C(n885), .ZN(
+        n886) );
+  MAOI222D0BWP U1210 ( .A(n732), .B(ptch[5]), .C(n717), .ZN(n733) );
+  MAOI222D1BWP U1211 ( .A(n1078), .B(ptch[5]), .C(n717), .ZN(n1065) );
+  CKND0BWP U1212 ( .I(n1084), .ZN(n735) );
+  INVD1BWP U1213 ( .I(n735), .ZN(n736) );
+  CKND2D3BWP U1214 ( .A1(net21823), .A2(net21813), .ZN(n1106) );
+  CKND2BWP U1215 ( .I(\Inertial_Interface/pitch_L [1]), .ZN(net24131) );
+  MAOI222D1BWP U1216 ( .A(n891), .B(net22257), .C(n854), .ZN(n896) );
+  OA21D0BWP U1217 ( .A1(net22349), .A2(net21846), .B(net21813), .Z(n1097) );
+  OAI21D1BWP U1218 ( .A1(net21846), .A2(net21795), .B(net22349), .ZN(net21850)
+         );
+  ND2D2BWP U1219 ( .A1(net22091), .A2(n960), .ZN(n963) );
+  CKND0BWP U1220 ( .I(n932), .ZN(n923) );
+  INVD2BWP U1221 ( .I(n1018), .ZN(n788) );
+  AOI31D2BWP U1222 ( .A1(n1037), .A2(net21973), .A3(n1036), .B(n1035), .ZN(
+        n1040) );
+  MAOI222D1BWP U1223 ( .A(n1084), .B(ptch[8]), .C(n717), .ZN(n1067) );
+  CKND2D0BWP U1224 ( .A1(\Inertial_Interface/pitch_L [0]), .A2(net24129), .ZN(
+        n738) );
+  OAI22D4BWP U1225 ( .A1(n1056), .A2(n1055), .B1(n1054), .B2(n1053), .ZN(n1062) );
+  INVD1BWP U1226 ( .I(n737), .ZN(n1083) );
+  AOI32D1BWP U1227 ( .A1(net21914), .A2(n1013), .A3(n1012), .B1(n1011), .B2(
+        net21917), .ZN(n1014) );
+  CKND2BWP U1228 ( .I(n993), .ZN(n977) );
+  CKND2D2BWP U1229 ( .A1(n1094), .A2(net21802), .ZN(n1109) );
+  MAOI222D1BWP U1230 ( .A(n1077), .B(ptch[11]), .C(n717), .ZN(n1069) );
+  XOR3D0BWP U1231 ( .A1(net22234), .A2(\Inertial_Interface/AZL [7]), .A3(
+        net22232), .Z(n745) );
+  CKXOR2D2BWP U1232 ( .A1(n745), .A2(n865), .Z(n880) );
+  CKND2BWP U1233 ( .I(net22235), .ZN(net22234) );
+  CKXOR2D0BWP U1234 ( .A1(net24250), .A2(\Inertial_Interface/AZL [6]), .Z(
+        net24022) );
+  OA21D1BWP U1235 ( .A1(net22130), .A2(net23960), .B(n927), .Z(n746) );
+  CKND2D1BWP U1236 ( .A1(net32099), .A2(net23767), .ZN(n927) );
+  CKND2D1BWP U1237 ( .A1(n1088), .A2(n748), .ZN(n749) );
+  CKND2BWP U1238 ( .I(n1088), .ZN(n747) );
+  CKND0BWP U1239 ( .I(n817), .ZN(n751) );
+  OAI21D2BWP U1240 ( .A1(\Inertial_Interface/AZL [6]), .A2(n947), .B(n804), 
+        .ZN(n845) );
+  XOR3D0BWP U1241 ( .A1(\Inertial_Interface/intgr/ptch_int [1]), .A2(net24132), 
+        .A3(n738), .Z(\Inertial_Interface/intgr/N31 ) );
+  ND2D1BWP U1242 ( .A1(net22088), .A2(net23977), .ZN(n753) );
+  ND2D2BWP U1243 ( .A1(n753), .A2(n889), .ZN(n853) );
+  CKND2D2BWP U1244 ( .A1(n754), .A2(n903), .ZN(n756) );
+  INVD1BWP U1245 ( .I(n704), .ZN(n754) );
+  AO221D4BWP U1246 ( .A1(net22155), .A2(n913), .B1(net22155), .B2(n914), .C(
+        n899), .Z(n908) );
+  CKND2D1BWP U1247 ( .A1(\Inertial_Interface/AZL [4]), .A2(net22231), .ZN(n757) );
+  ND2D2BWP U1248 ( .A1(net23960), .A2(net23929), .ZN(n758) );
+  CKND2D4BWP U1249 ( .A1(n757), .A2(n758), .ZN(n806) );
+  CKND2BWP U1250 ( .I(n806), .ZN(n784) );
+  ND2D1BWP U1251 ( .A1(n759), .A2(net22091), .ZN(n760) );
+  CKND0BWP U1252 ( .I(n701), .ZN(n759) );
+  ND2D1BWP U1253 ( .A1(net22116), .A2(n846), .ZN(n761) );
+  ND2D2BWP U1254 ( .A1(n761), .A2(n847), .ZN(n876) );
+  XNR3D4BWP U1255 ( .A1(net22095), .A2(n875), .A3(n876), .ZN(n884) );
+  CKND2D1BWP U1256 ( .A1(net23767), .A2(net22231), .ZN(n762) );
+  ND2D2BWP U1257 ( .A1(net22228), .A2(net23929), .ZN(n763) );
+  CKND2D4BWP U1258 ( .A1(n762), .A2(n763), .ZN(n804) );
+  INVD1BWP U1259 ( .I(net22231), .ZN(net23929) );
+  MUX2D0BWP U1260 ( .I0(\Inertial_Interface/intgr/ptch_int [1]), .I1(
+        \Inertial_Interface/intgr/N31 ), .S(vld), .Z(n816) );
+  XOR3D0BWP U1261 ( .A1(ptch[1]), .A2(net32199), .A3(n734), .Z(net21801) );
+  CKND2BWP U1262 ( .I(n764), .ZN(n1108) );
+  NR2D4BWP U1263 ( .A1(n1094), .A2(n700), .ZN(n765) );
+  XOR3D2BWP U1264 ( .A1(net22011), .A2(net22171), .A3(n904), .Z(n912) );
+  AOI222D4BWP U1265 ( .A1(n266), .A2(n250), .B1(n252), .B2(
+        \Inertial_Interface/done ), .C1(\Inertial_Interface/INT_meta2 ), .C2(
+        n264), .ZN(n280) );
+  OAI21D2BWP U1266 ( .A1(\Inertial_Interface/AZH [5]), .A2(net22310), .B(
+        net22299), .ZN(net22016) );
+  OAI22D2BWP U1267 ( .A1(n973), .A2(net22018), .B1(n698), .B2(n897), .ZN(n913)
+         );
+  OAI33D4BWP U1268 ( .A1(n895), .A2(n894), .A3(n893), .B1(n893), .B2(net22075), 
+        .B3(n916), .ZN(n897) );
+  INVD8BWP U1269 ( .I(net21939), .ZN(net21936) );
+  AO221D1BWP U1270 ( .A1(net22045), .A2(n844), .B1(net22281), .B2(net21939), 
+        .C(n984), .Z(n986) );
+  OA22D4BWP U1271 ( .A1(n1049), .A2(net22039), .B1(net21939), .B2(net22040), 
+        .Z(n799) );
+  ND2D2BWP U1272 ( .A1(rght_rev), .A2(\motor_drive/rghtMotor ), .ZN(n1149) );
+  INVD16BWP U1273 ( .I(n1149), .ZN(PWM_frwrd_rght) );
+  CKND16BWP U1274 ( .I(n122), .ZN(INERT_MOSI) );
+  CKND2BWP U1275 ( .I(n1145), .ZN(n122) );
+  CKBD16BWP U1276 ( .I(n1147), .Z(A2D_MOSI) );
+  INVD1BWP U1277 ( .I(\Inertial_Interface/state [2]), .ZN(n1141) );
+  CKBD16BWP U1278 ( .I(n1144), .Z(INERT_SS_n) );
+  CKBD16BWP U1279 ( .I(n1146), .Z(A2D_SS_n) );
+  AN3D2BWP U1280 ( .A1(\pepperoni_piezo/timer [25]), .A2(
+        \pepperoni_piezo/timer [24]), .A3(n187), .Z(n1151) );
+  INVD16BWP U1281 ( .I(n1151), .ZN(piezo_n) );
+  CKND16BWP U1282 ( .I(piezo_n), .ZN(piezo) );
+  AOI221XD4BWP U1283 ( .A1(n1048), .A2(n1047), .B1(ptch[7]), .B2(n1046), .C(
+        n1045), .ZN(net21929) );
+  OA21D1BWP U1284 ( .A1(\Inertial_Interface/AZL [4]), .A2(net32099), .B(n926), 
+        .Z(n773) );
+  CKND2D1BWP U1285 ( .A1(n773), .A2(net22142), .ZN(n866) );
+  ND2D2BWP U1286 ( .A1(n915), .A2(net22257), .ZN(n776) );
+  XNR2D0BWP U1287 ( .A1(net22018), .A2(n1002), .ZN(n1004) );
+  OAI21D0BWP U1288 ( .A1(n1112), .A2(net21771), .B(net21744), .ZN(n777) );
+  XOR3D0BWP U1289 ( .A1(net24241), .A2(\Inertial_Interface/intgr/ptch_int [2]), 
+        .A3(n573), .Z(\Inertial_Interface/intgr/N32 ) );
+  ND2D2BWP U1290 ( .A1(n779), .A2(net23823), .ZN(n780) );
+  CKND2D4BWP U1291 ( .A1(n780), .A2(n976), .ZN(n993) );
+  CKND0BWP U1292 ( .I(n702), .ZN(n779) );
+  CKND0BWP U1293 ( .I(net22040), .ZN(net23823) );
+  CKND2D1BWP U1294 ( .A1(n993), .A2(n992), .ZN(n997) );
+  OR2XD1BWP U1295 ( .A1(n781), .A2(net22441), .Z(net21855) );
+  ND2D1BWP U1296 ( .A1(n782), .A2(net22254), .ZN(n783) );
+  CKND0BWP U1297 ( .I(n796), .ZN(n782) );
+  MAOI222D1BWP U1298 ( .A(n1003), .B(net22069), .C(n974), .ZN(n975) );
+  CKND0BWP U1299 ( .I(net22147), .ZN(net22146) );
+  XNR3D0BWP U1300 ( .A1(net22075), .A2(n916), .A3(n915), .ZN(n796) );
+  OAI21D4BWP U1301 ( .A1(\Inertial_Interface/AZH [4]), .A2(net22304), .B(
+        net22305), .ZN(net22018) );
+  INVD0BWP U1302 ( .I(n253), .ZN(n113) );
+  CKND2D1BWP U1303 ( .A1(net22126), .A2(n784), .ZN(n785) );
+  OAI21D0BWP U1304 ( .A1(n167), .A2(n172), .B(n554), .ZN(
+        \A2D_interface/SPI_Interface/n59 ) );
+  CKND2D0BWP U1305 ( .A1(n938), .A2(n937), .ZN(n949) );
+  CKND0BWP U1306 ( .I(n1061), .ZN(n1051) );
+  CKND0BWP U1307 ( .I(n861), .ZN(n843) );
+  OAI22D0BWP U1308 ( .A1(n167), .A2(n182), .B1(n552), .B2(n181), .ZN(
+        \A2D_interface/SPI_Interface/n49 ) );
+  OAI22D0BWP U1309 ( .A1(n167), .A2(n181), .B1(n552), .B2(n180), .ZN(
+        \A2D_interface/SPI_Interface/n50 ) );
+  OAI22D0BWP U1310 ( .A1(n167), .A2(n180), .B1(n552), .B2(n179), .ZN(
+        \A2D_interface/SPI_Interface/n51 ) );
+  OAI22D0BWP U1311 ( .A1(n167), .A2(n179), .B1(n552), .B2(n178), .ZN(
+        \A2D_interface/SPI_Interface/n52 ) );
+  OAI22D0BWP U1312 ( .A1(n167), .A2(n178), .B1(n552), .B2(n177), .ZN(
+        \A2D_interface/SPI_Interface/n53 ) );
+  OAI22D0BWP U1313 ( .A1(n167), .A2(n177), .B1(n552), .B2(n176), .ZN(
+        \A2D_interface/SPI_Interface/n54 ) );
+  OAI22D0BWP U1314 ( .A1(n167), .A2(n176), .B1(n552), .B2(n175), .ZN(
+        \A2D_interface/SPI_Interface/n55 ) );
+  OAI22D0BWP U1315 ( .A1(n167), .A2(n175), .B1(n552), .B2(n174), .ZN(
+        \A2D_interface/SPI_Interface/n56 ) );
+  OAI22D0BWP U1316 ( .A1(n167), .A2(n174), .B1(n552), .B2(n173), .ZN(
+        \A2D_interface/SPI_Interface/n57 ) );
+  OAI22D0BWP U1317 ( .A1(n167), .A2(n173), .B1(n552), .B2(n172), .ZN(
+        \A2D_interface/SPI_Interface/n58 ) );
+  OAI22D0BWP U1318 ( .A1(n167), .A2(n170), .B1(n552), .B2(n169), .ZN(
+        \A2D_interface/SPI_Interface/n62 ) );
+  CKND0BWP U1319 ( .I(n250), .ZN(n111) );
+  OA21D1BWP U1320 ( .A1(n1011), .A2(net21917), .B(n1010), .Z(n787) );
+  OAI221D0BWP U1321 ( .A1(n547), .A2(n184), .B1(
+        \A2D_interface/SPI_Interface/state [0]), .B2(n167), .C(n117), .ZN(
+        \A2D_interface/SPI_Interface/nxt_state [0]) );
+  IND4D0BWP U1322 ( .A1(\Inertial_Interface/n33 ), .B1(n207), .B2(n279), .B3(
+        n280), .ZN(\Inertial_Interface/nxt_state [0]) );
+  IND2D0BWP U1323 ( .A1(n828), .B1(\Inertial_Interface/done ), .ZN(n207) );
+  IND2D0BWP U1324 ( .A1(n260), .B1(\Inertial_Interface/done ), .ZN(n839) );
+  OR3D0BWP U1325 ( .A1(\Inertial_Interface/state [2]), .A2(n826), .A3(n827), 
+        .Z(n253) );
+  CKND2D0BWP U1326 ( .A1(\A2D_interface/SPI_Interface/n68 ), .A2(
+        \A2D_interface/SPI_Interface/state [0]), .ZN(n551) );
+  AO21D0BWP U1327 ( .A1(\Auth_block/receiver/baud_cnt [10]), .A2(n507), .B(
+        n508), .Z(n808) );
+  OR3D0BWP U1328 ( .A1(\Inertial_Interface/state [2]), .A2(n118), .A3(n825), 
+        .Z(n828) );
+  OA21D0BWP U1329 ( .A1(\Inertial_Interface/done ), .A2(n260), .B(n261), .Z(
+        n273) );
+  AO21D0BWP U1330 ( .A1(n240), .A2(\Inertial_Interface/spi/state [1]), .B(
+        \Inertial_Interface/spi/n9 ), .Z(\Inertial_Interface/spi/nxt_state [1]) );
+  CKND1BWP U1331 ( .I(net22048), .ZN(net22045) );
+  IND2D2BWP U1332 ( .A1(n994), .B1(n998), .ZN(n1012) );
+  CKND1BWP U1333 ( .I(n1116), .ZN(n1120) );
+  CKND1BWP U1334 ( .I(net22142), .ZN(net22132) );
+  IND2D0BWP U1335 ( .A1(n1113), .B1(n1121), .ZN(n1115) );
+  CKND0BWP U1336 ( .I(net21735), .ZN(net21729) );
+  CKND0BWP U1337 ( .I(net21734), .ZN(net21730) );
+  MUX2D0BWP U1338 ( .I0(n791), .I1(n792), .S(n777), .Z(
+        \Inertial_Interface/intgr/N46 ) );
+  MUX2D0BWP U1339 ( .I0(n789), .I1(n790), .S(net22351), .Z(
+        \Inertial_Interface/intgr/N41 ) );
+  XNR2D0BWP U1340 ( .A1(n1106), .A2(n1107), .ZN(\Inertial_Interface/intgr/N52 ) );
+  INVD2BWP U1341 ( .I(n868), .ZN(n939) );
+  IND3D4BWP U1342 ( .A1(n990), .B1(net21954), .B2(n799), .ZN(n1054) );
+  XNR2D2BWP U1343 ( .A1(net21936), .A2(n861), .ZN(n803) );
+  CKND0BWP U1344 ( .I(n717), .ZN(n821) );
+  MUX2D1BWP U1345 ( .I0(n800), .I1(n801), .S(n802), .Z(
+        \Inertial_Interface/intgr/N42 ) );
+  ND2D3BWP U1346 ( .A1(n823), .A2(n123), .ZN(n248) );
+  AN3XD1BWP U1347 ( .A1(n1140), .A2(n120), .A3(n1141), .Z(n252) );
+  INR2XD0BWP U1348 ( .A1(n202), .B1(\Inertial_Interface/pitch_H [3]), .ZN(n203) );
+  XNR3D0BWP U1349 ( .A1(n567), .A2(\Inertial_Interface/intgr/ptch_int [10]), 
+        .A3(net32140), .ZN(n1137) );
+  XOR3D0BWP U1350 ( .A1(n568), .A2(ptch[0]), .A3(n1079), .Z(n1080) );
+  CKND2D0BWP U1351 ( .A1(ptch[1]), .A2(n1009), .ZN(n1010) );
+  AO21D1BWP U1352 ( .A1(n1007), .A2(net24223), .B(n1006), .Z(n786) );
+  AN2D2BWP U1353 ( .A1(\Inertial_Interface/AZH [2]), .A2(net22313), .Z(
+        net23530) );
+  CKBD2BWP U1354 ( .I(n242), .Z(n823) );
+  NR2XD0BWP U1355 ( .A1(\Inertial_Interface/spi/state [1]), .A2(
+        \Inertial_Interface/spi/state [0]), .ZN(n267) );
+  NR2XD0BWP U1356 ( .A1(n37), .A2(\Auth_block/state [1]), .ZN(n540) );
+  CKBD2BWP U1357 ( .I(net22353), .Z(net22351) );
+  INVD1BWP U1358 ( .I(n1090), .ZN(n1082) );
+  INVD1BWP U1359 ( .I(n1026), .ZN(n1021) );
+  INVD1BWP U1360 ( .I(n552), .ZN(n116) );
+  MUX2ND0BWP U1361 ( .I0(net21819), .I1(n1099), .S(n1102), .ZN(n1100) );
+  CKND0BWP U1362 ( .I(n985), .ZN(n988) );
+  XNR2D1BWP U1363 ( .A1(n1134), .A2(n1133), .ZN(n789) );
+  ND2D1BWP U1364 ( .A1(n1136), .A2(n1135), .ZN(n790) );
+  XNR2D0BWP U1365 ( .A1(net22351), .A2(net21751), .ZN(n791) );
+  CKND2D0BWP U1366 ( .A1(net21752), .A2(net21753), .ZN(n792) );
+  CKND2D0BWP U1367 ( .A1(net21794), .A2(net21808), .ZN(net23659) );
+  INVD1BWP U1368 ( .I(net21738), .ZN(net21825) );
+  CKMUX2D1BWP U1369 ( .I0(n862), .I1(net21936), .S(net22243), .Z(n822) );
+  MUX2ND0BWP U1370 ( .I0(n1120), .I1(n1117), .S(n1121), .ZN(n1118) );
+  CKMUX2D1BWP U1371 ( .I0(n793), .I1(n794), .S(n795), .Z(
+        \Inertial_Interface/intgr/N45 ) );
+  CKND2D0BWP U1372 ( .A1(net21744), .A2(n1124), .ZN(n793) );
+  XNR2D0BWP U1373 ( .A1(net22351), .A2(net21746), .ZN(n794) );
+  CKND2D0BWP U1374 ( .A1(n709), .A2(n1126), .ZN(n795) );
+  CKND1BWP U1375 ( .I(n883), .ZN(n958) );
+  INVD1BWP U1376 ( .I(n1129), .ZN(n1131) );
+  INVD1BWP U1377 ( .I(n506), .ZN(n39) );
+  CKND4BWP U1378 ( .I(n507), .ZN(n38) );
+  CKND4BWP U1379 ( .I(\A2D_interface/SPI_Interface/n68 ), .ZN(n167) );
+  ND2D1BWP U1380 ( .A1(n109), .A2(n114), .ZN(n247) );
+  NR2XD0BWP U1381 ( .A1(n262), .A2(n252), .ZN(n254) );
+  CKND3BWP U1382 ( .I(\Inertial_Interface/spi/n18 ), .ZN(n123) );
+  INVD1BWP U1383 ( .I(n278), .ZN(n114) );
+  INVD1BWP U1384 ( .I(net21853), .ZN(net21852) );
+  INVD1BWP U1385 ( .I(n1076), .ZN(n1075) );
+  MUX2ND0BWP U1386 ( .I0(n1096), .I1(n1097), .S(n798), .ZN(
+        \Inertial_Interface/intgr/N51 ) );
+  AOI21D2BWP U1387 ( .A1(n860), .A2(n904), .B(n859), .ZN(n910) );
+  NR2XD0BWP U1388 ( .A1(net22248), .A2(net22249), .ZN(n859) );
+  INVD1BWP U1389 ( .I(net22248), .ZN(net22278) );
+  CKND0BWP U1390 ( .I(n960), .ZN(n965) );
+  ND2D1BWP U1391 ( .A1(n1021), .A2(n1020), .ZN(n1022) );
+  CKND0BWP U1392 ( .I(n926), .ZN(n928) );
+  XOR4D0BWP U1393 ( .A1(n698), .A2(n1004), .A3(net22016), .A4(n1003), .Z(n1007) );
+  INVD1BWP U1394 ( .I(net21863), .ZN(net21862) );
+  CKND0BWP U1395 ( .I(net22291), .ZN(net22313) );
+  IND2D1BWP U1396 ( .A1(n922), .B1(net23960), .ZN(n925) );
+  INVD1BWP U1397 ( .I(net21801), .ZN(net21879) );
+  CKND0BWP U1398 ( .I(net22283), .ZN(net22281) );
+  INVD1BWP U1399 ( .I(net21876), .ZN(net21727) );
+  INVD1BWP U1400 ( .I(n884), .ZN(n959) );
+  XNR2D0BWP U1401 ( .A1(net22351), .A2(net21801), .ZN(n800) );
+  CKND2D0BWP U1402 ( .A1(n1129), .A2(n1130), .ZN(n801) );
+  OAI21D0BWP U1403 ( .A1(n1105), .A2(net32153), .B(n1135), .ZN(n802) );
+  INVD1BWP U1404 ( .I(n1080), .ZN(n1133) );
+  CKND1BWP U1405 ( .I(n942), .ZN(n945) );
+  CKND1BWP U1406 ( .I(n817), .ZN(n947) );
+  NR2D3BWP U1407 ( .A1(n51), .A2(\Auth_block/receiver/n42 ), .ZN(n507) );
+  NR2XD3BWP U1408 ( .A1(n276), .A2(n138), .ZN(n575) );
+  INVD1BWP U1409 ( .I(n555), .ZN(n117) );
+  INVD1BWP U1410 ( .I(n520), .ZN(n43) );
+  NR2XD3BWP U1411 ( .A1(n261), .A2(n138), .ZN(\Inertial_Interface/n33 ) );
+  AOI21D1BWP U1412 ( .A1(n55), .A2(n39), .B(n510), .ZN(n509) );
+  OAI222D1BWP U1413 ( .A1(n263), .A2(n823), .B1(n248), .B2(n132), .C1(n123), 
+        .C2(n133), .ZN(\Inertial_Interface/spi/n25 ) );
+  OAI222D1BWP U1414 ( .A1(n248), .A2(n136), .B1(n257), .B2(n823), .C1(n123), 
+        .C2(n137), .ZN(\Inertial_Interface/spi/n29 ) );
+  NR2XD1BWP U1415 ( .A1(n520), .A2(n39), .ZN(n510) );
+  ND2D1BWP U1416 ( .A1(n260), .A2(n276), .ZN(n256) );
+  ND2D1BWP U1417 ( .A1(n1142), .A2(n118), .ZN(n269) );
+  OAI221D1BWP U1418 ( .A1(n516), .A2(n38), .B1(n517), .B2(n46), .C(n506), .ZN(
+        \Auth_block/receiver/n34 ) );
+  NR2XD1BWP U1419 ( .A1(n269), .A2(n1141), .ZN(n264) );
+  OAI22D1BWP U1420 ( .A1(n123), .A2(n132), .B1(n248), .B2(n131), .ZN(
+        \Inertial_Interface/spi/n24 ) );
+  INR2XD2BWP U1421 ( .A1(n265), .B1(n267), .ZN(\Inertial_Interface/spi/n20 )
+         );
+  OAI21D1BWP U1422 ( .A1(n38), .A2(n46), .B(n517), .ZN(n508) );
+  ND2D1BWP U1423 ( .A1(n253), .A2(n278), .ZN(n262) );
+  OAI221D1BWP U1424 ( .A1(n248), .A2(n137), .B1(n123), .B2(n125), .C(n255), 
+        .ZN(\Inertial_Interface/spi/n30 ) );
+  OAI31D1BWP U1425 ( .A1(n256), .A2(n250), .A3(n252), .B(n109), .ZN(n255) );
+  OAI21D1BWP U1426 ( .A1(n526), .A2(n38), .B(n514), .ZN(n524) );
+  ND3D1BWP U1427 ( .A1(n111), .A2(n260), .A3(n261), .ZN(n259) );
+  ND2D1BWP U1428 ( .A1(n514), .A2(n49), .ZN(n532) );
+  OAI21D1BWP U1429 ( .A1(n530), .A2(n38), .B(n514), .ZN(n528) );
+  INVD1BWP U1430 ( .I(n530), .ZN(n45) );
+  INVD1BWP U1431 ( .I(n526), .ZN(n42) );
+  INVD1BWP U1432 ( .I(n522), .ZN(n41) );
+  ND2D1BWP U1433 ( .A1(n183), .A2(n184), .ZN(n556) );
+  ND2D1BWP U1434 ( .A1(n286), .A2(n1141), .ZN(n278) );
+  ND3D1BWP U1435 ( .A1(n540), .A2(n539), .A3(n541), .ZN(n534) );
+  INVD1BWP U1436 ( .I(n827), .ZN(n1140) );
+  AN2D2BWP U1437 ( .A1(n551), .A2(n556), .Z(\A2D_interface/SPI_Interface/n66 )
+         );
+  INVD1BWP U1438 ( .I(n825), .ZN(n1142) );
+  INVD1BWP U1439 ( .I(n823), .ZN(n837) );
+  OAI21D1BWP U1440 ( .A1(n504), .A2(n51), .B(n43), .ZN(
+        \Auth_block/receiver/nxt_state ) );
+  INVD1BWP U1441 ( .I(n540), .ZN(n36) );
+  INVD1BWP U1442 ( .I(n938), .ZN(n869) );
+  CKND0BWP U1443 ( .I(n1042), .ZN(n1046) );
+  INVD1BWP U1444 ( .I(ptch[9]), .ZN(n1055) );
+  ND2D1BWP U1445 ( .A1(\pepperoni_piezo/timer [16]), .A2(en_steer), .ZN(n188)
+         );
+  ND4D1BWP U1446 ( .A1(n190), .A2(n191), .A3(n192), .A4(n193), .ZN(n189) );
+  INVD1BWP U1447 ( .I(ptch[14]), .ZN(n1058) );
+  INVD1BWP U1448 ( .I(ptch[13]), .ZN(n1057) );
+  INR2D1BWP U1449 ( .A1(n204), .B1(\Inertial_Interface/pitch_H [5]), .ZN(n206)
+         );
+  OAI21D1BWP U1450 ( .A1(net22269), .A2(\Inertial_Interface/AZH [1]), .B(
+        net22291), .ZN(net22287) );
+  NR3D0BWP U1451 ( .A1(batt[7]), .A2(batt[9]), .A3(batt[8]), .ZN(n193) );
+  NR3D0BWP U1452 ( .A1(batt[0]), .A2(batt[11]), .A3(batt[10]), .ZN(n190) );
+  NR3D0BWP U1453 ( .A1(batt[1]), .A2(batt[3]), .A3(batt[2]), .ZN(n191) );
+  NR3D0BWP U1454 ( .A1(batt[4]), .A2(batt[6]), .A3(batt[5]), .ZN(n192) );
+  IND2D1BWP U1455 ( .A1(\Inertial_Interface/pitch_H [6]), .B1(n206), .ZN(n205)
+         );
+  CKND0BWP U1456 ( .I(\Inertial_Interface/AZL [5]), .ZN(net22126) );
+  INVD1BWP U1457 ( .I(n921), .ZN(n924) );
+  NR2D0BWP U1458 ( .A1(ptch[1]), .A2(n1009), .ZN(n1006) );
+  INVD1BWP U1459 ( .I(ptch[7]), .ZN(n1041) );
+  CKND2D0BWP U1460 ( .A1(ptch[5]), .A2(n1026), .ZN(n1031) );
+  NR2XD0BWP U1461 ( .A1(\Inertial_Interface/pitch_H [2]), .A2(n200), .ZN(n202)
+         );
+  NR3D0BWP U1462 ( .A1(\Auth_block/receiver/n56 ), .A2(\Auth_block/rx_data [7]), .A3(\Auth_block/rx_data [3]), .ZN(n544) );
+  AN4D1BWP U1463 ( .A1(\Auth_block/rx_data [5]), .A2(\Auth_block/rx_data [6]), 
+        .A3(\Auth_block/rx_rdy ), .A4(\Auth_block/rx_data [2]), .Z(n545) );
+  ND4D1BWP U1464 ( .A1(\Inertial_Interface/timer [5]), .A2(
+        \Inertial_Interface/timer [4]), .A3(\Inertial_Interface/timer [3]), 
+        .A4(\Inertial_Interface/timer [2]), .ZN(n282) );
+  ND4D1BWP U1465 ( .A1(\Inertial_Interface/timer [9]), .A2(
+        \Inertial_Interface/timer [8]), .A3(\Inertial_Interface/timer [7]), 
+        .A4(\Inertial_Interface/timer [6]), .ZN(n283) );
+  ND4D1BWP U1466 ( .A1(\Inertial_Interface/timer [1]), .A2(
+        \Inertial_Interface/timer [15]), .A3(\Inertial_Interface/timer [14]), 
+        .A4(\Inertial_Interface/timer [13]), .ZN(n285) );
+  OAI32D1BWP U1467 ( .A1(n55), .A2(\Auth_block/receiver/bit_cnt [1]), .A3(n506), .B1(n509), .B2(n54), .ZN(\Auth_block/receiver/n40 ) );
+  AOI32D1BWP U1468 ( .A1(\A2D_interface/round_robin_cnt [1]), .A2(n166), .A3(
+        n555), .B1(\A2D_interface/SPI_Interface/rd_data[11] ), .B2(n116), .ZN(
+        n554) );
+  INVD1BWP U1469 ( .I(\Inertial_Interface/spi/n61 ), .ZN(n831) );
+  INVD1BWP U1470 ( .I(\Inertial_Interface/spi/n59 ), .ZN(n832) );
+  INVD1BWP U1471 ( .I(\Inertial_Interface/spi/n56 ), .ZN(n838) );
+  OAI222D1BWP U1472 ( .A1(n263), .A2(n823), .B1(n248), .B2(n122), .C1(n123), 
+        .C2(n131), .ZN(\Inertial_Interface/spi/n23 ) );
+  OAI32D1BWP U1473 ( .A1(n53), .A2(\Auth_block/receiver/bit_cnt [3]), .A3(n511), .B1(n513), .B2(n52), .ZN(\Auth_block/receiver/n37 ) );
+  AOI21D1BWP U1474 ( .A1(n39), .A2(n53), .B(n512), .ZN(n513) );
+  INVD1BWP U1475 ( .I(\Auth_block/receiver/bit_cnt [2]), .ZN(n53) );
+  OAI222D1BWP U1476 ( .A1(n552), .A2(n170), .B1(n553), .B2(n117), .C1(n167), 
+        .C2(n171), .ZN(\A2D_interface/SPI_Interface/n61 ) );
+  OAI32D1BWP U1477 ( .A1(n38), .A2(\Auth_block/receiver/baud_cnt [7]), .A3(n41), .B1(n521), .B2(n47), .ZN(\Auth_block/receiver/n32 ) );
+  OAI222D1BWP U1478 ( .A1(n248), .A2(n133), .B1(n254), .B2(n823), .C1(n123), 
+        .C2(n134), .ZN(\Inertial_Interface/spi/n26 ) );
+  INVD1BWP U1479 ( .I(\Inertial_Interface/spi/rd_data[11] ), .ZN(n134) );
+  OAI211D0BWP U1480 ( .A1(\Inertial_Interface/done ), .A2(n253), .B(n273), .C(
+        n277), .ZN(\Inertial_Interface/nxt_state [1]) );
+  AOI211XD0BWP U1481 ( .A1(n114), .A2(\Inertial_Interface/done ), .B(n575), 
+        .C(n252), .ZN(n277) );
+  IND4D2BWP U1482 ( .A1(n577), .B1(\A2D_interface/SPI_Interface/sclk_div [3]), 
+        .B2(\A2D_interface/SPI_Interface/sclk_div [2]), .B3(
+        \A2D_interface/SPI_Interface/sclk_div [1]), .ZN(n549) );
+  IND4D2BWP U1483 ( .A1(n576), .B1(\Inertial_Interface/spi/sclk_div [3]), .B2(
+        \Inertial_Interface/spi/sclk_div [2]), .B3(
+        \Inertial_Interface/spi/sclk_div [1]), .ZN(n244) );
+  ND4D1BWP U1484 ( .A1(\Inertial_Interface/timer [12]), .A2(
+        \Inertial_Interface/timer [11]), .A3(\Inertial_Interface/timer [10]), 
+        .A4(\Inertial_Interface/timer [0]), .ZN(n284) );
+  NR2XD1BWP U1485 ( .A1(\Auth_block/receiver/state ), .A2(
+        \Auth_block/receiver/rx_ff2 ), .ZN(n520) );
+  INVD1BWP U1486 ( .I(n252), .ZN(n835) );
+  OAI22D1BWP U1487 ( .A1(\Auth_block/receiver/baud_cnt [0]), .A2(n38), .B1(
+        n514), .B2(n49), .ZN(\Auth_block/receiver/n36 ) );
+  NR3D1BWP U1488 ( .A1(n275), .A2(\A2D_interface/state[0] ), .A3(n556), .ZN(
+        n555) );
+  NR3D1BWP U1489 ( .A1(\Inertial_Interface/state [1]), .A2(
+        \Inertial_Interface/state [3]), .A3(n120), .ZN(n286) );
+  INVD1BWP U1490 ( .I(vld), .ZN(n275) );
+  MOAI22D0BWP U1491 ( .A1(\Auth_block/receiver/bit_cnt [0]), .A2(n506), .B1(
+        n510), .B2(\Auth_block/receiver/bit_cnt [0]), .ZN(
+        \Auth_block/receiver/n39 ) );
+  OAI21D1BWP U1492 ( .A1(\Auth_block/receiver/bit_cnt [1]), .A2(n506), .B(n509), .ZN(n512) );
+  MOAI22D0BWP U1493 ( .A1(n552), .A2(n182), .B1(
+        \A2D_interface/SPI_Interface/MISO_smpl ), .B2(
+        \A2D_interface/SPI_Interface/n68 ), .ZN(
+        \A2D_interface/SPI_Interface/n48 ) );
+  MOAI22D0BWP U1494 ( .A1(n552), .A2(n171), .B1(
+        \A2D_interface/SPI_Interface/n68 ), .B2(
+        \A2D_interface/SPI_Interface/rd_data[11] ), .ZN(
+        \A2D_interface/SPI_Interface/n60 ) );
+  NR2D0BWP U1495 ( .A1(\Inertial_Interface/state [2]), .A2(n825), .ZN(n271) );
+  NR3D1BWP U1496 ( .A1(\Auth_block/receiver/baud_cnt [5]), .A2(
+        \Auth_block/receiver/baud_cnt [6]), .A3(n42), .ZN(n522) );
+  NR3D1BWP U1497 ( .A1(n549), .A2(\A2D_interface/SPI_Interface/state [1]), 
+        .A3(n184), .ZN(\A2D_interface/SPI_Interface/n77 ) );
+  NR3D1BWP U1498 ( .A1(n244), .A2(\Inertial_Interface/spi/state [1]), .A3(n140), .ZN(\Inertial_Interface/spi/n9 ) );
+  OAI221D1BWP U1499 ( .A1(n531), .A2(n44), .B1(n45), .B2(n38), .C(n510), .ZN(
+        \Auth_block/receiver/n27 ) );
+  INVD1BWP U1500 ( .I(\Auth_block/receiver/baud_cnt [2]), .ZN(n44) );
+  NR2XD0BWP U1501 ( .A1(\Auth_block/receiver/baud_cnt [1]), .A2(n532), .ZN(
+        n531) );
+  AOI22D1BWP U1502 ( .A1(n548), .A2(n183), .B1(
+        \A2D_interface/SPI_Interface/state [1]), .B2(n546), .ZN(n547) );
+  IND2D1BWP U1503 ( .A1(n549), .B1(n550), .ZN(n548) );
+  ND4D1BWP U1504 ( .A1(\A2D_interface/SPI_Interface/shft_cnt [3]), .A2(
+        \A2D_interface/SPI_Interface/shft_cnt [2]), .A3(
+        \A2D_interface/SPI_Interface/shft_cnt [1]), .A4(
+        \A2D_interface/SPI_Interface/shft_cnt [0]), .ZN(n550) );
+  ND3D1BWP U1505 ( .A1(n39), .A2(\Auth_block/receiver/bit_cnt [1]), .A3(
+        \Auth_block/receiver/bit_cnt [0]), .ZN(n511) );
+  INVD1BWP U1506 ( .I(\Inertial_Interface/state [0]), .ZN(n120) );
+  INR4D0BWP U1507 ( .A1(n534), .B1(n520), .B2(n535), .B3(n536), .ZN(
+        \Auth_block/receiver/n25 ) );
+  AOI21D1BWP U1508 ( .A1(n504), .A2(\Auth_block/receiver/state ), .B(
+        \Auth_block/rx_rdy ), .ZN(n536) );
+  NR2XD0BWP U1509 ( .A1(\Auth_block/state [0]), .A2(n537), .ZN(n535) );
+  INVD1BWP U1510 ( .I(\A2D_interface/SPI_Interface/state [0]), .ZN(n184) );
+  OAI221D1BWP U1511 ( .A1(n241), .A2(n140), .B1(
+        \Inertial_Interface/spi/state [0]), .B2(n123), .C(n823), .ZN(
+        \Inertial_Interface/spi/nxt_state [0]) );
+  AOI22D0BWP U1512 ( .A1(n243), .A2(n139), .B1(
+        \Inertial_Interface/spi/state [1]), .B2(n240), .ZN(n241) );
+  IND2D1BWP U1513 ( .A1(n244), .B1(n245), .ZN(n243) );
+  ND4D1BWP U1514 ( .A1(\Inertial_Interface/spi/shft_cnt [3]), .A2(
+        \Inertial_Interface/spi/shft_cnt [2]), .A3(
+        \Inertial_Interface/spi/shft_cnt [1]), .A4(
+        \Inertial_Interface/spi/shft_cnt [0]), .ZN(n245) );
+  MOAI22D0BWP U1515 ( .A1(\Auth_block/receiver/bit_cnt [2]), .A2(n511), .B1(
+        n512), .B2(\Auth_block/receiver/bit_cnt [2]), .ZN(
+        \Auth_block/receiver/n38 ) );
+  MOAI22D0BWP U1516 ( .A1(n167), .A2(n169), .B1(n116), .B2(A2D_MOSI), .ZN(
+        \A2D_interface/SPI_Interface/n63 ) );
+  ND4D1BWP U1517 ( .A1(n257), .A2(n273), .A3(n274), .A4(n275), .ZN(
+        \Inertial_Interface/nxt_state [2]) );
+  CKND2D0BWP U1518 ( .A1(n113), .A2(\Inertial_Interface/done ), .ZN(n274) );
+  OAI221D1BWP U1519 ( .A1(n248), .A2(n135), .B1(n123), .B2(n136), .C(n258), 
+        .ZN(\Inertial_Interface/spi/n28 ) );
+  INVD1BWP U1520 ( .I(\Inertial_Interface/spi/rd_data[10] ), .ZN(n135) );
+  OAI21D1BWP U1521 ( .A1(n113), .A2(n259), .B(n109), .ZN(n258) );
+  ND2D1BWP U1522 ( .A1(\Inertial_Interface/spi/n18 ), .A2(
+        \Inertial_Interface/spi/state [0]), .ZN(n265) );
+  INVD1BWP U1523 ( .I(\motor_drive/lftMotor ), .ZN(n142) );
+  INVD1BWP U1524 ( .I(\Auth_block/receiver/baud_cnt [9]), .ZN(n46) );
+  INVD1BWP U1525 ( .I(\A2D_interface/SPI_Interface/state [1]), .ZN(n183) );
+  CKND1BWP U1526 ( .I(\Auth_block/receiver/bit_cnt [0]), .ZN(n55) );
+  CKND1BWP U1527 ( .I(\Auth_block/receiver/bit_cnt [1]), .ZN(n54) );
+  CKND1BWP U1528 ( .I(\Inertial_Interface/spi/state [0]), .ZN(n140) );
+  INVD1BWP U1529 ( .I(\Inertial_Interface/state [3]), .ZN(n118) );
+  IOA21D1BWP U1530 ( .A1(n808), .A2(\Auth_block/receiver/baud_cnt [11]), .B(
+        n506), .ZN(\Auth_block/receiver/n41 ) );
+  OR2D1BWP U1531 ( .A1(n549), .A2(n558), .Z(n546) );
+  OAI21D1BWP U1532 ( .A1(n262), .A2(n256), .B(n138), .ZN(n279) );
+  MOAI22D0BWP U1533 ( .A1(n41), .A2(n38), .B1(n809), .B2(
+        \Auth_block/receiver/baud_cnt [6]), .ZN(\Auth_block/receiver/n31 ) );
+  AO21D1BWP U1534 ( .A1(\Auth_block/receiver/baud_cnt [5]), .A2(n507), .B(n524), .Z(n809) );
+  INVD1BWP U1535 ( .I(\Auth_block/receiver/state ), .ZN(n51) );
+  AO21D1BWP U1536 ( .A1(n810), .A2(n811), .B(\motor_drive/rghtMotor ), .Z(n210) );
+  AN4D1BWP U1537 ( .A1(n160), .A2(n159), .A3(n214), .A4(n158), .Z(n810) );
+  AN4D1BWP U1538 ( .A1(n165), .A2(n164), .A3(n213), .A4(n163), .Z(n811) );
+  OAI21D1BWP U1539 ( .A1(n227), .A2(n228), .B(n142), .ZN(n226) );
+  ND4D1BWP U1540 ( .A1(n148), .A2(n147), .A3(n230), .A4(n146), .ZN(n227) );
+  ND4D1BWP U1541 ( .A1(n153), .A2(n152), .A3(n229), .A4(n151), .ZN(n228) );
+  NR2XD0BWP U1542 ( .A1(\motor_drive/lftPWM/count [9]), .A2(
+        \motor_drive/lftPWM/count [8]), .ZN(n230) );
+  INVD1BWP U1543 ( .I(\Auth_block/state [0]), .ZN(n37) );
+  INVD1BWP U1544 ( .I(\Auth_block/receiver/bit_cnt [3]), .ZN(n52) );
+  INVD1BWP U1545 ( .I(\motor_drive/rghtPWM/count [7]), .ZN(n158) );
+  INVD1BWP U1546 ( .I(\motor_drive/lftPWM/count [7]), .ZN(n146) );
+  INVD1BWP U1547 ( .I(\motor_drive/rghtPWM/count [9]), .ZN(n156) );
+  INVD1BWP U1548 ( .I(\motor_drive/lftPWM/count [9]), .ZN(n144) );
+  INVD1BWP U1549 ( .I(\motor_drive/rghtPWM/count [5]), .ZN(n160) );
+  INVD1BWP U1550 ( .I(\motor_drive/lftPWM/count [5]), .ZN(n148) );
+  INVD1BWP U1551 ( .I(\motor_drive/rghtPWM/count [2]), .ZN(n163) );
+  INVD1BWP U1552 ( .I(\motor_drive/lftPWM/count [2]), .ZN(n151) );
+  AN4D1BWP U1553 ( .A1(\Auth_block/rx_data [0]), .A2(\Auth_block/receiver/n56 ), .A3(n542), .A4(n543), .Z(n541) );
+  NR3D0BWP U1554 ( .A1(\Auth_block/rx_data [2]), .A2(\Auth_block/rx_data [7]), 
+        .A3(\Auth_block/rx_data [3]), .ZN(n542) );
+  AN4D1BWP U1555 ( .A1(\Auth_block/rx_data [1]), .A2(\Auth_block/rx_data [5]), 
+        .A3(\Auth_block/rx_data [6]), .A4(\Auth_block/rx_rdy ), .Z(n543) );
+  INVD1BWP U1556 ( .I(\motor_drive/rghtPWM/count [6]), .ZN(n159) );
+  INVD1BWP U1557 ( .I(\motor_drive/lftPWM/count [6]), .ZN(n147) );
+  OAI221D1BWP U1558 ( .A1(n527), .A2(n40), .B1(n42), .B2(n38), .C(n43), .ZN(
+        \Auth_block/receiver/n29 ) );
+  INVD1BWP U1559 ( .I(\Auth_block/receiver/baud_cnt [4]), .ZN(n40) );
+  NR2XD0BWP U1560 ( .A1(\Auth_block/receiver/baud_cnt [3]), .A2(n528), .ZN(
+        n527) );
+  INVD1BWP U1561 ( .I(n254), .ZN(n836) );
+  INVD1BWP U1562 ( .I(ptch[10]), .ZN(n1053) );
+  INVD1BWP U1563 ( .I(\motor_drive/rghtPWM/count [1]), .ZN(n164) );
+  INVD1BWP U1564 ( .I(\motor_drive/lftPWM/count [1]), .ZN(n152) );
+  ND2D1BWP U1565 ( .A1(n521), .A2(n47), .ZN(n519) );
+  INVD1BWP U1566 ( .I(n247), .ZN(n829) );
+  INVD1BWP U1567 ( .I(\motor_drive/rghtPWM/count [3]), .ZN(n162) );
+  INVD1BWP U1568 ( .I(\motor_drive/lftPWM/count [3]), .ZN(n150) );
+  INVD1BWP U1569 ( .I(\motor_drive/rghtPWM/count [0]), .ZN(n165) );
+  INVD1BWP U1570 ( .I(\motor_drive/lftPWM/count [0]), .ZN(n153) );
+  OA221D1BWP U1571 ( .A1(n157), .A2(rght_spd[8]), .B1(n156), .B2(rght_spd[9]), 
+        .C(n216), .Z(n215) );
+  INVD1BWP U1572 ( .I(\motor_drive/rghtPWM/count [8]), .ZN(n157) );
+  OA221D1BWP U1573 ( .A1(n159), .A2(rght_spd[6]), .B1(n158), .B2(rght_spd[7]), 
+        .C(n218), .Z(n217) );
+  OA221D1BWP U1574 ( .A1(n145), .A2(lft_spd[8]), .B1(n144), .B2(lft_spd[9]), 
+        .C(n232), .Z(n231) );
+  INVD1BWP U1575 ( .I(\motor_drive/lftPWM/count [8]), .ZN(n145) );
+  OA221D1BWP U1576 ( .A1(n147), .A2(lft_spd[6]), .B1(n146), .B2(lft_spd[7]), 
+        .C(n234), .Z(n233) );
+  NR2XD0BWP U1577 ( .A1(\motor_drive/rghtPWM/count [4]), .A2(
+        \motor_drive/rghtPWM/count [3]), .ZN(n213) );
+  NR2XD0BWP U1578 ( .A1(\motor_drive/rghtPWM/count [9]), .A2(
+        \motor_drive/rghtPWM/count [8]), .ZN(n214) );
+  NR2XD0BWP U1579 ( .A1(\motor_drive/lftPWM/count [4]), .A2(
+        \motor_drive/lftPWM/count [3]), .ZN(n229) );
+  INVD1BWP U1580 ( .I(\Inertial_Interface/state [0]), .ZN(n826) );
+  OAI211D1BWP U1581 ( .A1(n266), .A2(n111), .B(n267), .C(n268), .ZN(n242) );
+  AOI21D0BWP U1582 ( .A1(n269), .A2(n138), .B(n270), .ZN(n268) );
+  OAI32D1BWP U1583 ( .A1(n1141), .A2(\Inertial_Interface/INT_meta2 ), .A3(n825), .B1(n118), .B2(n271), .ZN(n270) );
+  IOA21D0BWP U1584 ( .A1(n117), .A2(A2D_SS_n), .B(n551), .ZN(
+        \A2D_interface/SPI_Interface/n64 ) );
+  IOA21D0BWP U1585 ( .A1(n823), .A2(INERT_SS_n), .B(n265), .ZN(
+        \Inertial_Interface/spi/n22 ) );
+  NR2XD0BWP U1586 ( .A1(n208), .A2(n209), .ZN(\motor_drive/rghtPWM/n27 ) );
+  AOI22D1BWP U1587 ( .A1(n210), .A2(n155), .B1(\motor_drive/rghtMotor ), .B2(
+        rght_spd[10]), .ZN(n209) );
+  AOI221D1BWP U1588 ( .A1(rght_spd[9]), .A2(n156), .B1(rght_spd[10]), .B2(n155), .C(n215), .ZN(n208) );
+  INVD1BWP U1589 ( .I(\motor_drive/rghtPWM/count [10]), .ZN(n155) );
+  NR2XD0BWP U1590 ( .A1(n224), .A2(n225), .ZN(\motor_drive/lftPWM/n10 ) );
+  AOI22D1BWP U1591 ( .A1(n226), .A2(n143), .B1(\motor_drive/lftMotor ), .B2(
+        lft_spd[10]), .ZN(n225) );
+  AOI221D1BWP U1592 ( .A1(lft_spd[9]), .A2(n144), .B1(lft_spd[10]), .B2(n143), 
+        .C(n231), .ZN(n224) );
+  INVD1BWP U1593 ( .I(\motor_drive/lftPWM/count [10]), .ZN(n143) );
+  ND2D1BWP U1594 ( .A1(n534), .A2(n538), .ZN(\Auth_block/nxt_state [1]) );
+  ND4D0BWP U1595 ( .A1(\Auth_block/state [1]), .A2(n537), .A3(n37), .A4(n539), 
+        .ZN(n538) );
+  IND2D1BWP U1596 ( .A1(\A2D_interface/state[0] ), .B1(n275), .ZN(
+        \A2D_interface/n40 ) );
+  INVD1BWP U1597 ( .I(\Inertial_Interface/state [1]), .ZN(n824) );
+  OA221D1BWP U1598 ( .A1(n163), .A2(rght_spd[2]), .B1(n162), .B2(rght_spd[3]), 
+        .C(n222), .Z(n221) );
+  IAO21D1BWP U1599 ( .A1(n164), .A2(rght_spd[1]), .B(
+        \motor_drive/rghtPWM/count [0]), .ZN(n223) );
+  OA221D1BWP U1600 ( .A1(n151), .A2(lft_spd[2]), .B1(n150), .B2(lft_spd[3]), 
+        .C(n238), .Z(n237) );
+  IAO21D1BWP U1601 ( .A1(n152), .A2(lft_spd[1]), .B(
+        \motor_drive/lftPWM/count [0]), .ZN(n239) );
+  OA221D1BWP U1602 ( .A1(n161), .A2(rght_spd[4]), .B1(n160), .B2(rght_spd[5]), 
+        .C(n220), .Z(n219) );
+  INVD1BWP U1603 ( .I(\motor_drive/rghtPWM/count [4]), .ZN(n161) );
+  OA221D1BWP U1604 ( .A1(n149), .A2(lft_spd[4]), .B1(n148), .B2(lft_spd[5]), 
+        .C(n236), .Z(n235) );
+  INVD1BWP U1605 ( .I(\motor_drive/lftPWM/count [4]), .ZN(n149) );
+  INVD1BWP U1606 ( .I(ptch[6]), .ZN(n1029) );
+  AO21D1BWP U1607 ( .A1(n524), .A2(\Auth_block/receiver/baud_cnt [5]), .B(n812), .Z(\Auth_block/receiver/n30 ) );
+  OAI31D1BWP U1608 ( .A1(n42), .A2(\Auth_block/receiver/baud_cnt [5]), .A3(n38), .B(n506), .ZN(n812) );
+  AO21D1BWP U1609 ( .A1(n528), .A2(\Auth_block/receiver/baud_cnt [3]), .B(n813), .Z(\Auth_block/receiver/n28 ) );
+  OAI31D1BWP U1610 ( .A1(n45), .A2(\Auth_block/receiver/baud_cnt [3]), .A3(n38), .B(n506), .ZN(n813) );
+  AO21D1BWP U1611 ( .A1(n508), .A2(\Auth_block/receiver/baud_cnt [10]), .B(
+        n814), .Z(\Auth_block/receiver/n35 ) );
+  OAI31D1BWP U1612 ( .A1(n516), .A2(\Auth_block/receiver/baud_cnt [10]), .A3(
+        n38), .B(n43), .ZN(n814) );
+  AO21D1BWP U1613 ( .A1(n532), .A2(\Auth_block/receiver/baud_cnt [1]), .B(n815), .Z(\Auth_block/receiver/n26 ) );
+  OAI31D1BWP U1614 ( .A1(\Auth_block/receiver/baud_cnt [0]), .A2(
+        \Auth_block/receiver/baud_cnt [1]), .A3(n38), .B(n43), .ZN(n815) );
+  INVD1BWP U1615 ( .I(ptch[4]), .ZN(n1016) );
+  INVD1BWP U1616 ( .I(ptch[5]), .ZN(n1020) );
+  INVD1BWP U1617 ( .I(\Auth_block/receiver/baud_cnt [7]), .ZN(n47) );
+  INVD1BWP U1618 ( .I(\Inertial_Interface/spi/rd_data[12] ), .ZN(n133) );
+  INVD1BWP U1619 ( .I(\Inertial_Interface/spi/rd_data[8] ), .ZN(n137) );
+  INVD1BWP U1620 ( .I(\Inertial_Interface/spi/rd_data[9] ), .ZN(n136) );
+  INVD1BWP U1621 ( .I(\Auth_block/receiver/baud_cnt [0]), .ZN(n49) );
+  INVD1BWP U1622 ( .I(\Inertial_Interface/spi/rd_data[14] ), .ZN(n131) );
+  INVD1BWP U1623 ( .I(\Inertial_Interface/spi/rd_data[13] ), .ZN(n132) );
+  INVD1BWP U1624 ( .I(\Inertial_Interface/spi/n55 ), .ZN(n125) );
+  OAI21D0BWP U1625 ( .A1(\Inertial_Interface/pitch_L [0]), .A2(net24129), .B(
+        n738), .ZN(\Inertial_Interface/intgr/N30 ) );
+  INVD1BWP U1626 ( .I(\A2D_interface/round_robin_cnt [0]), .ZN(n166) );
+  INVD1BWP U1627 ( .I(\Inertial_Interface/spi/n60 ), .ZN(n833) );
+  INVD1BWP U1628 ( .I(\pepperoni_piezo/timer [0]), .ZN(n185) );
+  INVD1BWP U1629 ( .I(rider_off), .ZN(n539) );
+  XOR3D0BWP U1630 ( .A1(n1083), .A2(n1086), .A3(ptch[9]), .Z(net21774) );
+  MAOI222D1BWP U1631 ( .A(n1074), .B(ptch[14]), .C(n717), .ZN(n1073) );
+  ND2D1BWP U1632 ( .A1(n1034), .A2(net21973), .ZN(n1028) );
+  ND2D2BWP U1633 ( .A1(n986), .A2(n985), .ZN(net21973) );
+  XOR3D2BWP U1634 ( .A1(net22072), .A2(n805), .A3(n715), .Z(n898) );
+  XOR4D2BWP U1635 ( .A1(n1073), .A2(net22351), .A3(ptch[15]), .A4(n1086), .Z(
+        n1088) );
+  CKBD2BWP U1636 ( .I(n871), .Z(n817) );
+  ND2D4BWP U1637 ( .A1(net22268), .A2(net22116), .ZN(net22269) );
+  FCICOND1BWP U1638 ( .A(n821), .B(n820), .CI(n1069), .CON(n819) );
+  AO22D0BWP U1639 ( .A1(\Inertial_Interface/intgr/ptch_int [2]), .A2(n275), 
+        .B1(vld), .B2(\Inertial_Interface/intgr/N32 ), .Z(
+        \Inertial_Interface/intgr/n5 ) );
+  INVD1BWP U1640 ( .I(n1137), .ZN(n1134) );
+  INVD1BWP U1641 ( .I(n1136), .ZN(n1105) );
+  INVD1BWP U1642 ( .I(net21860), .ZN(net21859) );
+  XOR3D0BWP U1643 ( .A1(n730), .A2(n1086), .A3(ptch[10]), .Z(net21846) );
+  XOR3D0BWP U1644 ( .A1(ptch[7]), .A2(n1086), .A3(n731), .Z(net21773) );
+  XOR3D0BWP U1645 ( .A1(ptch[3]), .A2(net24261), .A3(net24050), .Z(net21863)
+         );
+  XOR3D0BWP U1646 ( .A1(ptch[4]), .A2(n1086), .A3(net32217), .Z(net21839) );
+  XOR3D0BWP U1647 ( .A1(ptch[2]), .A2(net32203), .A3(net24048), .Z(net21876)
+         );
+  XOR3D2BWP U1648 ( .A1(\Inertial_Interface/AZL [6]), .A2(net22185), .A3(
+        net22095), .Z(n855) );
+  CKND2D2BWP U1649 ( .A1(n843), .A2(net21936), .ZN(n844) );
+  CKND0BWP U1650 ( .I(n1098), .ZN(n1101) );
+  CKND2D0BWP U1651 ( .A1(net21936), .A2(net22048), .ZN(n862) );
+  INVD2BWP U1652 ( .I(n1052), .ZN(n1056) );
+  OAI21D0BWP U1653 ( .A1(net21804), .A2(net32153), .B(n1103), .ZN(n1104) );
+  CKND2D1BWP U1654 ( .A1(n1034), .A2(n1033), .ZN(n1035) );
+  AO31D1BWP U1655 ( .A1(net21753), .A2(n1111), .A3(n772), .B(net21838), .Z(
+        n1092) );
+  OAI211D2BWP U1656 ( .A1(net22075), .A2(n971), .B(n970), .C(n969), .ZN(n972)
+         );
+  XOR3D0BWP U1657 ( .A1(net22349), .A2(net21802), .A3(n1104), .Z(
+        \Inertial_Interface/intgr/N49 ) );
+  XOR3D0BWP U1658 ( .A1(net22349), .A2(net21727), .A3(n1132), .Z(
+        \Inertial_Interface/intgr/N43 ) );
+  XOR3D0BWP U1659 ( .A1(net22349), .A2(net21774), .A3(n1110), .Z(
+        \Inertial_Interface/intgr/N50 ) );
+  XOR3D0BWP U1660 ( .A1(\Inertial_Interface/AZL [4]), .A2(net23767), .A3(
+        net24233), .Z(n875) );
+  OA21D0BWP U1661 ( .A1(\Inertial_Interface/AZL [1]), .A2(
+        \Inertial_Interface/AZL [0]), .B(net23767), .Z(n919) );
+  XOR3D0BWP U1662 ( .A1(net23767), .A2(net22130), .A3(net22132), .Z(n922) );
+  MUX2D1BWP U1663 ( .I0(n1115), .I1(n1114), .S(n1120), .Z(n1119) );
+  ND2D4BWP U1664 ( .A1(n1054), .A2(n1053), .ZN(n1061) );
+  CKXOR2D2BWP U1665 ( .A1(n1040), .A2(n1039), .Z(n1042) );
+  XOR3D0BWP U1666 ( .A1(\Inertial_Interface/AZL [4]), .A2(net23767), .A3(n849), 
+        .Z(n850) );
+  CKND2D8BWP U1667 ( .A1(n117), .A2(n167), .ZN(n552) );
+  NR3D8BWP U1668 ( .A1(\Auth_block/receiver/baud_cnt [10]), .A2(
+        \Auth_block/receiver/baud_cnt [11]), .A3(n516), .ZN(
+        \Auth_block/receiver/n42 ) );
+  ND2D1BWP U1669 ( .A1(n826), .A2(n824), .ZN(n825) );
+  CKND2BWP U1670 ( .I(\Inertial_Interface/done ), .ZN(n138) );
+  OAI21D1BWP U1671 ( .A1(n109), .A2(n138), .B(n265), .ZN(
+        \Inertial_Interface/spi/n21 ) );
+  ND2D1BWP U1672 ( .A1(\Inertial_Interface/state [1]), .A2(n118), .ZN(n827) );
+  OR3D1BWP U1673 ( .A1(n1141), .A2(n826), .A3(n827), .Z(n260) );
+  ND2D1BWP U1674 ( .A1(n839), .A2(n828), .ZN(\Inertial_Interface/nxt_state [3]) );
+  CKND2BWP U1675 ( .I(n248), .ZN(n1143) );
+  AOI22D1BWP U1676 ( .A1(\Inertial_Interface/spi/n62 ), .A2(
+        \Inertial_Interface/spi/n18 ), .B1(\Inertial_Interface/spi/n61 ), .B2(
+        n1143), .ZN(n830) );
+  OAI211D1BWP U1677 ( .A1(n111), .A2(n242), .B(n247), .C(n830), .ZN(
+        \Inertial_Interface/spi/n37 ) );
+  OAI22D1BWP U1678 ( .A1(n123), .A2(n831), .B1(n248), .B2(n833), .ZN(
+        \Inertial_Interface/spi/n36 ) );
+  OAI22D1BWP U1679 ( .A1(n123), .A2(n833), .B1(n248), .B2(n832), .ZN(
+        \Inertial_Interface/spi/n35 ) );
+  AOI22D1BWP U1680 ( .A1(\Inertial_Interface/spi/n59 ), .A2(
+        \Inertial_Interface/spi/n18 ), .B1(\Inertial_Interface/spi/n58 ), .B2(
+        n1143), .ZN(n834) );
+  OAI211D1BWP U1681 ( .A1(n823), .A2(n835), .B(n247), .C(n834), .ZN(
+        \Inertial_Interface/spi/n34 ) );
+  AO222D1BWP U1682 ( .A1(\Inertial_Interface/spi/n58 ), .A2(
+        \Inertial_Interface/spi/n18 ), .B1(n113), .B2(n837), .C1(
+        \Inertial_Interface/spi/n57 ), .C2(n1143), .Z(
+        \Inertial_Interface/spi/n33 ) );
+  AO222D1BWP U1683 ( .A1(n837), .A2(n836), .B1(\Inertial_Interface/spi/n57 ), 
+        .B2(\Inertial_Interface/spi/n18 ), .C1(\Inertial_Interface/spi/n56 ), 
+        .C2(n1143), .Z(\Inertial_Interface/spi/n32 ) );
+  OAI22D1BWP U1684 ( .A1(n123), .A2(n838), .B1(n248), .B2(n125), .ZN(
+        \Inertial_Interface/spi/n31 ) );
+  CKND2BWP U1685 ( .I(n207), .ZN(n1138) );
+  CKND2BWP U1686 ( .I(n839), .ZN(n1139) );
+  CKND2BWP U1687 ( .I(\Inertial_Interface/AZH [0]), .ZN(net22268) );
+  ND2D1BWP U1688 ( .A1(\Inertial_Interface/AZH [3]), .A2(net23530), .ZN(
+        net22309) );
+  ND2D1BWP U1689 ( .A1(\Inertial_Interface/AZH [6]), .A2(net22301), .ZN(n840)
+         );
+  ND2D1BWP U1690 ( .A1(net23634), .A2(n699), .ZN(n841) );
+  XNR3D1BWP U1691 ( .A1(net22072), .A2(net22088), .A3(n842), .ZN(n861) );
+  MAOI222D1BWP U1692 ( .A(n856), .B(net22254), .C(n855), .ZN(n857) );
+  ND2D1BWP U1693 ( .A1(net22160), .A2(n910), .ZN(n909) );
+  CKND2BWP U1694 ( .I(n909), .ZN(n864) );
+  CKND2BWP U1695 ( .I(n888), .ZN(n895) );
+  CKND2BWP U1696 ( .I(n1002), .ZN(n973) );
+  CKND2BWP U1697 ( .I(n911), .ZN(n905) );
+  OAI21D1BWP U1698 ( .A1(net22160), .A2(n910), .B(n909), .ZN(n981) );
+  MAOI222D1BWP U1699 ( .A(n920), .B(n919), .C(net24267), .ZN(n921) );
+  ND2D1BWP U1700 ( .A1(n924), .A2(n925), .ZN(n933) );
+  ND2D1BWP U1701 ( .A1(net24250), .A2(n922), .ZN(n932) );
+  OAI21D1BWP U1702 ( .A1(net22132), .A2(n928), .B(n927), .ZN(n929) );
+  XOR3D1BWP U1703 ( .A1(net24250), .A2(net22130), .A3(n929), .Z(n930) );
+  AOI32D1BWP U1704 ( .A1(n933), .A2(net22126), .A3(n932), .B1(n931), .B2(n930), 
+        .ZN(n934) );
+  XOR3D1BWP U1705 ( .A1(\Inertial_Interface/AZL [6]), .A2(n939), .A3(n949), 
+        .Z(n942) );
+  ND2D1BWP U1706 ( .A1(n940), .A2(n944), .ZN(n954) );
+  OAI21D1BWP U1707 ( .A1(n807), .A2(n949), .B(n948), .ZN(n950) );
+  OAI21D1BWP U1708 ( .A1(net22091), .A2(n960), .B(n961), .ZN(n957) );
+  ND2D1BWP U1709 ( .A1(n957), .A2(n963), .ZN(n968) );
+  XOR3D1BWP U1710 ( .A1(net22091), .A2(n959), .A3(n958), .Z(n967) );
+  CKND2BWP U1711 ( .I(n961), .ZN(n964) );
+  OA21D1BWP U1712 ( .A1(n964), .A2(net22087), .B(net22088), .Z(n962) );
+  ND2D1BWP U1713 ( .A1(n796), .A2(net22018), .ZN(n969) );
+  ND2D1BWP U1714 ( .A1(n988), .A2(n987), .ZN(n1034) );
+  XOR3D1BWP U1715 ( .A1(net22011), .A2(n702), .A3(n1005), .Z(n1009) );
+  XOR2D1BWP U1716 ( .A1(net21936), .A2(n1008), .Z(n1011) );
+  IOA21D2BWP U1717 ( .A1(ptch[4]), .A2(n1017), .B(n1015), .ZN(n1024) );
+  XOR3D1BWP U1718 ( .A1(n788), .A2(n1037), .A3(n726), .Z(n1026) );
+  XNR2D1BWP U1719 ( .A1(n1028), .A2(n1027), .ZN(n1043) );
+  ND2D1BWP U1720 ( .A1(n1038), .A2(net21971), .ZN(n1039) );
+  IOA21D2BWP U1721 ( .A1(ptch[8]), .A2(net23671), .B(n1044), .ZN(n1045) );
+  AN2XD1BWP U1722 ( .A1(net21953), .A2(net21954), .Z(n1050) );
+  AN3XD1BWP U1723 ( .A1(ptch[12]), .A2(ptch[13]), .A3(ptch[14]), .Z(n1060) );
+  CKND2BWP U1724 ( .I(n1062), .ZN(n1063) );
+  OA21D1BWP U1725 ( .A1(n1063), .A2(n697), .B(ptch[15]), .Z(net21932) );
+  MAOI222D1BWP U1726 ( .A(net21892), .B(ptch[4]), .C(n717), .ZN(n1064) );
+  MAOI222D1BWP U1727 ( .A(n717), .B(ptch[13]), .C(n819), .ZN(n1070) );
+  XNR2D1BWP U1728 ( .A1(n205), .A2(\Inertial_Interface/pitch_H [7]), .ZN(n1072) );
+  ND2D1BWP U1729 ( .A1(net21794), .A2(net21781), .ZN(net21815) );
+  ND2D1BWP U1730 ( .A1(net22349), .A2(net21828), .ZN(net21793) );
+  ND2D1BWP U1731 ( .A1(n1137), .A2(n1133), .ZN(n1136) );
+  ND2D1BWP U1732 ( .A1(n1136), .A2(net21886), .ZN(n1081) );
+  ND2D1BWP U1733 ( .A1(n1080), .A2(n1134), .ZN(n1135) );
+  OAI211D1BWP U1734 ( .A1(n1105), .A2(net21883), .B(n1081), .C(n1135), .ZN(
+        net21734) );
+  ND2D1BWP U1735 ( .A1(net21881), .A2(n1135), .ZN(net21735) );
+  XOR2D1BWP U1736 ( .A1(net22349), .A2(n710), .Z(n1096) );
+  OAI21D1BWP U1737 ( .A1(net22351), .A2(n1093), .B(net21774), .ZN(n1095) );
+  XOR2D1BWP U1738 ( .A1(net22349), .A2(net21828), .Z(n1102) );
+  ND2D1BWP U1739 ( .A1(net21780), .A2(net21781), .ZN(n1107) );
+  XOR2D1BWP U1740 ( .A1(net22355), .A2(net21773), .Z(n1116) );
+  AN2XD1BWP U1741 ( .A1(net21763), .A2(n1116), .Z(n1117) );
+  OA211D1BWP U1742 ( .A1(n1120), .A2(net32165), .B(n1119), .C(n1118), .Z(
+        \Inertial_Interface/intgr/N48 ) );
+  XOR2D1BWP U1743 ( .A1(n1128), .A2(n1127), .Z(\Inertial_Interface/intgr/N44 )
+         );
+  OAI31D1BWP U1744 ( .A1(net21729), .A2(net21730), .A3(n1131), .B(n1130), .ZN(
+        n1132) );
+endmodule
+
