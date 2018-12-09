@@ -202,14 +202,10 @@ module inert_intf(clk, rst_n,  vld, ptch, SS_n, SCLK, MOSI, MISO, INT);
 		  end
 
 		  //Wait a cycle before asserting vld.
-		  ASRT_VLD: begin
+		  default: begin
                      vld = 1;
                      nxt_state = WAIT;
                   end
-
-		  // default case to make sure we end up in beginning state if something goes wrong
-		  default: nxt_state = INIT1;
-
 		endcase
 	end
 

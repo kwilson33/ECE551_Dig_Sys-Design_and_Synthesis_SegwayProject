@@ -91,7 +91,7 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
             nxt_state = SECOND;
           end
         end
-		SECOND : begin		
+		default : begin		
 		  if (rdy_rise) begin
 			nxt_state = FIRST;
 		  end else

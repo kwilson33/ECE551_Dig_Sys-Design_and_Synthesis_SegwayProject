@@ -16,7 +16,7 @@ set current_design Segway
 # traverse the design hierarchy so it knows who the children are
 link	
 
-# 500MHz frequency clock
+# 400MHz frequency clock
 create_clock -name "clk" -period 2.5 -waveform {0 1} {clk} 
 # set don't touch on clock network	
 set_dont_touch_network [find port clk]
@@ -69,6 +69,7 @@ set_wire_load_model -name TSMC32K_Lowk_Conservative -library tcbn40lpbwptc
 # Only uncomment if compile_ultra doesn't work
 
 set_fix_hold clk
+
 set compile_seqmap_enable_output_inversion true
 compile -map_effort medium
 ungroup -all -flatten

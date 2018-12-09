@@ -27,7 +27,7 @@ module A2D_Intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_
 	output logic SCLK_A2D;				// 1/32 of 50MHz clock, comes from MSB of a 5 bit counter running off clk
 	output logic MOSI_A2D;				// MOSI : Master Out Slave In (we are its master and we drive it)
 	
-	// internal signals for the SPI 
+	// internal signals for the SPI sim:/Segway_tb/#INITIAL#56
 	logic [15:0] rd_data;			// Data from SPI slave, use [11:0] for A/D
 	logic [15:0] cmd;				// data being sent to intertial sensor
 	logic wrt;						// high for 1 clock period, initates SPI transaction
@@ -66,17 +66,12 @@ module A2D_Intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_
 		end
 		
 		
-		
 		//Round robin counter, incremented when update is asserted
-		always_ff @(posedge clk, negedge rst_n) begin
-		    if (!rst_n)
-		        round_robin_cnt <= 2'b00;
-			else if (update) begin
-				if (round_robin_cnt == 2'b10) begin			// counter should only be 0, 1, 2 and wrap around to 0
-					round_robin_cnt <= 2'b00;
-				end
-					else round_robin_cnt <= round_robin_cnt + 1;
-			end 
+	 always_ff @(posedge clk, negedge rst_n) begin
+		 if (!rst_n) round_robin_cnt <= 0;
+		   else if(round_robin_cnt == 2'b10)
+		     round_robin_cnt <= 2'b00;
+		   else round_robin_cnt <= round_robin_cnt + 1;
 		end
 			
 	
@@ -133,16 +128,13 @@ module A2D_Intf(clk,rst_n, nxt, lft_ld, rght_ld, batt, SS_n_A2D, SCLK_A2D, MOSI_
 				nxt_state = SPI_2;
 			end
 			
-			SPI_2: begin					// Wait until both transactions are finished to update 
+			default: begin					// Wait until both transactions are finished to update 
 											// and then update counter
 				if (done) begin
 					update = 1;
-					nxt_state = IDLE;		// Go back to waiting for another transaction
 				end
 				else nxt_state = SPI_2;
 			end
-			
-			default : nxt_state = IDLE;
 		endcase
 	end
 

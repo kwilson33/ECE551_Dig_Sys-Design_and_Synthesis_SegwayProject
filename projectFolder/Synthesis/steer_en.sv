@@ -113,10 +113,9 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
 		end
 		
 		
-		STEER_EN: begin
+		default: begin
 			
 			if (~sum_gt_min) begin 				//rider knocked off the device or is not heavy enough
-				nxt_state = IDLE;
 				rider_off = 1;
 			end
 			else if (diff_gt_15_16) begin 		// rider steps off
@@ -129,8 +128,6 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
 			end
 		end
 		
-		
-		default: nxt_state = IDLE; 				//reset state 
 		
 	endcase
 	end
