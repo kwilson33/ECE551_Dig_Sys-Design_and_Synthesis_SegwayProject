@@ -1,0 +1,49 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 1
+Design : Segway
+Version: N-2017.09-SP5
+Date   : Mon Dec 10 03:04:41 2018
+****************************************
+
+Operating Conditions: NCCOM   Library: tcbn40lpbwptc
+Wire Load Model Mode: segmented
+
+  Startpoint: Inertial_Interface/spi/shft_reg_reg[7]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: Inertial_Interface/AZH_reg[7]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  Segway             TSMC32K_Lowk_Conservative
+                                           tcbn40lpbwptc
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  Inertial_Interface/spi/shft_reg_reg[7]/CP (DFD1BWP)     0.00       0.00 r
+  Inertial_Interface/spi/shft_reg_reg[7]/Q (DFD1BWP)      0.13       0.13 f
+  Inertial_Interface/AZH_reg[7]/D (EDFCNQD4BWP)           0.00       0.13 f
+  data arrival time                                                  0.13
+
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  clock uncertainty                                       0.15       0.15
+  Inertial_Interface/AZH_reg[7]/CP (EDFCNQD4BWP)          0.00       0.15 r
+  library hold time                                      -0.02       0.13
+  data required time                                                 0.13
+  --------------------------------------------------------------------------
+  data required time                                                 0.13
+  data arrival time                                                 -0.13
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+1
