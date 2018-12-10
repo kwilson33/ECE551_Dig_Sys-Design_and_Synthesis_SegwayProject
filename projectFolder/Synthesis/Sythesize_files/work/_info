@@ -1,0 +1,431 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/userspace/s/szhou228
+vA2D_Intf
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 lQQe`jkNCIY>1LN=Y79H>1
+I6bmiAmSDRbkN=0FBPmU`G3
+!s105 A2D_Intf_sv_unit
+S1
+Z2 d/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files
+Z3 w1544465559
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/A2D_Intf.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/A2D_Intf.sv
+L0 3
+Z4 OL;L;10.6a;65
+Z5 !s108 1544466523.000000
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/A2D_Intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/A2D_Intf.sv|
+!i113 0
+Z6 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z7 tCvgOpt 0
+n@a2@d_@intf
+vADC128S
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 _hh:J@nmBPbm2GFD?WWJP3
+IV9XDU61;J[kA7POod4zjW0
+!s105 ADC128S_sv_unit
+S1
+R2
+w1544465558
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/ADC128S.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/ADC128S.sv
+L0 2
+R4
+Z8 !s108 1544466524.000000
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/ADC128S.sv|
+!i113 0
+R6
+R7
+n@a@d@c128@s
+vAuth_blk
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 <A2SU<jE;eQii]8?7JzOk3
+IN^[F3H0934dXg?Ne0^LWQ2
+!s105 Auth_blk_sv_unit
+S1
+R2
+w1544467032
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Auth_blk.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Auth_blk.sv
+L0 2
+R4
+!s108 1544467041.000000
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Auth_blk.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Auth_blk.sv|
+!i113 0
+R6
+R7
+n@auth_blk
+vbalance_cntrl
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 RBCM<6CCf8[d6JNTJK<RH2
+I2R?_UYShl]?UPKm?<6kAW0
+!s105 balance_cntrl_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv
+L0 2
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv|
+!i113 0
+R6
+R7
+vinert_intf
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 c6VJG4P[E;Ff`UIRc^>Yl0
+IT?TH6IWik4nQL:^U12S6=2
+!s105 inert_intf_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inert_intf.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inert_intf.sv
+L0 2
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inert_intf.sv|
+!i113 0
+R6
+R7
+vinertial_integrator
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 VGOGn?D?F6KUO3K[8RjN32
+ISchzD@HFdgg8^_kWm2RjP3
+!s105 inertial_integrator_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inertial_integrator.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inertial_integrator.sv
+L0 1
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inertial_integrator.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/inertial_integrator.sv|
+!i113 0
+R6
+R7
+vmtr_drv
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 i7Lm]dLckOJ30o8>LLT891
+IKTdXf@U2`MdX@C^Kel=>d3
+!s105 mtr_drv_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/mtr_drv.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/mtr_drv.sv
+L0 1
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/mtr_drv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/mtr_drv.sv|
+!i113 0
+R6
+R7
+vpiezo
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 SFRc25fYh_5_TbF]CcZHc1
+I7T0>iTabj0j288Q2niIGz2
+!s105 piezo_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/piezo.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/piezo.sv
+L0 1
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/piezo.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/piezo.sv|
+!i113 0
+R6
+R7
+vPWM11
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 _XzKoU^mFgZV=?mMZBh0;1
+IOH_OSQn>imYh;1Nf?]Yh33
+!s105 PWM11_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/PWM11.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/PWM11.sv
+L0 1
+R4
+R5
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/PWM11.sv|
+!i113 0
+R6
+R7
+n@p@w@m11
+vrst_synch
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 @HOnY`GATNd>9E@XQIc<f0
+IoHa:]8?FQ[`A2Lik^@MY>2
+!s105 rst_synch_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/rst_synch.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/rst_synch.sv
+L0 1
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/rst_synch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/rst_synch.sv|
+!i113 0
+R6
+R7
+vSegway
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 k7kl>K3C1G1AJdTD09j[91
+IXFbZ^6[@HzT1EWLKSLP2P2
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.v
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.v
+L0 1
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.v|
+!i113 0
+Z9 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R7
+n@segway
+vSegway_tb
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 WK:LJFhe8ZS0Vf:bi5?zd2
+Id[K:1[POZl_9GM^[;aGCU0
+!s105 Segway_tb_sv_unit
+S1
+R2
+w1544465631
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway_tb.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway_tb.sv
+Ftb_tasks.sv
+Ftb_tests.sv
+L0 2
+R4
+R8
+!s107 tb_tests.sv|tb_tasks.sv|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway_tb.sv|
+!i113 0
+R6
+R7
+n@segway_tb
+vSegwayModel
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 g1Bl0olIMWUgW?^54A7Z_2
+IVb>>GFA2kfW`n<beC`a>Q1
+!s105 SegwayModel_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SegwayModel.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SegwayModel.sv
+L0 2
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SegwayModel.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SegwayModel.sv|
+!i113 0
+R6
+R7
+n@segway@model
+vSPI_ADC128S
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 8:QKM[f]G0c@NCRf59ScE1
+Img:deikh2FUoOP<m_=dKj3
+!s105 SPI_ADC128S_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_ADC128S.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_ADC128S.sv
+L0 2
+R4
+!s108 1544466525.000000
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_ADC128S.sv|
+!i113 0
+R6
+R7
+n@s@p@i_@a@d@c128@s
+vSPI_mstr16
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 T<cWCPPLomzA1FoBBjOIc2
+IbVONW`[6[hKU3U^5R:=mV3
+!s105 SPI_mstr16_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_mstr16.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_mstr16.sv
+L0 2
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_mstr16.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/SPI_mstr16.sv|
+!i113 0
+R6
+R7
+n@s@p@i_mstr16
+vsteer_en
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 LYMa8@3d`f28@eRh6:3LD2
+IGiEmZd`E0ndgK<z7<W@TK1
+!s105 steer_en_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/steer_en.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/steer_en.sv
+L0 1
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/steer_en.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/steer_en.sv|
+!i113 0
+R6
+R7
+vUART_rcv
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 ef8C@z5ghUzITC;1LR7>52
+I6P@R@a8;ZPm6d80nUM7OT0
+!s105 UART_rcv_sv_unit
+S1
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_rcv.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_rcv.sv
+L0 1
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_rcv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_rcv.sv|
+!i113 0
+R6
+R7
+n@u@a@r@t_rcv
+vUART_tx
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 <oBHE0FVBI1zHKU[jbGn<0
+IHOP`k90lz=D=cJcab3f^l3
+R2
+R3
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v
+L0 2
+R4
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v|
+!i113 0
+R9
+R7
+n@u@a@r@t_tx

@@ -1,0 +1,150 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+d/userspace/s/szhou228/ece551/ece551Project/projectFolder/segwayPostSynthesis
+vADC128S
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 _hh:J@nmBPbm2GFD?WWJP3
+I1e?lilH167jN<fQM2M[T?2
+!s105 ADC128S_sv_unit
+S1
+Z2 d/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test
+w1544465558
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/ADC128S.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/ADC128S.sv
+L0 2
+Z3 OL;L;10.6a;65
+Z4 !s108 1544469524.000000
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/ADC128S.sv|
+!i113 0
+Z5 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z6 tCvgOpt 0
+n@a@d@c128@s
+vSegway
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 WzJ_1:=W`_YcUzCgnOQo40
+I21TP0eVO?eR9zW]8R@MIc3
+R2
+w1544468303
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway.vg
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway.vg
+L0 8
+R3
+R4
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway.vg|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway.vg|
+!i113 0
+Z7 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R6
+n@segway
+vSegway_tb
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 J;E@kVfgRCjGZJ8`Mk2Yk2
+I=cQ_8[a]K2^D_BcG2Se9d2
+!s105 Segway_tb_sv_unit
+S1
+R2
+w1544469202
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway_tb.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway_tb.sv
+Ftb_tasks.sv
+Ftb_tests.sv
+L0 2
+R3
+Z8 !s108 1544469523.000000
+!s107 tb_tests.sv|tb_tasks.sv|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/Segway_tb.sv|
+!i113 0
+R5
+R6
+n@segway_tb
+vSegwayModel
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 g1Bl0olIMWUgW?^54A7Z_2
+I102IZ3NFfmjk=H;Kc;VUQ1
+!s105 SegwayModel_sv_unit
+S1
+R2
+Z9 w1544465559
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SegwayModel.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SegwayModel.sv
+L0 2
+R3
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SegwayModel.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SegwayModel.sv|
+!i113 0
+R5
+R6
+n@segway@model
+vSPI_ADC128S
+R0
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 8:QKM[f]G0c@NCRf59ScE1
+IRZ@NQ<UNaLF1R4J3>L3C<1
+!s105 SPI_ADC128S_sv_unit
+S1
+R2
+R9
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SPI_ADC128S.sv
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SPI_ADC128S.sv
+L0 2
+R3
+R8
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/SPI_ADC128S.sv|
+!i113 0
+R5
+R6
+n@s@p@i_@a@d@c128@s
+vUART_tx
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 <oBHE0FVBI1zHKU[jbGn<0
+ICagehM6zAUU_DKC[O4WzE1
+R2
+R9
+8/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/UART_tx.v
+F/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/UART_tx.v
+L0 2
+R3
+R4
+!s107 /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/UART_tx.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/UART_tx.v|
+!i113 0
+R7
+R6
+n@u@a@r@t_tx

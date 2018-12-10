@@ -12,4 +12,36 @@
 # //  is prohibited from disclosure under the Trade Secrets Act,
 # //  18 U.S.C. Section 1905.
 # //
-# Loading project segwayPostSynthesis
+# Loading project pre_synthesis
+# reading /cae/apps/data/mentor-2017/questasim/v10.6_1/linux_x86_64/../modelsim.ini
+# Loading project pre_synthesis
+vsim work.Segway_tb -novopt
+# vsim work.Segway_tb -novopt 
+# Start time: 12:59:45 on Dec 10,2018
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# Loading sv_std.std
+# Loading work.Segway_tb
+# Loading work.SegwayModel
+# Loading work.ADC128S
+# Loading work.SPI_ADC128S
+# Loading work.Segway
+# Loading work.Auth_blk
+# Loading work.UART_rcv
+# Loading work.inert_intf
+# Loading work.SPI_mstr16
+# Loading work.inertial_integrator
+# Loading work.balance_cntrl
+# Loading work.steer_en
+# Loading work.mtr_drv
+# Loading work.PWM11
+# Loading work.A2D_Intf
+# Loading work.piezo
+# Loading work.rst_synch
+# Loading work.UART_tx
+add wave -position insertpoint sim:/Segway_tb/iPHYS/theta_plat/*
+run -all
+# ** Note: $stop    : tb_tests.sv(21)
+#    Time: 42000050 ns  Iteration: 1  Instance: /Segway_tb
+# Break in Task test1 at tb_tests.sv line 21
+# End time: 13:00:19 on Dec 10,2018, Elapsed time: 0:00:34
+# Errors: 0, Warnings: 1

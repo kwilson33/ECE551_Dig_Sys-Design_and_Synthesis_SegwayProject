@@ -6,7 +6,7 @@ Report : timing
         -max_paths 1
 Design : Segway
 Version: N-2017.09-SP5
-Date   : Mon Dec 10 11:58:57 2018
+Date   : Mon Dec 10 12:58:22 2018
 ****************************************
 
 Operating Conditions: NCCOM   Library: tcbn40lpbwptc
@@ -32,7 +32,7 @@ Wire Load Model Mode: segmented
                                                           0.00       0.00 r
   A2D_interface/SPI_Interface/shft_reg_reg[11]/Q (DFD1BWP)
                                                           0.11       0.11 f
-  U1877/ZN (IOA22D2BWP)                                   0.06       0.18 f
+  U1883/ZN (IOA22D2BWP)                                   0.06       0.18 f
   A2D_interface/batt_reg[11]/D (DFCNQD1BWP)               0.00       0.18 f
   data arrival time                                                  0.18
 

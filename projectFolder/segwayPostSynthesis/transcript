@@ -1,0 +1,44 @@
+# //  Questa Sim-64
+# //  Version 10.6a linux_x86_64 Mar 16 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Project file /userspace/s/szhou228/ece551/ece551Project/projectFolder/segwayPostSynthesis/segwayPostSynthesis.mpf was not found.
+# Unable to open project.
+# Loading project test
+# Compile of Segway_tb.sv was successful.
+# Compile of SegwayModel.sv was successful with warnings.
+# Compile of SPI_ADC128S.sv was successful.
+# Compile of UART_tx.v was successful.
+# Compile of ADC128S.sv was successful.
+# Compile of Segway.vg was successful.
+# 6 compiles, 0 failed with no errors.
+vsim work.Segway_tb -t ns +notimingchecks -L /userspace/e/ece551/TSMC_lib -novopt
+# vsim work.Segway_tb -t ns "+notimingchecks" -L /userspace/e/ece551/TSMC_lib -novopt 
+# Start time: 12:22:43 on Dec 10,2018
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# Refreshing /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/work.Segway_tb
+# Loading sv_std.std
+# Loading work.Segway_tb
+# Refreshing /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/work.SegwayModel
+# Loading work.SegwayModel
+# Refreshing /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/work.ADC128S
+# Loading work.ADC128S
+# Refreshing /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/work.SPI_ADC128S
+# Loading work.SPI_ADC128S
+# Refreshing /userspace/s/szhou228/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/test/work.Segway
+# Loading work.Segway
+# ** Warning: (vsim-7) Failed to open lock file "/userspace/e/ece551/TSMC_lib/_lock" in create mode.
+# Permission denied. (errno = EACCES)
+# -- Cannot create lockfile "/userspace/e/ece551/TSMC_lib/_lock".
+# End time: 12:22:44 on Dec 10,2018, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 2

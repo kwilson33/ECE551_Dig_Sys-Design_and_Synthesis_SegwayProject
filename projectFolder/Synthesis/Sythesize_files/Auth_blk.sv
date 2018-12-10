@@ -46,8 +46,8 @@ module Auth_blk(clk, rst_n, rider_off, pwr_up, RX);
 			
 			PWR1: begin
 				pwr_up = 1; 											// always power up in this state
-				if (rider_off) nxt_state = OFF;							// if no rider go to OFF state				
-				else if((rx_data == stop) && (rx_rdy)) begin			// received an 's' ...
+				//if (rider_off) nxt_state = OFF;							// if no rider go to OFF state				
+				if((rx_data == stop) && (rx_rdy)) begin			// received an 's' ...
 						clr_rx_rdy = 1;	
 						nxt_state = PWR2;						// someone still on segway, so transition to PWR2 state and wait for rider off signal								
 				end
