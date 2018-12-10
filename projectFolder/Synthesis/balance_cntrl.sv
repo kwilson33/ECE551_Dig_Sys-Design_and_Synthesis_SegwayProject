@@ -8,11 +8,11 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   //use these params for saturating  values
   localparam most_neg10b = 10'h200; 			// most negative value in 10 bits
   localparam most_pos10b = 10'h1FF; 			// most positive value in 10 bits signed
-  localparam most_neg7b  =  7'h40;				// most negative value in 7 bits
-  localparam most_pos7b  =  7'h3F;				// most positive value in 7 bits  signed
-  localparam most_pos11b_unsigned = 11'h7FF; 	// most pos value in 11 bits unsigned
+  localparam most_neg7b  =  7'h40;			// most negative value in 7 bits
+  localparam most_pos7b  =  7'h3F;			// most positive value in 7 bits  signed
+  localparam most_pos11b_unsigned = 11'h7FF; 		// most pos value in 11 bits unsigned
   
-  localparam warningSpeed =11'h600;			// value to compare against to see if speed is too fast, 1536 in decimal. If saturated, speed will be 2047, which will trigger warning for too fast
+  localparam warningSpeed = 11'h600;			// value to compare against to see if speed is too fast, 1536 in decimal. If saturated, speed will be 2047, which will trigger warning for too fast
  
   
   input clk,rst_n;
@@ -23,9 +23,9 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   input en_steer;
   input pwr_up;						// comes from Auth_blk.sv. Enables device. lft and rght speed should be 0 if pwr_up is high
   
-  output [10:0] lft_spd;			// 11-bit unsigned speed at which to run left motor
+  output reg [10:0] lft_spd;			// 11-bit unsigned speed at which to run left motor
   output lft_rev;					// direction to run left motor (1==>reverse)
-  output [10:0] rght_spd;			// 11-bit unsigned speed at which to run right motor
+  output reg [10:0] rght_spd;			// 11-bit unsigned speed at which to run right motor
   output rght_rev;					// direction to run right motor (1==>reverse)
   output ovr_spd;					// asserted if lft rght speed are greater than 1536. Goes to piezo interface to warn rider.
   
@@ -44,16 +44,12 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   
   //General signals
   wire signed [9:0]  ptch_err_sat;
-  wire signed [17:0] ptch_err_sat_SignExt;
   
   //Signals needed for getting torquewith
   wire signed [15:0] PID_cntrl;
-  wire signed [15:0] ld_cell_diff_div8_SignExt; 
   wire signed [15:0] lft_torque;
-  //wire signed [15:0] lft_torque_int;
   wire signed [15:0] steerEN_lft_torque;
   wire signed [15:0] rght_torque;
- // wire signed [15:0] rght_torque_int;
   wire signed [15:0] steerEN_rght_torque;
   
   //Signals needed for shaping torque to get duty
@@ -75,19 +71,16 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
 	
   //P of PID
   logic signed [14:0] ptch_P_term;
-  wire signed [15:0] ptch_P_term_SignExt;
+
   
   //I of PID 
-  wire signed [11:0] ptch_I_term;
-  wire signed [15:0] ptch_I_term_SignExt;
   wire signed [17:0] nxt_integrator ; 
   wire neg_overflow;
   wire pos_overflow;
   wire overflow;
   
   //D of PID
-  logic signed [12:0] ptch_D_term; //7 bits * 6 bits from D_COEFF = 13 bits
-  wire signed [15:0] ptch_D_term_SignExt;
+  logic signed [12:0] ptch_D_term;
   wire signed [9:0] ptch_D_diff; //current - prev
   wire signed [6:0] ptch_D_diff_sat;
  
@@ -115,17 +108,16 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
 						(&ptch[15:9] ? ptch[9:0] 	 : most_neg10b) : //if too neg sat to 0x200
 						(|ptch[15:9] ? most_pos10b   : ptch[9:0]); //if too pos sat to 0x1FF
   
-  //sign extended
-  assign ptch_err_sat_SignExt = {{8{ptch_err_sat[9]}}, ptch_err_sat};
   
   //signed multiplication, results in 14 bits
 
-  //assign ptch_P_term = ($signed(P_COEFF)) * (ptch_err_sat); //15 bits
+ assign ptch_P_term = ($signed(P_COEFF)) * (ptch_err_sat); //15 bits
+/*
   always_ff @(posedge clk, negedge rst_n) begin
     if(!rst_n) ptch_P_term <= 0;
     else ptch_P_term <= ($signed(P_COEFF)) * (ptch_err_sat);
   end
-    
+  */
   
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
@@ -141,19 +133,18 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   //######################################################################################################################################################################################################
   
   //nxt_integrator is the current integator + the sign extended ptch_err
-  assign nxt_integrator = integrator + ptch_err_sat_SignExt;
+  assign nxt_integrator = integrator + {{8{ptch_err_sat[9]}}, ptch_err_sat};
 
   //overflow logic
-  assign neg_overflow = (integrator[17] & ptch_err_sat_SignExt[17])   ?   (~nxt_integrator[17]): 1'b0; //check if both MSBs are 1, if they are and nxt_integrator MSB is a 0, then overflow
-  assign pos_overflow = (!integrator[17] & !ptch_err_sat_SignExt[17]) ?   nxt_integrator[17]   : 1'b0; //check if both MSBS are 0, if they are and nxt_integ MSB is 1, then overflow
+  assign neg_overflow = (integrator[17] & ptch_err_sat[9])   ?   (~nxt_integrator[17]): 1'b0; //check if both MSBs are 1, if they are and nxt_integrator MSB is a 0, then overflow
+  assign pos_overflow = (!integrator[17] & !ptch_err_sat[9]) ?   nxt_integrator[17]   : 1'b0; //check if both MSBS are 0, if they are and nxt_integ MSB is 1, then overflow
   assign overflow = (neg_overflow | pos_overflow);
-
-  //only have to use upper 10 bits to get the I term for PID math
-  assign ptch_I_term = integrator[17:6]; //12 bits
  
   //Flop that gets integrator, will clear if rider is off or reset is asserted
   always @(posedge clk, negedge rst_n) begin
 	if(!rst_n) 
+		integrator <= 0;
+	else if (!pwr_up)
 		integrator <= 0;
 	else if (rider_off) 
 		integrator <= 0;
@@ -200,12 +191,14 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
 						   (&ptch_D_diff[9:6] ? ptch_D_diff[6:0] : most_neg7b) : //check bits 10 to 7 for zeros, if any exist, saturate to 0x40
 						   (|ptch_D_diff[9:6] ? most_pos7b : ptch_D_diff[6:0]); //check bits 10 to 7 for ones, if any exist, saturate to 0x3F
 						   
-							
-  //assign ptch_D_term = ($signed(D_COEFF)) * ptch_D_diff_sat; //13 bits
+  assign ptch_D_term = ($signed(D_COEFF)) * ptch_D_diff_sat;
+	/*	
   always_ff @(posedge clk, negedge rst_n) begin
     if(!rst_n) ptch_D_term <= 0;
     else ptch_D_term <= ($signed(D_COEFF)) * ptch_D_diff_sat; //13 bits
   end
+*/
+
   
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
@@ -222,44 +215,31 @@ module balance_cntrl(clk,rst_n,vld,ptch,ld_cell_diff,lft_spd,lft_rev,
   //################################################################################Putting it All Together###############################################################################################
   //######################################################################################################################################################################################################
 	
-	assign ld_cell_diff_div8_SignExt = {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}; //getting rid of 3 LSBs, same as dividing by 8
-	//either add sped up version of integrator or normal sign extended version based on fast_sim parameter
-	//assign PID_cntrl = ptch_P_term_SignExt + ptch_D_term_SignExt + (pwr_up ? ((fast_sim ? integrator[17:2] : ptch_I_term_SignExt)) : 0); //16 bits
 
-assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}}, ptch_D_term} + ((pwr_up ? (fast_sim ? integrator[17:2] : {{4{ptch_I_term[11]}}, ptch_I_term} ) : 0 ))); 
+	assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}}, ptch_D_term} + ((pwr_up ? (fast_sim ? integrator[17:2] : {{4{integrator[17]}}, integrator[17:6]} ) : 0 ))); 
 	
 	//if steering is enabled, get left and right torque by subtracting from/ adding to the PID_cntrl
 	//if not, just use the PID cntrl
-	assign steerEN_lft_torque = PID_cntrl - ld_cell_diff_div8_SignExt;
-	assign steerEN_rght_torque = PID_cntrl + ld_cell_diff_div8_SignExt;
+
+	// check if PID is positive or negative and THEN add or subtract from it!!!!
+	assign steerEN_lft_torque = PID_cntrl[15] ? (PID_cntrl+ {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}) : (PID_cntrl - {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]});
+	assign steerEN_rght_torque = PID_cntrl[15] ? ( PID_cntrl - {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}) : (PID_cntrl + {{7{ld_cell_diff[11]}}, ld_cell_diff[11:3]}) ;
+
 	assign lft_torque = (en_steer) ? steerEN_lft_torque : PID_cntrl;
 	assign rght_torque = (en_steer) ? steerEN_rght_torque : PID_cntrl;
-  /*
-        always_ff @(posedge clk, negedge rst_n) begin
-		if (!rst_n) begin
-		  lft_torque <= 0;
-		  rght_torque <= 0;
-		end
-		else begin
-		 lft_torque <= lft_torque_int;
-		 rght_torque <= rght_torque_int;
-		end
-        end
-*/
+
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
-  
-  
-  
   
   
   //######################################################################################################################################################################################################
   //######################################################################################################################################################################################################
   //################################################################################Shaping Desired Torque to form Duty###################################################################################
   //######################################################################################################################################################################################################
-  
+   wire [10:0] lft_spd_test;
+  wire [10:0] rght_spd_test;
   //Left Torque///////
   assign lft_torque_plusMinus_MinDuty = (lft_torque[15]) ? (lft_torque - MIN_DUTY) : (lft_torque + MIN_DUTY); //add or subtract MIN_DUTY depending on if torque is + or - 
   assign lft_torque_SignMult = ($signed(GAIN_MULTIPLIER)) * lft_torque;
@@ -268,7 +248,7 @@ assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}
   
   //lft_shaped torque decided by if lft torque is greater or equal to LOW_TORQUE_BAND
   //assign lft_shaped = (abs_lft_torque >= LOW_TORQUE_BAND) ? lft_torque_plusMinus_MinDuty : lft_torque_SignMult;
-  assign lft_shaped_int = (abs_lft_torque >= LOW_TORQUE_BAND) ? lft_torque_plusMinus_MinDuty : lft_torque_SignMult;
+  assign lft_shaped = (abs_lft_torque >= LOW_TORQUE_BAND) ? lft_torque_plusMinus_MinDuty : lft_torque_SignMult;
   assign lft_rev = lft_shaped[15]; //reverse left if 1
   
   //take abs value of lft_shaped and unsigned saturate to 11 bits
@@ -276,12 +256,13 @@ assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}
   //if pwr_up is not asserted, lft_speed is 0
   assign lft_spd = pwr_up ? ((|abs_lft_shaped[15:11]) ? most_pos11b_unsigned : abs_lft_shaped[10:0]) : 11'h000; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
   
+/*
   always_ff @(posedge clk, negedge rst_n) begin
      if(!rst_n) lft_shaped <=0;
      else lft_shaped <= lft_shaped_int;
   end
-  
-  
+  */
+
   //Right Torque///////
   assign rght_torque_plusMinus_MinDuty = (rght_torque[15]) ? (rght_torque - MIN_DUTY) : (rght_torque + MIN_DUTY); //add or subtract MIN_DUTY depending on if torque is + or - 
   assign rght_torque_SignMult = ($signed(GAIN_MULTIPLIER)) * rght_torque;
@@ -290,7 +271,7 @@ assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}
   
   //rght_shaped torque decided by if rght torque is greater or equal to LOW_TORQUE_BAND
   //assign rght_shaped = (abs_rght_torque >= LOW_TORQUE_BAND) ? rght_torque_plusMinus_MinDuty : rght_torque_SignMult;
-  assign rght_shaped_int = (abs_rght_torque >= LOW_TORQUE_BAND) ? rght_torque_plusMinus_MinDuty : rght_torque_SignMult;
+  assign rght_shaped = (abs_rght_torque >= LOW_TORQUE_BAND) ? rght_torque_plusMinus_MinDuty : rght_torque_SignMult;
   assign rght_rev = rght_shaped[15]; //reverse right if 1
   
   //take abs value of rght_shaped and unsigned saturate to 11 bits
@@ -298,12 +279,13 @@ assign PID_cntrl = $signed({ptch_P_term[14], ptch_P_term} + {{3{ptch_D_term[12]}
   // if pwr_up is not asserted, rght_speed is 0
   assign rght_spd = pwr_up ? ((|abs_rght_shaped[15:11]) ? most_pos11b_unsigned : abs_rght_shaped[10:0]) : 11'h000; //check bits 16 to 12 to see if any ones present, if there are, saturate to 0x7FF
   
+/*
   always_ff @(posedge clk, negedge rst_n) begin
      if(!rst_n) rght_shaped <=0;
      else rght_shaped <= rght_shaped_int;
   end
   
-  
+  */
   //See if either left or right speed are too fast
   assign ovr_spd = ((lft_spd > warningSpeed) || ( rght_spd > warningSpeed));
   

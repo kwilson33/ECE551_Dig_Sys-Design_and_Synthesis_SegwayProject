@@ -11,7 +11,7 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
 
   output signed [11:0]ld_cell_diff;
   output logic en_steer;					// enables steering (goes to balance_cntrl)
-  output logic rider_off;					// pulses high for one clock on transition back to initial state
+  output wire rider_off;					// pulses high for one clock on transition back to initial state
   
   // Internal Signals
   
@@ -81,12 +81,12 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
 		state <= nxt_state;
   end
   
+  assign rider_off = (!sum_gt_min);
   //combinational state transition and output logic, sensitivity list contains all inputs to the FSM
   always_comb  begin
 	nxt_state = IDLE; //default to reset
 	clr_tmr = 0;	//default outputs
-	en_steer = 0;	//to
-	rider_off = 0; //avoid latches
+	en_steer = 0;	//to avoid latches
 	
 	case (state)
 	
@@ -114,10 +114,7 @@ module steer_en(clk,rst_n,lft_ld,rght_ld,ld_cell_diff,en_steer,rider_off);
 		
 		
 		default: begin
-			
-			if (~sum_gt_min) begin 				//rider knocked off the device or is not heavy enough
-				rider_off = 1;
-			end
+			if (~sum_gt_min) nxt_state = IDLE;
 			else if (diff_gt_15_16) begin 		// rider steps off
 				nxt_state = WAIT;
 				clr_tmr = 1;

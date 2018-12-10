@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
   //////////////////////////////////////////////////|
   // Model of a National Semi Conductor ADC128S    ||
@@ -54,7 +55,7 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
 	end
 	
 
-  assign value = channel[2]? (channel[0]? batt : rght_ld) : lft_ld;
+  assign value = channel[2] ? (channel[0] ? batt : rght_ld) : lft_ld;
 
 
   //// Infer state register next ////
@@ -91,7 +92,7 @@ module ADC128S(clk,rst_n, lft_ld, rght_ld, batt, SS_n,SCLK,MISO,MOSI);
             nxt_state = SECOND;
           end
         end
-		default : begin		
+		SECOND : begin		
 		  if (rdy_rise) begin
 			nxt_state = FIRST;
 		  end else

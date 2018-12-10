@@ -1,4 +1,3 @@
-//Kevin Wilson 10/13/18
 module mtr_drv (PWM_rev_lft, PWM_frwrd_lft, PWM_rev_rght, PWM_frwrd_rght,
 				clk, rst_n, lft_spd, lft_rev, rght_spd, rght_rev);
 				
@@ -23,7 +22,7 @@ module mtr_drv (PWM_rev_lft, PWM_frwrd_lft, PWM_rev_rght, PWM_frwrd_rght,
 	
 	PWM11 lftPWM(.PWM_sig(lftMotor), .clk(clk), .rst_n(rst_n), .duty(lft_spd));
 	/*
-	if the PWM signal from lftPWM (lftMotor) is high then you want to be driving. 
+	if the PWM signal from lftPWM (lftMotor) is high then you want to be driving.
 	To figure out the direction do this: If PWM signal is high and lft_rev is also high, then
 	you'd want to be reversing the segway. But if the PWM signal is high and lft_rev is low, that means you want
 	to be driving forward. When the PWM signal itself is low, stay still.

@@ -1,0 +1,431 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/AppV5/Quartus_16.v2
+vA2D_Intf
+Z0 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
+!s110 1544205982
+!i10b 1
+!s100 Sz1O?2Vm^d[jJNzT=mnzQ1
+ICT53BK_DLkgWH3Z;^I1d_1
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+!s105 A2D_Intf_sv_unit
+S1
+Z2 dI:/ece551/TestingSegway
+w1544205977
+8I:/ece551/TestingSegway/A2D_Intf.sv
+FI:/ece551/TestingSegway/A2D_Intf.sv
+L0 3
+Z3 OV;L;10.4d;61
+r1
+!s85 0
+31
+!s108 1544205981.000000
+!s107 I:/ece551/TestingSegway/A2D_Intf.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/A2D_Intf.sv|
+!i113 1
+Z4 o-work work -sv
+n@a2@d_@intf
+vADC128S
+R0
+Z5 !s110 1544205171
+!i10b 1
+!s100 T;=OLf:OG5XE3^Lm?N;J33
+I<fb;WKaMX1_jZagY?ko]R1
+R1
+!s105 ADC128S_sv_unit
+S1
+R2
+Z6 w1544204958
+8I:/ece551/TestingSegway/ADC128S.sv
+FI:/ece551/TestingSegway/ADC128S.sv
+L0 1
+R3
+r1
+!s85 0
+31
+Z7 !s108 1544205171.000000
+!s107 I:/ece551/TestingSegway/ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/ADC128S.sv|
+!i113 1
+R4
+n@a@d@c128@s
+vAuth_blk
+R0
+R5
+!i10b 1
+!s100 QIn9FdM5hmcLHPak?cDEG0
+IoRi<mO4:5<mfU7gl?:6Rz1
+R1
+!s105 Auth_blk_sv_unit
+S1
+R2
+R6
+8I:/ece551/TestingSegway/Auth_blk.sv
+FI:/ece551/TestingSegway/Auth_blk.sv
+L0 2
+R3
+r1
+!s85 0
+31
+R7
+!s107 I:/ece551/TestingSegway/Auth_blk.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/Auth_blk.sv|
+!i113 1
+R4
+n@auth_blk
+vbalance_cntrl
+R0
+Z8 !s110 1544205172
+!i10b 1
+!s100 a`UYHn9MW?7@=Lee3J>C_2
+ITL8K>=cXa1baTId3joJ]d1
+R1
+!s105 balance_cntrl_sv_unit
+S1
+R2
+Z9 w1544204959
+8I:/ece551/TestingSegway/balance_cntrl.sv
+FI:/ece551/TestingSegway/balance_cntrl.sv
+L0 2
+R3
+r1
+!s85 0
+31
+Z10 !s108 1544205172.000000
+!s107 I:/ece551/TestingSegway/balance_cntrl.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/balance_cntrl.sv|
+!i113 1
+R4
+vinert_intf
+R0
+R8
+!i10b 1
+!s100 1AFe6koEA1]Bn64_BDRGb1
+In:9kLNCdgRdn3N`_Vj`hk3
+R1
+!s105 inert_intf_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/inert_intf.sv
+FI:/ece551/TestingSegway/inert_intf.sv
+L0 2
+R3
+r1
+!s85 0
+31
+R10
+!s107 I:/ece551/TestingSegway/inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/inert_intf.sv|
+!i113 1
+R4
+vinertial_integrator
+R0
+Z11 !s110 1544205173
+!i10b 1
+!s100 VGOGn?D?F6KUO3K[8RjN32
+I67Y82;h`Xcn8>J7C:]goE2
+R1
+!s105 inertial_integrator_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/inertial_integrator.sv
+FI:/ece551/TestingSegway/inertial_integrator.sv
+L0 1
+R3
+r1
+!s85 0
+31
+Z12 !s108 1544205173.000000
+!s107 I:/ece551/TestingSegway/inertial_integrator.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/inertial_integrator.sv|
+!i113 1
+R4
+vmtr_drv
+R0
+R11
+!i10b 1
+!s100 PL@W@<SLN?bS:LQ=GRZL]1
+IZDik<R>TTibdl6SGmVeWc0
+R1
+!s105 mtr_drv_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/mtr_drv.sv
+FI:/ece551/TestingSegway/mtr_drv.sv
+L0 2
+R3
+r1
+!s85 0
+31
+R12
+!s107 I:/ece551/TestingSegway/mtr_drv.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/mtr_drv.sv|
+!i113 1
+R4
+vpiezo
+R0
+Z13 !s110 1544205174
+!i10b 1
+!s100 SFRc25fYh_5_TbF]CcZHc1
+IHe<NJG:F7:oIIKk5>0zze0
+R1
+!s105 piezo_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/piezo.sv
+FI:/ece551/TestingSegway/piezo.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R12
+!s107 I:/ece551/TestingSegway/piezo.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/piezo.sv|
+!i113 1
+R4
+vPWM11
+R0
+R13
+!i10b 1
+!s100 TVXN8>e7`QhgcNmj7ND^?0
+IH[S1K?NfRjK:f]oo>K]WP1
+R1
+!s105 PWM11_sv_unit
+S1
+R2
+R6
+8I:/ece551/TestingSegway/PWM11.sv
+FI:/ece551/TestingSegway/PWM11.sv
+L0 1
+R3
+r1
+!s85 0
+31
+Z14 !s108 1544205174.000000
+!s107 I:/ece551/TestingSegway/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/PWM11.sv|
+!i113 1
+R4
+n@p@w@m11
+vrst_synch
+R0
+R13
+!i10b 1
+!s100 @HOnY`GATNd>9E@XQIc<f0
+IQ:VlLlYUBmI5CVHT17n0M2
+R1
+!s105 rst_synch_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/rst_synch.sv
+FI:/ece551/TestingSegway/rst_synch.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R14
+!s107 I:/ece551/TestingSegway/rst_synch.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/rst_synch.sv|
+!i113 1
+R4
+vSegway
+!s110 1544205912
+!i10b 1
+!s100 89K58kc93EdAGmBS[3CO`3
+Idii<`OKBhVHa8b0Ui?A4n3
+R1
+R2
+w1544205908
+8I:/ece551/TestingSegway/Segway.v
+FI:/ece551/TestingSegway/Segway.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1544205911.000000
+!s107 I:/ece551/TestingSegway/Segway.v|
+!s90 -reportprogress|300|-work|work|-stats=none|I:/ece551/TestingSegway/Segway.v|
+!i113 1
+Z15 o-work work
+n@segway
+vSegway_tb
+R0
+!s110 1544205707
+!i10b 1
+!s100 n;8Yl3@@ji6385i:Pb=0e3
+IJ0N4S4cBd?3jjzMFloIX20
+R1
+!s105 Segway_tb_sv_unit
+S1
+R2
+w1544205519
+8I:/ece551/TestingSegway/Segway_tb.sv
+FI:/ece551/TestingSegway/Segway_tb.sv
+Ftb_tasks.sv
+Ftb_tests.sv
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1544205707.000000
+!s107 tb_tests.sv|tb_tasks.sv|I:/ece551/TestingSegway/Segway_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/Segway_tb.sv|
+!i113 1
+R4
+n@segway_tb
+vSegwayModel
+R0
+!s110 1544205175
+!i10b 1
+!s100 ACM53l]eDi_C?JXi]4ia?3
+I:c0FEdj?AEBeTfC3@GaGL1
+R1
+!s105 SegwayModel_sv_unit
+S1
+R2
+w1544198393
+8I:/ece551/TestingSegway/SegwayModel.sv
+FI:/ece551/TestingSegway/SegwayModel.sv
+L0 1
+R3
+r1
+!s85 0
+31
+Z16 !s108 1544205175.000000
+!s107 I:/ece551/TestingSegway/SegwayModel.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/SegwayModel.sv|
+!i113 1
+R4
+n@segway@model
+vSPI_ADC128S
+R0
+Z17 !s110 1544205176
+!i10b 1
+!s100 ;E62=i88@ghW83DU@9;CK1
+IOh7PAOWgP0A]Noo8_odnM3
+R1
+!s105 SPI_ADC128S_sv_unit
+S1
+R2
+R6
+8I:/ece551/TestingSegway/SPI_ADC128S.sv
+FI:/ece551/TestingSegway/SPI_ADC128S.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R16
+!s107 I:/ece551/TestingSegway/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/SPI_ADC128S.sv|
+!i113 1
+R4
+n@s@p@i_@a@d@c128@s
+vSPI_mstr16
+R0
+R17
+!i10b 1
+!s100 T<cWCPPLomzA1FoBBjOIc2
+IzKXj2ZQ[TG0nUEWHMNl532
+R1
+!s105 SPI_mstr16_sv_unit
+S1
+R2
+R6
+8I:/ece551/TestingSegway/SPI_mstr16.sv
+FI:/ece551/TestingSegway/SPI_mstr16.sv
+L0 2
+R3
+r1
+!s85 0
+31
+Z18 !s108 1544205176.000000
+!s107 I:/ece551/TestingSegway/SPI_mstr16.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/SPI_mstr16.sv|
+!i113 1
+R4
+n@s@p@i_mstr16
+vsteer_en
+R0
+R17
+!i10b 1
+!s100 ?e21^fe<?5PGn05S=iRX<1
+InWOJ8jC8:U:mF3[SWn2XK1
+R1
+!s105 steer_en_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/steer_en.sv
+FI:/ece551/TestingSegway/steer_en.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R18
+!s107 I:/ece551/TestingSegway/steer_en.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/steer_en.sv|
+!i113 1
+R4
+vUART_rcv
+R0
+!s110 1544205170
+!i10b 1
+!s100 ef8C@z5ghUzITC;1LR7>52
+I^R[1GIMOVQT0j@_7?dfV?2
+R1
+!s105 UART_rcv_sv_unit
+S1
+R2
+R9
+8I:/ece551/TestingSegway/UART_rcv.sv
+FI:/ece551/TestingSegway/UART_rcv.sv
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1544205170.000000
+!s107 I:/ece551/TestingSegway/UART_rcv.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|I:/ece551/TestingSegway/UART_rcv.sv|
+!i113 1
+R4
+n@u@a@r@t_rcv
+vUART_tx
+!s110 1544205169
+!i10b 1
+!s100 OKXUO<?9:f=G`OAPBc]dP0
+I25c6jkP=oHb?lRzJgf;Mn3
+R1
+R2
+R9
+8I:/ece551/TestingSegway/UART_tx.v
+FI:/ece551/TestingSegway/UART_tx.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1544205169.000000
+!s107 I:/ece551/TestingSegway/UART_tx.v|
+!s90 -reportprogress|300|-work|work|-stats=none|I:/ece551/TestingSegway/UART_tx.v|
+!i113 1
+R15
+n@u@a@r@t_tx

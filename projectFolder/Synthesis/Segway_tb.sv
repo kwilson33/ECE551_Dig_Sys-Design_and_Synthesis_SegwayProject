@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module Segway_tb();
 
 
@@ -16,12 +17,12 @@ reg clk, RST_n;
 reg [7:0] cmd;					// command host is sending to DUT
 reg send_cmd;					// asserted to initiate sending of command
 reg signed [15:0] rider_lean;			// forward/backward lean (goes to SegwayModel)
-// Perhaps more needed?
-reg [11:0] lft_ld, rght_ld, batt;
 
-/////// declare any internal signals needed at this level //////
-wire cmd_sent;
+
 // Perhaps more needed?
+reg [11:0] ld_cell_lft, ld_cell_rght, batt_V;
+wire cmd_sent;
+
 
 
 ////////////////////////////////////////////////////////////////
@@ -37,7 +38,7 @@ SegwayModel iPHYS(.clk(clk),.RST_n(RST_n),.SS_n(SS_n),.SCLK(SCLK),
 ///////////////////////////////////////////////////////
 ADC128S drivenSPI (.clk(clk), .rst_n(RST_n), .SS_n(A2D_SS_n), 
 							.SCLK(A2D_SCLK), .MOSI(A2D_MOSI), .MISO(A2D_MISO),
-							.lft_ld(lft_ld), .rght_ld(rght_ld), .batt(batt)); 
+							.lft_ld(ld_cell_lft), .rght_ld(ld_cell_rght), .batt(batt_V)); 
   
 ////// Instantiate DUT ////////
 Segway iDUT(.clk(clk),.RST_n(RST_n),.LED(),.INERT_SS_n(SS_n),.INERT_MOSI(MOSI),
@@ -54,10 +55,14 @@ UART_tx iTX(.clk(clk),.rst_n(RST_n),.TX(RX_TX),.trmt(send_cmd),.tx_data(cmd),.tx
 
 
 initial begin     
-  //repeat(1000)@(posedge clk);
-  test1;
+Initialize();
+test1;
+
+test2;
+
+test3;
 	
-  $display("YAHOO! test passed!");
+  $display("YAHOO! test completed! (/-.-/)");
   
   $stop();
 end

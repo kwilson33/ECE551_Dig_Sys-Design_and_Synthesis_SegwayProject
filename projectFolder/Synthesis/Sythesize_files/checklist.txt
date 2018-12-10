@@ -1,0 +1,3 @@
+checklist for running testbenches module by module
+
+balance_ctrl.sv checked

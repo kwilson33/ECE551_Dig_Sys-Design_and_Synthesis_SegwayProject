@@ -24,7 +24,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   // 0 when we map to the DE0-Nano.                                  //
   ////////////////////////////////////////////////////////////////////
   localparam fast_sim = 1;				// asserted to speed up simulations. 
-  localparam BATT_LOW_THRESH = 11'h800; // if batt from A2D_Intf drops below, batt_low signal will be high
+  localparam BATT_LOW_THRESH = 12'h800; // if batt from A2D_Intf drops below, batt_low signal will be high
   
   ///////////////////////////////////////////////////////////
   ////// Internal interconnecting sigals defined here //////
@@ -34,8 +34,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   
   
   // A2D Interface Signals 
-  wire [11:0] lft_ld, rght_ld;
-  wire [11:0] batt;
+  wire [11:0] lft_ld, rght_ld, batt;
  
   
   // Inertial Interface Signals
@@ -58,7 +57,7 @@ module Segway(clk,RST_n,LED,INERT_SS_n,INERT_MOSI,
   
   // Piezo Signals
   wire batt_low;
-  assign batt_low = batt <= BATT_LOW_THRESH; // TODO: Is this OK??
+  assign batt_low = batt < BATT_LOW_THRESH; // TODO: Is this OK??
   
 
   ////////////////////////////////////

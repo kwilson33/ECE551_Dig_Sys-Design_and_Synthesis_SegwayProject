@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module SegwayModel(clk,RST_n,SS_n,SCLK,MISO,MOSI,INT,PWM_rev_rght,PWM_frwrd_rght,
                    PWM_rev_lft,PWM_frwrd_lft,rider_lean);
   //////////////////////////////////////////////////

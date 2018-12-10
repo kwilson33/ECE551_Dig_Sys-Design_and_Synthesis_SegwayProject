@@ -1,68 +1,120 @@
-//`include "tb_tasks.sv"
-/*  SendCmd is going to send 'g' or 's' into Segway.v, mimicing real siganls from usr's bluetooth
-   'g' go is 0x67
-   's' stop is 0x73
-*/
+localparam g = 8'h67;
+localparam s = 8'h73;
+
+//test min weight edge case
+
 task test1;
-    Initialize();
-    batt = BATT_THRESHOLD + 1;
-    lft_ld = MIN_RIDER_WEIGHT + 1;
-    rght_ld = MIN_RIDER_WEIGHT + 1;
+
+    
+    batt_V = BATT_THRESHOLD + 1;
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1;
+    ld_cell_rght = MIN_RIDER_WEIGHT + 1;
     rider_lean = 0;
     SendCmd(8'h67);
     repeat(100000)@(posedge clk);   // power up, wait for a short time
     @(negedge clk);
     rider_lean = 16'h1fff;          // test most positive lean
-    repeat(1500000)@(posedge clk);
+    repeat(1000000)@(posedge clk);
     @(negedge clk);
     rider_lean = 16'hE000;          // most negative lean
-    repeat(1500000)@(posedge clk);
+    repeat(1000000)@(posedge clk);
     $stop();
     
 endtask
-
 
 task test2;
-    Initialize();
-    batt = BATT_THRESHOLD + 1;
-    lft_ld = MIN_RIDER_WEIGHT;
-    rght_ld = MIN_RIDER_WEIGHT;
+
+    
+    batt_V = BATT_THRESHOLD + 1;
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1;
+    ld_cell_rght = MIN_RIDER_WEIGHT + 1;
     rider_lean = 0;
-    
     SendCmd(8'h67);
-    repeat(200)@(posedge clk);
-    
+    repeat(100000)@(posedge clk);    // power up, wait for a short time
+
+
+	 // test left turn with a a lot of weight backwards
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1500;
+    repeat(1000000)@(posedge clk);
+    rider_lean = 16'h1fff;          // test most positive lean while turning left
+    repeat(1000000)@(posedge clk);
+    rider_lean = 0;
+    repeat (1000)@(posedge clk);
+    rider_lean = 16'hE000;          // most negative lean while turning left
+    repeat(1000000)@(posedge clk);
+
+   
+   
+    // test right turn
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1;
+    //rider_lean = 0;
+    @(posedge clk);
     @(negedge clk);
-    lft_ld = MIN_RIDER_WEIGHT - 1;
-    rght_ld = MIN_RIDER_WEIGHT - 1;
-    repeat(200)@(posedge clk);      // should back to IDLE
-    
-    @(negedge clk);
-    lft_ld = MIN_RIDER_WEIGHT;
-    rght_ld = MIN_RIDER_WEIGHT;
-    rider_lean = 14'h0;
-    SendCmd(8'h67);                 // PWR1
-    repeat(300000000)@(posedge clk);  // now should be in PWR2
-    
-    @(negedge clk);
-    rider_lean = 14'h1fff;
-    SendCmd(8'h73);
-    repeat(200)@(posedge clk);  // TODO, wait long enough to stop?
-    
-    @(negedge clk);
-    rider_lean = 14'h1fff;
-    SendCmd(8'h73);
-    repeat(200)@(posedge clk);
-    
+    ld_cell_rght = MIN_RIDER_WEIGHT + 1500;
+    repeat(1000000)@(posedge clk);
+    rider_lean = 16'h1fff;          // test most positive lean while turning right
+    repeat(1000000)@(posedge clk);
+    rider_lean = 0;
+    repeat(1000)@(posedge clk); 
+    rider_lean = 16'hE000;          // most negative lean while turning right
+    repeat(1000000)@(posedge clk);
     
     $stop();
 
 endtask
-
 
 
 task test3;
 
+
+    
+    batt_V = BATT_THRESHOLD + 1;
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1;
+    ld_cell_rght = MIN_RIDER_WEIGHT + 1;
+
+    rider_lean = 0;
+	SendCmd(g);
+	repeat(1000000) @(posedge clk);
+	
+    
+    // go to power 1 
+    SendCmd(g);
+    repeat(1000000)@(posedge clk);		// now should be in PWR1
+    @(negedge clk);
+    // add self checking 
+
+    // steer critera not met, rider_off is asserted
+    ld_cell_lft = 1;
+    ld_cell_rght = 2;
+    repeat(1000000)@(posedge clk);      // should back to OFF
+    @(negedge clk);
+    // add self checking 
+
+    // go to PWR1 again
+    ld_cell_lft = MIN_RIDER_WEIGHT + 1;
+    ld_cell_rght = MIN_RIDER_WEIGHT + 1;
+    SendCmd(g);       
+    repeat(1000000)@(posedge clk);// now should be in PWR1, again
+    
+    SendCmd(s);
+    repeat(100000)@(posedge clk);// now should be in PWR2
+
+	SendCmd(g);
+	repeat(100000)@(posedge clk);// now should be in PWR1
+
+	SendCmd(s);
+    repeat(100000)@(posedge clk);// now should be in PWR2
+
+	ld_cell_lft = 1;
+    ld_cell_rght = 2;
+	repeat(1000000)@(posedge clk);// now should be in OFF
+
+	
+	@(posedge clk); @(negedge clk);
+	batt_V = BATT_THRESHOLD - 1;
+	repeat (100000) @(posedge clk);
+    
+    $stop();
 
 endtask
 

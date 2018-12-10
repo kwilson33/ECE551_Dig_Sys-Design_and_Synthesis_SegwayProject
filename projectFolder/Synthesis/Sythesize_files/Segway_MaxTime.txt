@@ -7,15 +7,16 @@ Report : timing
         -max_paths 1
 Design : Segway
 Version: N-2017.09-SP5
-Date   : Mon Dec 10 03:04:41 2018
+Date   : Mon Dec 10 11:58:57 2018
 ****************************************
 
 Operating Conditions: NCCOM   Library: tcbn40lpbwptc
 Wire Load Model Mode: segmented
 
-  Startpoint: Inertial_Interface/intgr/ptch_int_reg[25]
+  Startpoint: A2D_interface/lft_ld_reg[3]
               (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: piezo (output port clocked by clk)
+  Endpoint: balance_control/lft_shaped_reg[10]
+            (rising edge-triggered flip-flop clocked by clk)
   Path Group: clk
   Path Type: max
 
@@ -28,62 +29,65 @@ Wire Load Model Mode: segmented
   --------------------------------------------------------------------------
   clock clk (rise edge)                                   0.00       0.00
   clock network delay (ideal)                             0.00       0.00
-  Inertial_Interface/intgr/ptch_int_reg[25]/CP (EDFCND4BWP)
-                                                          0.00       0.00 r
-  Inertial_Interface/intgr/ptch_int_reg[25]/Q (EDFCND4BWP)
-                                                          0.13       0.13 f
-  U2622/ZN (IIND4D4BWP)                                   0.08       0.21 f
-  U4692/ZN (ND2D4BWP)                                     0.04       0.25 r
-  U4324/ZN (INVD4BWP)                                     0.02       0.26 f
-  U4607/ZN (OAI31D4BWP)                                   0.06       0.32 r
-  U3772/ZN (INVD4BWP)                                     0.03       0.35 f
-  U3165/ZN (ND2D4BWP)                                     0.02       0.38 r
-  U3198/ZN (INVD4BWP)                                     0.02       0.39 f
-  U4158/ZN (AOI31D4BWP)                                   0.05       0.44 r
-  U5116/ZN (XNR3D4BWP)                                    0.13       0.57 f
-  U4958/ZN (XNR2D2BWP)                                    0.09       0.66 r
-  U6247/Z (XOR3D2BWP)                                     0.14       0.80 f
-  U3109/ZN (OAI22D4BWP)                                   0.05       0.85 r
-  U2346/ZN (CKND2D4BWP)                                   0.03       0.88 f
-  U3037/ZN (OAI211D2BWP)                                  0.03       0.91 r
-  U3070/ZN (ND2D4BWP)                                     0.04       0.95 f
-  U5464/Z (AN2D4BWP)                                      0.05       1.00 f
-  U5656/Z (OR3D4BWP)                                      0.08       1.08 f
-  U3326/ZN (CKND4BWP)                                     0.02       1.10 r
-  U5574/Z (OA21D4BWP)                                     0.05       1.15 r
-  U3882/ZN (CKND2D8BWP)                                   0.03       1.17 f
-  U4555/Z (OA211D4BWP)                                    0.06       1.23 f
-  U3110/ZN (IND3D4BWP)                                    0.06       1.29 f
-  U4942/ZN (XNR2D2BWP)                                    0.08       1.37 r
-  U5160/Z (OA211D4BWP)                                    0.06       1.44 r
-  U4173/Z (AN2D4BWP)                                      0.05       1.48 r
-  U2247/Z (XOR2D1BWP)                                     0.07       1.56 f
-  U5501/Z (AN2D4BWP)                                      0.04       1.60 f
-  U5500/ZN (OAI21D4BWP)                                   0.03       1.63 r
-  U4824/ZN (MUX2ND4BWP)                                   0.10       1.73 r
-  U4641/ZN (OAI211D4BWP)                                  0.04       1.78 f
-  U4841/ZN (ND2D4BWP)                                     0.03       1.80 r
-  U4363/ZN (INVD4BWP)                                     0.02       1.82 f
-  U3645/Z (OA32D2BWP)                                     0.09       1.91 f
-  U4683/ZN (OAI31D2BWP)                                   0.06       1.97 r
-  U3874/Z (AO31D2BWP)                                     0.06       2.03 r
-  U3229/ZN (INVD4BWP)                                     0.02       2.05 f
-  U2637/ZN (OAI32D2BWP)                                   0.05       2.10 r
-  U3230/Z (AN3D4BWP)                                      0.10       2.20 r
-  U5349/ZN (INVD16BWP)                                    0.05       2.25 f
-  piezo (out)                                             0.00       2.25 f
-  data arrival time                                                  2.25
+  A2D_interface/lft_ld_reg[3]/CP (DFSND1BWP)              0.00       0.00 r
+  A2D_interface/lft_ld_reg[3]/QN (DFSND1BWP)              0.18       0.18 r
+  U2257/ZN (ND2D1BWP)                                     0.04       0.23 f
+  U2254/ZN (OAI22D1BWP)                                   0.06       0.28 r
+  U3367/ZN (NR2XD1BWP)                                    0.05       0.33 f
+  U2779/ZN (ND2D3BWP)                                     0.03       0.36 r
+  U2620/ZN (ND2D1BWP)                                     0.06       0.42 f
+  U2938/ZN (OAI21D1BWP)                                   0.09       0.51 r
+  U3695/ZN (CKND1BWP)                                     0.06       0.57 f
+  U3366/Z (OR2XD1BWP)                                     0.07       0.64 f
+  U3357/ZN (ND2D2BWP)                                     0.03       0.67 r
+  U2588/ZN (OAI21D2BWP)                                   0.04       0.70 f
+  U3337/ZN (CKND2D4BWP)                                   0.03       0.74 r
+  U3340/ZN (OAI21D2BWP)                                   0.03       0.77 f
+  U3355/ZN (ND2D2BWP)                                     0.03       0.80 r
+  U3539/ZN (MAOI222D2BWP)                                 0.11       0.91 f
+  U3976/ZN (INVD1BWP)                                     0.02       0.93 r
+  U3105/CON (FCICOND2BWP)                                 0.10       1.03 f
+  U3075/ZN (MAOI222D1BWP)                                 0.06       1.10 r
+  U3182/ZN (OAI21D1BWP)                                   0.05       1.15 f
+  U2310/ZN (OAI21D1BWP)                                   0.04       1.18 r
+  U3395/ZN (OAI21D1BWP)                                   0.05       1.23 f
+  U3769/ZN (OAI21D1BWP)                                   0.04       1.27 r
+  U3483/ZN (OAI21D1BWP)                                   0.05       1.32 f
+  U2316/ZN (OAI21D1BWP)                                   0.04       1.37 r
+  U3770/ZN (OAI21D1BWP)                                   0.05       1.42 f
+  U2964/ZN (IOA21D2BWP)                                   0.03       1.45 r
+  U3768/ZN (OAI21D1BWP)                                   0.04       1.49 f
+  U2996/ZN (IOA21D2BWP)                                   0.04       1.52 r
+  U2772/ZN (OAI21D4BWP)                                   0.04       1.56 f
+  U2771/ZN (OAI21D4BWP)                                   0.03       1.59 r
+  U3196/ZN (AOI22D2BWP)                                   0.03       1.62 f
+  U2513/ZN (XNR2D1BWP)                                    0.09       1.71 r
+  U3036/ZN (IOA21D2BWP)                                   0.07       1.78 r
+  U2863/Z (CKXOR2D2BWP)                                   0.08       1.86 f
+  U3034/Z (OA211D4BWP)                                    0.07       1.93 f
+  U3026/ZN (OAI211D4BWP)                                  0.04       1.96 r
+  U3025/ZN (NR4D4BWP)                                     0.03       1.99 f
+  U2051/ZN (INVD6BWP)                                     0.03       2.03 r
+  U2736/ZN (ND2D2BWP)                                     0.04       2.06 f
+  U2400/ZN (CKND3BWP)                                     0.06       2.12 r
+  U3543/ZN (IND2D0BWP)                                    0.06       2.18 f
+  U4597/ZN (OAI21D1BWP)                                   0.04       2.22 r
+  U4599/ZN (MUX2ND0BWP)                                   0.05       2.27 f
+  U2956/ZN (OAI211D1BWP)                                  0.04       2.31 r
+  balance_control/lft_shaped_reg[10]/D (DFCND1BWP)        0.00       2.31 r
+  data arrival time                                                  2.31
 
   clock clk (rise edge)                                   2.50       2.50
   clock network delay (ideal)                             0.00       2.50
   clock uncertainty                                      -0.15       2.35
-  output external delay                                  -0.50       1.85
-  data required time                                                 1.85
+  balance_control/lft_shaped_reg[10]/CP (DFCND1BWP)       0.00       2.35 r
+  library setup time                                     -0.04       2.31
+  data required time                                                 2.31
   --------------------------------------------------------------------------
-  data required time                                                 1.85
-  data arrival time                                                 -2.25
+  data required time                                                 2.31
+  data arrival time                                                 -2.31
   --------------------------------------------------------------------------
-  slack (VIOLATED)                                                  -0.40
+  slack (MET)                                                        0.00
 
 
 1

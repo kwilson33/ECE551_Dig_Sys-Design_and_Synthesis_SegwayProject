@@ -5,8 +5,7 @@
 ####################################################################################################
 read_file -format sverilog {Segway.v, Auth_blk.sv, inert_intf.sv, balance_cntrl.sv, rst_synch.sv, \
 							steer_en.sv, mtr_drv.sv, A2D_Intf.sv, piezo.sv, \
-							PWM11.sv, SPI_mstr16.sv, inertial_integrator.sv, UART_rcv.sv, UART_tx.v, \
-							SPI_ADC128S.sv, ADC128S.sv}
+							PWM11.sv, SPI_mstr16.sv, inertial_integrator.sv, UART_rcv.sv, UART_tx.v}
 ####################################################################################################
 
 
@@ -70,12 +69,12 @@ set_wire_load_model -name TSMC32K_Lowk_Conservative -library tcbn40lpbwptc
 
 set_fix_hold clk
 
-#set compile_seqmap_enable_output_inversion true
-#compile -map_effort medium
-#ungroup -all -flatten
-#compile -map_effort high
+set compile_seqmap_enable_output_inversion true
+compile -map_effort medium
+ungroup -all -flatten
+compile -map_effort high
 
-compile_ultra
+#compile_ultra
 ###################################################################################################
 
 ########################Log area & times and write out gate level verilog netlist###################

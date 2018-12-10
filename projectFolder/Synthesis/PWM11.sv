@@ -18,8 +18,8 @@ module PWM11 (PWM_sig, clk, rst_n, duty);
 	
 	
 	// check what count is and assign flags
-	assign cnt_eq_0 = (count == 11'h0000) ? 1:0;
-	assign cnt_gtEQ_duty = (count >= duty) ? 1:0;
+	assign cnt_eq_0 = (count == 11'h0000);
+	assign cnt_gtEQ_duty = (count >= duty);
 	
 	//11 bit counter
 	always_ff @(posedge clk, negedge rst_n) begin
