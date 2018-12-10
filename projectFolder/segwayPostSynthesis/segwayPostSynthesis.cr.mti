@@ -1,0 +1,51 @@
+/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv {1 {vlog -work work -vopt -sv -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module ADC128S
+
+Top level modules:
+	ADC128S
+
+} {} {}} /userspace/t/tmiller34/ece551/segwayPostSynthesus/Segway.vg {1 {vlog -work work -vopt -stats=none /userspace/t/tmiller34/ece551/segwayPostSynthesus/Segway.vg
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module Segway
+
+Top level modules:
+	Segway
+
+} {} {}} /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv {2 {vlog -work work -vopt -sv -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module SegwayModel
+** Warning: /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv(141): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+Top level modules:
+	SegwayModel
+
+} {} {}} /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg {1 {vlog -work work -vopt -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module Segway
+
+Top level modules:
+	Segway
+
+} {} {}} /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v {1 {vlog -work work -vopt -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module UART_tx
+
+Top level modules:
+	UART_tx
+
+} {} {}} /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv {1 {vlog -work work -vopt -sv -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module Segway_tb
+
+Top level modules:
+	Segway_tb
+
+} {} {}} /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv {1 {vlog -work work -vopt -sv -stats=none /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv
+QuestaSim-64 vlog 10.6a Compiler 2017.03 Mar 16 2017
+-- Compiling module SPI_ADC128S
+
+Top level modules:
+	SPI_ADC128S
+
+} {} {}}
