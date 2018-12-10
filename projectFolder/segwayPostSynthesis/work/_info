@@ -1,0 +1,474 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/userspace/t/tmiller34/ece551/segwayPostSynthesus
+T_opt
+!s110 1544465158
+Vn]hZ><Lhea4H5[D?2hVNE3
+04 9 4 work Segway_tb fast 0
+=1-000ae431a4f1-5c0eab02-d9156-3bf3ab
+o-quiet -auto_acc_if_foreign -work work -L /userspace/e/ece551/TSMC_lib
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.6a;65
+vA2D_Intf
+Z2 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+!s110 1544464737
+!i10b 1
+!s100 lQQe`jkNCIY>1LN=Y79H>1
+IhIazf1kR<b4eO2_E_[hOH2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 A2D_Intf_sv_unit
+S1
+R0
+w1544422233
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/A2D_Intf.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/A2D_Intf.sv
+L0 3
+Z4 OL;L;10.6a;65
+r1
+!s85 0
+31
+!s108 1544464737.000000
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/A2D_Intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/A2D_Intf.sv|
+!i113 0
+Z5 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+n@a2@d_@intf
+vADC128S
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 _hh:J@nmBPbm2GFD?WWJP3
+ISPzm:60ifSKl=B4gg]Jz>1
+!s105 ADC128S_sv_unit
+S1
+R0
+w1544424170
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv
+L0 2
+R4
+Z6 !s108 1544464981.000000
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/ADC128S.sv|
+!i113 0
+R5
+R1
+n@a@d@c128@s
+vAuth_blk
+R2
+Z7 !s110 1544464738
+!i10b 1
+!s100 >ca2L6cN7QAW_^GQoSLOD2
+IRUR4DK>LZVnghAI=gC`@Z0
+R3
+!s105 Auth_blk_sv_unit
+S1
+R0
+w1544412303
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/Auth_blk.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/Auth_blk.sv
+L0 2
+R4
+r1
+!s85 0
+31
+Z8 !s108 1544464738.000000
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/Auth_blk.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/Auth_blk.sv|
+!i113 0
+R5
+R1
+n@auth_blk
+vbalance_cntrl
+R2
+Z9 !s110 1544464740
+!i10b 1
+!s100 RBCM<6CCf8[d6JNTJK<RH2
+Imz[bH@o841ERHg=D[NN9^0
+R3
+!s105 balance_cntrl_sv_unit
+S1
+R0
+w1544464659
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv
+L0 2
+R4
+r1
+!s85 0
+31
+Z10 !s108 1544464740.000000
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/balance_cntrl.sv|
+!i113 0
+R5
+R1
+vbalance_cntrl_dbg_tb
+R9
+!i10b 1
+!s100 65=l4dnAafZHczU>`1J623
+I:n@9MV^IMYm;JL79LEOeh1
+R3
+R0
+w1544431504
+8/userspace/t/tmiller34/ece551/testimngBALCLLCC/balance_cntrl_dbg_tb.v
+F/userspace/t/tmiller34/ece551/testimngBALCLLCC/balance_cntrl_dbg_tb.v
+L0 1
+R4
+r1
+!s85 0
+31
+R10
+!s107 /userspace/t/tmiller34/ece551/testimngBALCLLCC/balance_cntrl_dbg_tb.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/t/tmiller34/ece551/testimngBALCLLCC/balance_cntrl_dbg_tb.v|
+!i113 0
+Z11 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vinert_intf
+R2
+R7
+!i10b 1
+!s100 c6VJG4P[E;Ff`UIRc^>Yl0
+I5oOO4P:j>XAMld[?O3XEC1
+R3
+!s105 inert_intf_sv_unit
+S1
+R0
+w1544422927
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/inert_intf.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/inert_intf.sv
+L0 2
+R4
+r1
+!s85 0
+31
+R8
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/inert_intf.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/inert_intf.sv|
+!i113 0
+R5
+R1
+vinertial_integrator
+R2
+Z12 !s110 1544464739
+!i10b 1
+!s100 VGOGn?D?F6KUO3K[8RjN32
+IWlYG`=[W1`@f0d2Vi<SmE1
+R3
+!s105 inertial_integrator_sv_unit
+S1
+R0
+Z13 w1544385724
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/inertial_integrator.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/inertial_integrator.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R8
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/inertial_integrator.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/inertial_integrator.sv|
+!i113 0
+R5
+R1
+vmtr_drv
+R2
+R12
+!i10b 1
+!s100 i7Lm]dLckOJ30o8>LLT891
+ICD`S9PfB0kLacIEnE>5PH0
+R3
+!s105 mtr_drv_sv_unit
+S1
+R0
+w1544397328
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/mtr_drv.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/mtr_drv.sv
+L0 1
+R4
+r1
+!s85 0
+31
+Z14 !s108 1544464739.000000
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/mtr_drv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/mtr_drv.sv|
+!i113 0
+R5
+R1
+vpiezo
+R2
+R12
+!i10b 1
+!s100 SFRc25fYh_5_TbF]CcZHc1
+Ifg>TIld@Zj_4onz?Z[5Ed0
+R3
+!s105 piezo_sv_unit
+S1
+R0
+R13
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/piezo.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/piezo.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R14
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/piezo.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/piezo.sv|
+!i113 0
+R5
+R1
+vPWM11
+R2
+R12
+!i10b 1
+!s100 _XzKoU^mFgZV=?mMZBh0;1
+I??0Zj6?8;B]ak=L;5FTc>3
+R3
+!s105 PWM11_sv_unit
+S1
+R0
+w1544424502
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/PWM11.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/PWM11.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R14
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/PWM11.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/PWM11.sv|
+!i113 0
+R5
+R1
+n@p@w@m11
+vrst_synch
+R2
+R12
+!i10b 1
+!s100 @HOnY`GATNd>9E@XQIc<f0
+In4PbBbUnhW]o=[T4YI=eV1
+R3
+!s105 rst_synch_sv_unit
+S1
+R0
+R13
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/rst_synch.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/rst_synch.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R14
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/rst_synch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/rst_synch.sv|
+!i113 0
+R5
+R1
+vSegway
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 N:1O3eNXQM=kTFCOA:1iT3
+IoRC8XdXQbTAf@^6Qgkj=80
+R0
+w1544465010
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg
+L0 9
+R4
+!s108 1544465016.000000
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/Segway.vg|
+!i113 0
+R11
+R1
+n@segway
+vSegway_tb
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 WK:LJFhe8ZS0Vf:bi5?zd2
+Ig0aFT9JNiz5G=`LM`9fDb2
+!s105 Segway_tb_sv_unit
+S1
+R0
+w1544461207
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv
+Ftb_tasks.sv
+Ftb_tests.sv
+L0 2
+R4
+R6
+!s107 tb_tests.sv|tb_tasks.sv|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Segway_tb.sv|
+!i113 0
+R5
+R1
+n@segway_tb
+vSegwayModel
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 g1Bl0olIMWUgW?^54A7Z_2
+I6n:4i4QPKEmeHj6PLlH_k3
+!s105 SegwayModel_sv_unit
+S1
+R0
+w1544424136
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv
+L0 2
+R4
+R6
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SegwayModel.sv|
+!i113 0
+R5
+R1
+n@segway@model
+vSPI_ADC128S
+R2
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 8:QKM[f]G0c@NCRf59ScE1
+IBDci1_4IC`ORKV5k0:b=[3
+!s105 SPI_ADC128S_sv_unit
+S1
+R0
+w1544424157
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv
+L0 2
+R4
+R6
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/SPI_ADC128S.sv|
+!i113 0
+R5
+R1
+n@s@p@i_@a@d@c128@s
+vSPI_mstr16
+R2
+R9
+!i10b 1
+!s100 T<cWCPPLomzA1FoBBjOIc2
+Ilfg8<oE=mCzibE_j4[j[D2
+R3
+!s105 SPI_mstr16_sv_unit
+S1
+R0
+w1544385721
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/SPI_mstr16.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/SPI_mstr16.sv
+L0 2
+R4
+r1
+!s85 0
+31
+R14
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/SPI_mstr16.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/SPI_mstr16.sv|
+!i113 0
+R5
+R1
+n@s@p@i_mstr16
+vsteer_en
+R2
+R9
+!i10b 1
+!s100 LYMa8@3d`f28@eRh6:3LD2
+Ia1EkhUhTZMHLKjYQ?@=Ud0
+R3
+!s105 steer_en_sv_unit
+S1
+R0
+w1544417118
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/steer_en.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/steer_en.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R10
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/steer_en.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/steer_en.sv|
+!i113 0
+R5
+R1
+vUART_rcv
+R2
+R9
+!i10b 1
+!s100 ef8C@z5ghUzITC;1LR7>52
+INYj>D<L@VQz9B7E5jN@lR2
+R3
+!s105 UART_rcv_sv_unit
+S1
+R0
+w1544388693
+8/userspace/t/tmiller34/ece551/segwayPostSynthesus/UART_rcv.sv
+F/userspace/t/tmiller34/ece551/segwayPostSynthesus/UART_rcv.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R10
+!s107 /userspace/t/tmiller34/ece551/segwayPostSynthesus/UART_rcv.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|/userspace/t/tmiller34/ece551/segwayPostSynthesus/UART_rcv.sv|
+!i113 0
+R5
+R1
+n@u@a@r@t_rcv
+vUART_tx
+!s110 1544464981
+!i10b 1
+!s100 <oBHE0FVBI1zHKU[jbGn<0
+I5<_I^lJNPjXb?9EbPAg153
+R3
+R0
+w1544424148
+8/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v
+F/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v
+L0 2
+R4
+r1
+!s85 0
+31
+R6
+!s107 /userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|/userspace/t/tmiller34/ece551/ece551Project/projectFolder/Synthesis/Sythesize_files/UART_tx.v|
+!i113 0
+R11
+R1
+n@u@a@r@t_tx
