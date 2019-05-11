@@ -1,16 +1,3 @@
-What is done
+What is it?
 ------------
-* Module instantiations in Segway.v
-* Balance control
-* Steer_en
-* Inertial Interface & Integrator
-* Synthesis script
-* Piezo!!
-* A2D Interface 
-
-What to do
-------------
-* synthesize design
-* Complete Segway_tb.v	
-  * testbench class, 
-* Extra Credit : Code coverage
+Verilog code for making a Segway work! Acceleration, sound, everything.
